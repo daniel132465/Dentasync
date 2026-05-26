@@ -3,13 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DENTASYNC</title>
+    <title>Dentasync</title>
+    <style>
+        @keyframes floatMarquee {
+            0% { transform: translateX(-20px); }
+            50% { transform: translateX(20px); }
+            100% { transform: translateX(-20px); }
+        }
+        .animate-float-marquee {
+            animation: floatMarquee 3s ease-in-out infinite;
+        }
+    </style>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-white min-h-screen text-gray-900 flex flex-col items-center py-16 px-4 font-sans">
     <!-- Encabezado principal -->
-    <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight text-blue-600 mb-12 drop-shadow-sm">
+    <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight mb-12 drop-shadow-sm animate-float-marquee" style="color: #2ecc71;">
         DENTASYNC
     </h1>
     
