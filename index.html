@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DENTASYNC</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-white min-h-screen text-gray-900 flex flex-col items-center py-16 px-4 font-sans">
+    <!-- Encabezado principal -->
+    <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight text-blue-600 mb-12 drop-shadow-sm">
+        DENTASYNC
+    </h1>
+    
+    <!-- Contenedor de datos -->
+    <div id="data-container" class="w-full max-w-4xl">
+        <p class="text-gray-500 text-center text-lg animate-pulse" id="loading-text">Cargando datos desde Supabase...</p>
+        <ul id="numbers-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 hidden">
+            <!-- Los números se inyectarán aquí dinámicamente -->
+        </ul>
+    </div>
+
+    <!-- Supabase JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="app.js"></script>
+</body>
+</html>
