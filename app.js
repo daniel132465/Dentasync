@@ -1,8 +1,10 @@
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
 const supabaseUrl = 'https://kjbrpydruswugwshvwvb.supabase.co';
 const supabaseKey = 'sb_publishable_U1iNyWHxH_pF8rMFbKRGvg_OqQ730yk';
 
 // Inicializar el cliente Supabase
-const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 async function fetchNumeros() {
     const loadingText = document.getElementById('loading-text');
