@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DentaSync - Recuperar Contraseña</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brandDark: '#0284c7',
+                        brandLight: '#0ea5e9',
+                        hospitalDark: '#0E1E38',
+                        hospitalLight: '#1A365D',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="antialiased bg-gray-50 flex items-center justify-center min-h-screen p-4 text-slate-800">
+
+    <!-- Tarjeta Centrada -->
+    <div class="bg-white rounded-3xl p-8 shadow-xl max-w-sm w-full text-center flex flex-col items-center justify-center relative overflow-hidden transition-all duration-300 hover:shadow-2xl border border-gray-100">
+        
+        <!-- Círculo Estético de Fondo -->
+        <div class="absolute -top-10 -right-10 w-24 h-24 bg-sky-50 rounded-full pointer-events-none opacity-60"></div>
+        <div class="absolute -bottom-10 -left-10 w-24 h-24 bg-sky-50 rounded-full pointer-events-none opacity-60"></div>
+
+        <!-- Ícono Estético de Llave/Seguridad -->
+        <div class="w-20 h-20 bg-sky-50 rounded-2xl flex items-center justify-center mb-6 border border-sky-100 shadow-sm z-10">
+            <svg class="w-10 h-10 text-brandDark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+            </svg>
+        </div>
+
+        <!-- Título -->
+        <h2 class="text-2xl font-bold text-hospitalDark mb-2 z-10">Recuperar Contraseña</h2>
+        
+        <!-- Mensaje de construcción -->
+        <p class="text-slate-500 mb-8 z-10 font-medium">Web en construcción</p>
+
+        <!-- Botón Volver al Login -->
+        <a href="login.html" class="inline-flex items-center justify-center w-full py-3 px-4 bg-gradient-to-r from-hospitalDark to-hospitalLight hover:from-brandDark hover:to-brandLight text-white rounded-xl font-semibold shadow-md hover:shadow-lg transition-all duration-300 z-10">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+            </svg>
+            Volver al Login
+        </a>
+    </div>
+
+</body>
+</html>
