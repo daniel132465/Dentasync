@@ -68,12 +68,16 @@
                     <a href="#inicio" class="nav-link text-slate-600 hover:text-brandDark font-medium transition-colors" data-target="inicio">Inicio</a>
                     <a href="#funciones" class="nav-link text-slate-600 hover:text-brandDark font-medium transition-colors" data-target="funciones">Funciones</a>
                     <a href="#novedades" class="nav-link text-slate-600 hover:text-brandDark font-medium transition-colors" data-target="novedades">Novedades</a>
+                    <a href="#planes" class="nav-link text-slate-600 hover:text-brandDark font-medium transition-colors" data-target="planes">Planes</a>
                     <a href="#opiniones" class="nav-link text-slate-600 hover:text-brandDark font-medium transition-colors" data-target="opiniones">Opiniones</a>
                     <a href="#contacto" class="nav-link text-slate-600 hover:text-brandDark font-medium transition-colors" data-target="contacto">Contacto</a>
                 </div>
 
                 <!-- Action Button -->
-                <div class="hidden md:flex items-center">
+                <div class="hidden md:flex items-center space-x-4">
+                    <button class="text-brandDark border-2 border-brandDark hover:bg-brandDark hover:text-white px-6 py-2 rounded-lg font-semibold shadow-sm hover:shadow-md transition-all duration-200">
+                        Crear cuenta
+                    </button>
                     <button class="bg-gradient-to-r from-brandDark to-brandLight hover:from-sky-700 hover:to-sky-500 text-white px-6 py-2.5 rounded-lg font-semibold shadow-md hover:shadow-lg transition-all duration-200 transform hover:-translate-y-0.5">
                         Iniciar Sesión
                     </button>
@@ -96,9 +100,13 @@
                 <a href="#inicio" class="nav-link block px-3 py-3 rounded-md text-base font-medium text-slate-700 hover:text-brandDark hover:bg-slate-50" data-target="inicio">Inicio</a>
                 <a href="#funciones" class="nav-link block px-3 py-3 rounded-md text-base font-medium text-slate-700 hover:text-brandDark hover:bg-slate-50" data-target="funciones">Funciones</a>
                 <a href="#novedades" class="nav-link block px-3 py-3 rounded-md text-base font-medium text-slate-700 hover:text-brandDark hover:bg-slate-50" data-target="novedades">Novedades</a>
+                <a href="#planes" class="nav-link block px-3 py-3 rounded-md text-base font-medium text-slate-700 hover:text-brandDark hover:bg-slate-50" data-target="planes">Planes</a>
                 <a href="#opiniones" class="nav-link block px-3 py-3 rounded-md text-base font-medium text-slate-700 hover:text-brandDark hover:bg-slate-50" data-target="opiniones">Opiniones</a>
                 <a href="#contacto" class="nav-link block px-3 py-3 rounded-md text-base font-medium text-slate-700 hover:text-brandDark hover:bg-slate-50" data-target="contacto">Contacto</a>
-                <div class="mt-4 px-3">
+                <div class="mt-4 px-3 space-y-3">
+                    <button class="w-full text-brandDark border-2 border-brandDark hover:bg-slate-50 px-6 py-3 rounded-lg font-semibold shadow-sm">
+                        Crear cuenta
+                    </button>
                     <button class="w-full bg-gradient-to-r from-brandDark to-brandLight text-white px-6 py-3 rounded-lg font-semibold shadow-md">
                         Iniciar Sesión
                     </button>
@@ -118,10 +126,6 @@
                 
                 <!-- Left Column -->
                 <div class="lg:col-span-6 text-center lg:text-left mb-16 lg:mb-0">
-                    <div class="inline-flex items-center px-4 py-2 rounded-full bg-sky-50 border border-sky-100 text-brandDark font-medium text-sm mb-6 shadow-sm">
-                        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                        Plataforma #1 para consultorios dentales
-                    </div>
                     <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 leading-tight mb-6 tracking-tight">
                         Gestiona tu <br class="hidden lg:block"/>
                         <span class="text-transparent bg-clip-text bg-gradient-to-r from-brandDark to-brandLight">consultorio dental</span> <br class="hidden lg:block"/>
@@ -360,6 +364,87 @@
                             <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                         </a>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN PLANES (#planes) -->
+    <section id="planes" class="py-24 bg-white relative border-t border-slate-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-base text-brandLight font-bold tracking-wide uppercase mb-3">Precios</h2>
+                <h3 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-6">Planes transparentes</h3>
+                <p class="text-lg text-slate-600">Elige el plan que mejor se adapte al tamaño de tu clínica.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+                <!-- Tarjeta 1: Gratuito -->
+                <div class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm hover:shadow-lg transition-shadow">
+                    <h4 class="text-xl font-bold text-slate-800 mb-2">Gratuito</h4>
+                    <div class="text-4xl font-extrabold text-slate-900 mb-6">0 Bs.<span class="text-lg font-medium text-slate-500">/mes</span></div>
+                    <ul class="space-y-4 mb-8 text-slate-600">
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-brandLight mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span>1 consultorio en simultáneo</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-brandLight mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span>Límite de 10 pacientes al mes</span>
+                        </li>
+                    </ul>
+                    <button class="w-full py-3 px-4 bg-sky-50 text-brandDark hover:bg-sky-100 rounded-xl font-bold transition-colors">
+                        Comenzar Ya
+                    </button>
+                </div>
+
+                <!-- Tarjeta 2: Básico (Más Popular) -->
+                <div class="bg-white p-8 rounded-2xl border-2 border-brandDark shadow-xl relative transform md:-translate-y-4">
+                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-brandDark text-white px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wide whitespace-nowrap">
+                        Más Popular
+                    </div>
+                    <h4 class="text-xl font-bold text-brandDark mb-2">Básico</h4>
+                    <div class="text-4xl font-extrabold text-slate-900 mb-6">199 Bs.<span class="text-lg font-medium text-slate-500">/mes</span></div>
+                    <ul class="space-y-4 mb-8 text-slate-600">
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-brandLight mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span>2 consultorios en simultáneo</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-brandLight mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span>Límite de 250 pacientes al mes</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-brandLight mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span>Reportes de gestión</span>
+                        </li>
+                    </ul>
+                    <button class="w-full py-3 px-4 bg-brandDark text-white hover:bg-sky-700 rounded-xl font-bold transition-colors shadow-md">
+                        Adquirir Plan
+                    </button>
+                </div>
+
+                <!-- Tarjeta 3: Avanzado -->
+                <div class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm hover:shadow-lg transition-shadow">
+                    <h4 class="text-xl font-bold text-slate-800 mb-2">Avanzado</h4>
+                    <div class="text-4xl font-extrabold text-slate-900 mb-6">499 Bs.<span class="text-lg font-medium text-slate-500">/mes</span></div>
+                    <ul class="space-y-4 mb-8 text-slate-600">
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-brandLight mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span>3 consultorios en simultáneo</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-brandLight mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span>Límite de 1500 pacientes al mes</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-brandLight mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span>Analíticas inteligentes con IA</span>
+                        </li>
+                    </ul>
+                    <button class="w-full py-3 px-4 bg-sky-50 text-brandDark hover:bg-sky-100 rounded-xl font-bold transition-colors">
+                        Contactar Ventas
+                    </button>
                 </div>
             </div>
         </div>
