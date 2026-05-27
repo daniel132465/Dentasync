@@ -3,556 +3,1051 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dentasync - Gestión Odontológica Inteligente</title>
+    <title>DentaSync - Gestión Inteligente</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --color-white: #ffffff;
-            --color-light-gray: #f8f9fa;
-            --color-navy: #2c3e50;
-            --color-green: #2ecc71;
-            --color-green-hover: #27ae60;
+            --primary-blue: #0091DC;
+            --primary-blue-hover: #007bb5;
+            --navy-blue: #0E1E38;
+            --bg-white: #FFFFFF;
+            --bg-light: #F8F9FA;
+            --text-gray: #64748B;
+            --border-color: #E2E8F0;
+            
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+            
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
             font-family: 'Inter', sans-serif;
-            color: var(--color-navy);
         }
 
         body {
-            background-color: var(--color-white);
+            background-color: var(--bg-white);
+            color: var(--text-gray);
             line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            color: var(--navy-blue);
+            line-height: 1.2;
         }
 
         a {
             text-decoration: none;
             color: inherit;
+            transition: color 0.2s ease;
         }
 
         ul {
             list-style: none;
         }
 
-        /* --- Tipografía y Botones --- */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Botones */
         .btn {
-            display: inline-block;
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 24px;
+            border-radius: var(--radius-md);
             font-weight: 600;
+            font-size: 1rem;
             cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: center;
+            transition: all 0.2s ease;
+            border: 2px solid transparent;
         }
 
         .btn-primary {
-            background-color: var(--color-green);
-            color: var(--color-white);
-            border: none;
+            background-color: var(--primary-blue);
+            color: var(--bg-white);
         }
 
         .btn-primary:hover {
-            background-color: var(--color-green-hover);
+            background-color: var(--primary-blue-hover);
+            transform: translateY(-1px);
         }
 
         .btn-outline {
             background-color: transparent;
-            color: var(--color-navy);
-            border: 2px solid var(--color-navy);
+            color: var(--primary-blue);
+            border-color: var(--primary-blue);
         }
 
         .btn-outline:hover {
-            background-color: var(--color-navy);
-            color: var(--color-white);
+            background-color: rgba(0, 145, 220, 0.05);
         }
 
-        .btn-secondary {
-            background-color: transparent;
-            color: var(--color-navy);
-            border: none;
+        .btn-white {
+            background-color: var(--bg-white);
+            color: var(--primary-blue);
         }
         
-        .btn-secondary:hover {
-            text-decoration: underline;
+        .btn-white:hover {
+            background-color: #f1f5f9;
         }
 
-        /* --- Header / Navbar --- */
+        /* 1. BARRA DE NAVEGACIÓN (#inicio) */
         header {
-            background-color: var(--color-white);
-            padding: 1rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            background-color: var(--bg-white);
+            border-bottom: 1px solid var(--border-color);
             position: sticky;
             top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            z-index: 1000;
         }
 
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--color-green);
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 80px;
         }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            background-color: var(--primary-blue);
+            color: var(--bg-white);
+            font-weight: 800;
+            font-size: 1.2rem;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius-md);
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo-text .denta { color: var(--navy-blue); }
+        .logo-text .sync { color: var(--primary-blue); }
 
         .nav-links {
             display: flex;
-            gap: 2rem;
+            gap: 32px;
         }
 
         .nav-links a {
+            color: var(--text-gray);
             font-weight: 500;
-            transition: color 0.3s;
         }
 
         .nav-links a:hover {
-            color: var(--color-green);
+            color: var(--primary-blue);
         }
 
-        .nav-actions .btn-outline {
-            padding: 0.5rem 1rem;
-        }
-
-        /* --- Mobile Menu Toggle --- */
-        .menu-toggle {
-            display: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        /* --- Hero Section --- */
+        /* 2. SECCIÓN HERO */
         .hero {
-            background-color: var(--color-light-gray);
-            padding: 6rem 5%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 4rem;
+            padding: 100px 0;
+            background-color: var(--bg-white);
         }
 
-        .hero-content {
-            flex: 1;
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            background-color: #E6F4FB;
+            color: var(--primary-blue);
+            padding: 8px 16px;
+            border-radius: 99px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 24px;
         }
 
         .hero-title {
-            font-size: 3.5rem;
+            font-size: 4rem;
             font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
-            color: var(--color-navy);
+            letter-spacing: -1px;
+            margin-bottom: 24px;
         }
 
-        .hero-subtitle {
-            font-size: 1.25rem;
-            color: #596a7b; /* lighter navy */
-            margin-bottom: 2.5rem;
+        .hero-title span {
+            color: var(--primary-blue);
         }
 
-        .hero-buttons {
+        .hero-desc {
+            font-size: 1.125rem;
+            margin-bottom: 40px;
+            max-width: 540px;
+        }
+
+        .hero-actions {
             display: flex;
-            gap: 1rem;
+            gap: 16px;
         }
 
-        .hero-visual {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* Dashboard Mockup CSS */
-        .dashboard-mockup {
-            width: 100%;
-            max-width: 600px;
-            background-color: var(--color-white);
-            border-radius: 12px;
-            box-shadow: 0 20px 40px rgba(44, 62, 80, 0.1);
+        .hero-mockup {
+            background-color: var(--bg-white);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-xl);
+            border: 1px solid var(--border-color);
             overflow: hidden;
-            display: flex;
-            flex-direction: column;
+            transform: perspective(1000px) rotateY(-5deg) rotateX(2deg);
+            transition: transform 0.3s ease;
+        }
+
+        .hero-mockup:hover {
+            transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
         }
 
         .mockup-header {
-            background-color: var(--color-light-gray);
-            padding: 1rem;
+            background-color: var(--primary-blue);
+            padding: 16px 20px;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            border-bottom: 1px solid #e2e8f0;
+            gap: 12px;
+            color: var(--bg-white);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .mockup-dots {
+            display: flex;
+            gap: 6px;
         }
 
         .mockup-dot {
-            width: 12px;
-            height: 12px;
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
+            background-color: rgba(255,255,255,0.4);
         }
-        .mockup-dot.red { background-color: #ff5f56; }
-        .mockup-dot.yellow { background-color: #ffbd2e; }
-        .mockup-dot.green { background-color: #27c93f; }
 
         .mockup-body {
-            padding: 2rem;
-            display: flex;
-            gap: 1rem;
+            padding: 24px;
+            background-color: var(--bg-light);
         }
 
-        .mockup-sidebar {
-            width: 60px;
-            height: 200px;
-            background-color: var(--color-light-gray);
-            border-radius: 8px;
+        .mockup-metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 24px;
         }
 
-        .mockup-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .mockup-bar {
-            height: 20px;
-            background-color: var(--color-light-gray);
-            border-radius: 4px;
-        }
-        .mockup-bar.short { width: 50%; }
-
-        /* --- Funciones Section --- */
-        .features {
-            background-color: var(--color-white);
-            padding: 6rem 5%;
+        .metric-card {
+            background-color: var(--bg-white);
+            padding: 16px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
             text-align: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .metric-card.blue { color: var(--primary-blue); }
+        .metric-card.green { color: #10B981; }
+        .metric-card.orange { color: #F59E0B; }
+
+        .mockup-appointments {
+            background-color: var(--bg-white);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .appointments-title {
+            font-size: 0.8rem;
+            color: var(--text-gray);
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+        }
+
+        .appointment-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            background-color: var(--bg-white);
+        }
+
+        .appointment-row:last-child { margin-bottom: 0; }
+        
+        .appointment-info {
+            color: var(--navy-blue);
+            font-weight: 500;
+        }
+
+        .appointment-status {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #10B981;
+        }
+
+        /* 3. BANNER DE ESTADÍSTICAS */
+        .stats-banner {
+            background-color: var(--bg-light);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 60px 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            text-align: center;
+            gap: 24px;
+        }
+
+        .stat-item h3 {
+            font-size: 2.5rem;
+            color: var(--primary-blue);
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .stat-item p {
+            font-weight: 500;
+            color: var(--navy-blue);
+        }
+
+        /* SECCIONES GENERALES */
+        .section {
+            padding: 100px 0;
+        }
+
+        .section-light { background-color: var(--bg-white); }
+        .section-gray { background-color: var(--bg-light); }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 64px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .section-label {
+            color: var(--primary-blue);
+            font-weight: 700;
+            font-size: 0.875rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            display: block;
         }
 
         .section-title {
             font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 3rem;
+            font-weight: 800;
+            margin-bottom: 16px;
         }
 
+        .section-subtitle {
+            font-size: 1.125rem;
+        }
+
+        /* 4. SECCIÓN FUNCIONALIDADES (#funciones) */
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
         }
 
         .feature-card {
-            background-color: var(--color-light-gray);
-            padding: 2rem;
-            border-radius: 12px;
-            transition: transform 0.3s;
-            text-align: left;
+            background-color: var(--bg-white);
+            border: 1px solid var(--border-color);
+            padding: 32px;
+            border-radius: var(--radius-xl);
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-sm);
         }
 
         .feature-card:hover {
-            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-blue);
+            transform: translateY(-4px);
         }
 
-        .feature-icon {
+        .feature-icon-wrapper {
             width: 48px;
             height: 48px;
-            margin-bottom: 1.5rem;
-            color: var(--color-green);
-        }
-
-        .feature-title {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-
-        .feature-desc {
-            color: #596a7b;
-        }
-
-        /* --- Planes de Suscripción Section --- */
-        .pricing {
-            background-color: var(--color-light-gray);
-            padding: 6rem 5%;
-            text-align: center;
-        }
-
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-            align-items: center;
-        }
-
-        .pricing-card {
-            background-color: var(--color-white);
-            padding: 3rem 2rem;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            position: relative;
+            background-color: #E6F4FB;
+            border-radius: var(--radius-md);
             display: flex;
-            flex-direction: column;
-            height: 100%;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            color: var(--primary-blue);
         }
 
-        .pricing-card.featured {
-            border: 2px solid var(--color-green);
-            transform: scale(1.05);
-            z-index: 10;
+        .feature-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 12px;
         }
 
-        .badge-popular {
+        /* 5. SECCIÓN NOVEDADES (#novedades) */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+
+        .news-card {
+            background-color: var(--bg-white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            padding: 32px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease;
+        }
+
+        .news-card:hover { transform: translateY(-4px); }
+
+        .news-border-top {
             position: absolute;
-            top: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: var(--color-green);
-            color: var(--color-white);
-            padding: 0.25rem 1rem;
-            border-radius: 20px;
-            font-size: 0.875rem;
-            font-weight: 600;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
         }
 
-        .plan-name {
-            font-size: 1.5rem;
+        .border-blue { background-color: var(--primary-blue); }
+        .border-green { background-color: #10B981; }
+        .border-purple { background-color: #8B5CF6; }
+
+        .news-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .news-badge {
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 0.75rem;
             font-weight: 700;
-            margin-bottom: 0.5rem;
         }
 
-        .plan-price {
+        .badge-blue { background-color: #E6F4FB; color: var(--primary-blue); }
+        .badge-green { background-color: #D1FAE5; color: #10B981; }
+        .badge-purple { background-color: #EDE9FE; color: #8B5CF6; }
+
+        .news-date {
+            font-size: 0.875rem;
+            color: var(--text-gray);
+        }
+
+        .news-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 12px;
+        }
+
+        .news-card p {
+            margin-bottom: 24px;
+            font-size: 0.95rem;
+        }
+
+        .news-link {
+            color: var(--primary-blue);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+        .news-link:hover { text-decoration: underline; }
+
+        /* 6. SECCIÓN TESTIMONIOS (#opiniones) */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-bottom: 80px;
+        }
+
+        .testimonial-card {
+            background-color: var(--bg-white);
+            padding: 24px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+        }
+
+        .stars {
+            color: #FBBF24;
+            margin-bottom: 16px;
+            letter-spacing: 2px;
+        }
+
+        .testimonial-text {
+            font-size: 0.95rem;
+            font-style: italic;
+            margin-bottom: 24px;
+            color: var(--navy-blue);
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .author-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary-blue);
+            color: var(--bg-white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .author-info h4 {
+            font-size: 0.9rem;
+            margin-bottom: 2px;
+        }
+
+        .author-info p {
+            font-size: 0.8rem;
+            color: var(--text-gray);
+        }
+
+        /* BANNER AZUL CTA */
+        .cta-banner {
+            background-color: var(--primary-blue);
+            border-radius: var(--radius-xl);
+            padding: 80px 40px;
+            text-align: center;
+            color: var(--bg-white);
+            background-image: linear-gradient(135deg, var(--primary-blue) 0%, #007bb5 100%);
+        }
+
+        .cta-banner h2 {
+            color: var(--bg-white);
             font-size: 2.5rem;
             font-weight: 800;
-            color: var(--color-green);
-            margin-bottom: 1.5rem;
+            margin-bottom: 24px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .plan-price span {
-            font-size: 1rem;
-            color: #596a7b;
+        /* 7. CONTACTO Y FOOTER (#contacto / #nosotros) */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            margin-bottom: 80px;
+        }
+
+        .contact-card {
+            text-align: center;
+            padding: 32px;
+            background-color: var(--bg-white);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .contact-icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 20px;
+            color: var(--primary-blue);
+        }
+
+        .contact-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+
+        .contact-card p {
+            color: var(--navy-blue);
             font-weight: 500;
         }
 
-        .plan-features {
-            margin-bottom: 2rem;
-            flex-grow: 1;
+        footer {
+            background-color: var(--navy-blue);
+            color: #94A3B8;
+            padding: 80px 0 32px;
         }
 
-        .plan-features li {
-            margin-bottom: 0.75rem;
-            color: #596a7b;
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .footer-logo {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-        }
-
-        .plan-features li::before {
-            content: "✓";
-            color: var(--color-green);
-            font-weight: bold;
-        }
-
-        /* --- Footer --- */
-        footer {
-            background-color: var(--color-navy);
-            color: var(--color-white);
-            padding: 3rem 5%;
-            text-align: center;
+            gap: 12px;
+            margin-bottom: 20px;
         }
         
-        footer * {
-            color: var(--color-white);
+        .footer-logo .logo-icon { background-color: var(--primary-blue); }
+        .footer-logo .logo-text { color: var(--bg-white); }
+        .footer-logo .logo-text .denta { color: var(--bg-white); }
+        .footer-logo .logo-text .sync { color: var(--primary-blue); }
+
+        .footer-about {
+            max-width: 320px;
+            margin-bottom: 24px;
         }
 
-        .footer-content {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            margin-bottom: 2rem;
+        .footer-title {
+            color: var(--bg-white);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 24px;
         }
 
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
+        .footer-links li {
+            margin-bottom: 12px;
         }
 
         .footer-links a:hover {
-            color: var(--color-green);
+            color: var(--primary-blue);
         }
 
-        .copyright {
+        .social-links {
+            display: flex;
+            gap: 16px;
+        }
+
+        .social-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--bg-white);
+            transition: background-color 0.2s ease;
+        }
+
+        .social-circle:hover {
+            background-color: var(--primary-blue);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             font-size: 0.875rem;
-            opacity: 0.7;
         }
 
-        /* --- Media Queries --- */
-        @media (max-width: 992px) {
-            .hero {
-                flex-direction: column;
-                text-align: center;
-            }
-            .hero-buttons {
-                justify-content: center;
-            }
-            .pricing-card.featured {
-                transform: scale(1);
-            }
+        .legal-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .hero-grid { grid-template-columns: 1fr; }
+            .hero-mockup { transform: none; margin-top: 40px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .features-grid { grid-template-columns: repeat(2, 1fr); }
+            .news-grid { grid-template-columns: repeat(2, 1fr); }
+            .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
         }
 
         @media (max-width: 768px) {
-            .nav-links, .nav-actions {
-                display: none;
-            }
-            .menu-toggle {
-                display: block;
-            }
-            .hero-title {
-                font-size: 2.5rem;
-            }
-            .hero-buttons {
-                flex-direction: column;
-            }
-            .footer-links {
-                flex-direction: column;
-                gap: 1rem;
-            }
+            .nav-links { display: none; }
+            .hero-title { font-size: 2.5rem; }
+            .features-grid, .news-grid, .contact-grid { grid-template-columns: 1fr; }
+            .testimonials-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+            .stats-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
-<body>
+<body id="inicio">
 
-    <!-- Header / Navbar -->
+    <!-- 1. BARRA DE NAVEGACIÓN -->
     <header>
-        <div class="logo">Dentasync</div>
-        <nav class="nav-links">
-            <a href="#funciones">Funciones</a>
-            <a href="#planes">Planes</a>
-            <a href="#nosotros">Sobre Nosotros</a>
-        </nav>
-        <div class="nav-actions">
-            <button class="btn btn-outline">Iniciar Sesión</button>
+        <div class="container navbar">
+            <a href="#inicio" class="logo-container">
+                <div class="logo-icon">DS</div>
+                <div class="logo-text"><span class="denta">Denta</span><span class="sync">Sync</span></div>
+            </a>
+            <nav class="nav-links">
+                <a href="#inicio">Inicio</a>
+                <a href="#funciones">Funciones</a>
+                <a href="#novedades">Novedades</a>
+                <a href="#opiniones">Opiniones</a>
+                <a href="#contacto">Contacto</a>
+            </nav>
+            <a href="#" class="btn btn-primary">Iniciar Sesión</a>
         </div>
-        <div class="menu-toggle">☰</div>
     </header>
 
-    <!-- Hero Section -->
+    <!-- 2. SECCIÓN HERO -->
     <section class="hero">
-        <div class="hero-content">
-            <h1 class="hero-title">Gestión Odontológica Inteligente para Bolivia</h1>
-            <p class="hero-subtitle">Optimiza tu consultorio, agenda citas con IA y gestiona historias clínicas en una burbuja SaaS segura.</p>
-            <div class="hero-buttons">
-                <button class="btn btn-primary">Prueba Gratis 10 Pacientes</button>
-                <button class="btn btn-secondary">Ver Demostración</button>
+        <div class="container hero-grid">
+            <div class="hero-content">
+                <div class="hero-badge">✔ Plataforma #1 para consultorios dentales</div>
+                <h1 class="hero-title">Gestiona tu <span>consultorio dental</span> con inteligencia</h1>
+                <p class="hero-desc">DentaSync centraliza tu agenda, pacientes y expedientes clínicos en una plataforma moderna, segura y fácil de usar. Dedica más tiempo a lo que importa: tus pacientes.</p>
+                <div class="hero-actions">
+                    <a href="#" class="btn btn-primary">Comenzar Gratis →</a>
+                    <a href="#funciones" class="btn btn-outline">Ver Funciones ›</a>
+                </div>
             </div>
-        </div>
-        <div class="hero-visual">
-            <div class="dashboard-mockup">
+            
+            <div class="hero-mockup">
                 <div class="mockup-header">
-                    <div class="mockup-dot red"></div>
-                    <div class="mockup-dot yellow"></div>
-                    <div class="mockup-dot green"></div>
+                    <div class="mockup-dots">
+                        <div class="mockup-dot"></div>
+                        <div class="mockup-dot"></div>
+                        <div class="mockup-dot"></div>
+                    </div>
+                    DentaSync — Panel Principal
                 </div>
                 <div class="mockup-body">
-                    <div class="mockup-sidebar"></div>
-                    <div class="mockup-content">
-                        <div class="mockup-bar"></div>
-                        <div class="mockup-bar short"></div>
-                        <div class="mockup-bar"></div>
+                    <div class="mockup-metrics">
+                        <div class="metric-card blue">12 Citas hoy</div>
+                        <div class="metric-card green">384 Pacientes</div>
+                        <div class="metric-card orange">5 Pendientes</div>
+                    </div>
+                    <div class="mockup-appointments">
+                        <div class="appointments-title">PRÓXIMAS CITAS</div>
+                        <div class="appointment-row">
+                            <span class="appointment-info">09:00 | María González - Limpieza dental</span>
+                            <div class="appointment-status"></div>
+                        </div>
+                        <div class="appointment-row">
+                            <span class="appointment-info">10:30 | Juan Pérez - Ortodoncia</span>
+                            <div class="appointment-status"></div>
+                        </div>
+                        <div class="appointment-row">
+                            <span class="appointment-info">11:45 | Ana Torres - Extracción</span>
+                            <div class="appointment-status"></div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Sección Funciones -->
-    <section id="funciones" class="features">
-        <h2 class="section-title">Funciones Principales</h2>
-        <div class="features-grid">
-            <!-- Tarjeta 1 -->
-            <div class="feature-card">
-                <svg class="feature-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                <h3 class="feature-title">Agenda Inteligente con IA</h3>
-                <p class="feature-desc">Algoritmos que optimizan tus tiempos de atención y citas diarias.</p>
+    <!-- 3. BANNER DE ESTADÍSTICAS -->
+    <div class="stats-banner">
+        <div class="container stats-grid">
+            <div class="stat-item">
+                <h3>3,200+</h3>
+                <p>Consultorios activos</p>
             </div>
-            <!-- Tarjeta 2 -->
-            <div class="feature-card">
-                <svg class="feature-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                <h3 class="feature-title">Odontograma Interactivo</h3>
-                <p class="feature-desc">Mapeo dental FDI visual, preciso y fácil de utilizar con pacientes.</p>
+            <div class="stat-item">
+                <h3>180,000+</h3>
+                <p>Pacientes gestionados</p>
             </div>
-            <!-- Tarjeta 3 -->
-            <div class="feature-card">
-                <svg class="feature-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
-                <h3 class="feature-title">Evolución de Ortodoncia</h3>
-                <p class="feature-desc">Línea de tiempo detallada para tratamientos largos y seguimiento.</p>
+            <div class="stat-item">
+                <h3>99.9%</h3>
+                <p>Disponibilidad</p>
             </div>
-            <!-- Tarjeta 4 -->
-            <div class="feature-card">
-                <svg class="feature-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-                <h3 class="feature-title">Aislamiento Multi-Tenant</h3>
-                <p class="feature-desc">Tus datos viven en su propia burbuja segura e independiente.</p>
+            <div class="stat-item">
+                <h3>4.9/5</h3>
+                <p>Satisfacción</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. SECCIÓN FUNCIONALIDADES -->
+    <section id="funciones" class="section section-light">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">FUNCIONALIDADES</span>
+                <h2 class="section-title">Todo lo que necesitas en un solo lugar</h2>
+                <p class="section-subtitle">Desde la primera cita hasta el seguimiento post-tratamiento...</p>
+            </div>
+            
+            <div class="features-grid">
+                <!-- Tarjeta 1 -->
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    </div>
+                    <h3>Agenda Inteligente</h3>
+                    <p>Gestiona citas de forma eficiente, evitando traslapes y optimizando los tiempos muertos en tu clínica.</p>
+                </div>
+                <!-- Tarjeta 2 -->
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                    </div>
+                    <h3>Gestión de Pacientes</h3>
+                    <p>Historial clínico completo, datos de contacto, alergias y evolución de tratamientos accesibles al instante.</p>
+                </div>
+                <!-- Tarjeta 3 -->
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    </div>
+                    <h3>Expedientes Clínicos</h3>
+                    <p>Odontograma digital, diagnósticos precisos, planes de tratamiento y almacenamiento de radiografías.</p>
+                </div>
+                <!-- Tarjeta 4 -->
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+                    </div>
+                    <h3>Recordatorios Automáticos</h3>
+                    <p>Envía notificaciones automáticas por SMS y correo para reducir significativamente el ausentismo.</p>
+                </div>
+                <!-- Tarjeta 5 -->
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                    </div>
+                    <h3>Seguridad de Datos</h3>
+                    <p>Tus datos protegidos con cifrado de grado militar y respaldos automáticos en la nube.</p>
+                </div>
+                <!-- Tarjeta 6 -->
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
+                    </div>
+                    <h3>Disponible 24/7</h3>
+                    <p>Accede a tu consultorio desde cualquier dispositivo, en cualquier lugar y en cualquier momento.</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Sección Planes -->
-    <section id="planes" class="pricing">
-        <h2 class="section-title">Nuestros Planes</h2>
-        <div class="pricing-grid">
-            <!-- Plan Gratis -->
-            <div class="pricing-card">
-                <h3 class="plan-name">Sillón Único</h3>
-                <div class="plan-price">0 Bs.<span>/mes</span></div>
-                <ul class="plan-features">
-                    <li>Límite: 10 pacientes/mes</li>
-                    <li>Agenda básica</li>
-                    <li>Soporte comunitario</li>
-                </ul>
-                <button class="btn btn-outline">Comenzar Ya</button>
+    <!-- 5. SECCIÓN NOVEDADES -->
+    <section id="novedades" class="section section-gray">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">NOVEDADES</span>
+                <h2 class="section-title">Últimas actualizaciones</h2>
             </div>
-            <!-- Plan Básico (Destacado) -->
-            <div class="pricing-card featured">
-                <div class="badge-popular">Más Popular</div>
-                <h3 class="plan-name">Clínica Creciente</h3>
-                <div class="plan-price">199 Bs.<span>/mes</span></div>
-                <ul class="plan-features">
-                    <li>Límite: 250 pacientes/mes</li>
-                    <li>2 consultorios simultáneos</li>
-                    <li>Odontograma Interactivo</li>
-                    <li>Soporte prioritario</li>
-                </ul>
-                <button class="btn btn-primary">Empezar Prueba</button>
-            </div>
-            <!-- Plan Avanzado -->
-            <div class="pricing-card">
-                <h3 class="plan-name">Imperio Dental</h3>
-                <div class="plan-price">499 Bs.<span>/mes</span></div>
-                <ul class="plan-features">
-                    <li>Límite: 1500 pacientes/mes</li>
-                    <li>3 consultorios simultáneos</li>
-                    <li>IA Avanzada y Reportes</li>
-                    <li>Soporte 24/7</li>
-                </ul>
-                <button class="btn btn-outline">Contactar Ventas</button>
+            
+            <div class="news-grid">
+                <!-- Novedad 1 -->
+                <div class="news-card">
+                    <div class="news-border-top border-blue"></div>
+                    <div class="news-meta">
+                        <span class="news-badge badge-blue">Nuevo</span>
+                        <span class="news-date">20 Mayo 2026</span>
+                    </div>
+                    <h3>Odontograma Digital Mejorado</h3>
+                    <p>Hemos actualizado la interfaz del odontograma para ofrecer una experiencia visual más rica e interactiva.</p>
+                    <a href="#" class="news-link">Leer más ›</a>
+                </div>
+                <!-- Novedad 2 -->
+                <div class="news-card">
+                    <div class="news-border-top border-green"></div>
+                    <div class="news-meta">
+                        <span class="news-badge badge-green">Actualización</span>
+                        <span class="news-date">10 Mayo 2026</span>
+                    </div>
+                    <h3>Integración con WhatsApp</h3>
+                    <p>Ahora los recordatorios automáticos de citas pueden ser enviados directamente al WhatsApp de tus pacientes.</p>
+                    <a href="#" class="news-link">Leer más ›</a>
+                </div>
+                <!-- Novedad 3 -->
+                <div class="news-card">
+                    <div class="news-border-top border-purple"></div>
+                    <div class="news-meta">
+                        <span class="news-badge badge-purple">Mejora</span>
+                        <span class="news-date">1 Mayo 2026</span>
+                    </div>
+                    <h3>Reportes Estadísticos</h3>
+                    <p>Nuevos gráficos y métricas en el panel de control para que midas la rentabilidad de tu clínica.</p>
+                    <a href="#" class="news-link">Leer más ›</a>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-links">
-                <a href="#">Términos y Condiciones</a>
-                <a href="#">Política de Privacidad</a>
-                <a href="#">Centro de Soporte</a>
-                <a href="#">Contacto</a>
+    <!-- 6. SECCIÓN TESTIMONIOS -->
+    <section id="opiniones" class="section section-light">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">TESTIMONIOS</span>
+                <h2 class="section-title">Lo que dicen nuestros usuarios</h2>
             </div>
-            <div class="copyright">
-                &copy; 2026 Dentasync-Emi. Todos los derechos reservados.
+            
+            <div class="testimonials-grid">
+                <!-- Testimonio 1 -->
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p class="testimonial-text">"DentaSync cambió mi forma de trabajar. Ahora mi agenda es un 40% más eficiente y no pierdo pacientes por olvidos."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">DC</div>
+                        <div class="author-info">
+                            <h4>Dr. Carlos Méndez</h4>
+                            <p>Bogotá, Colombia</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Testimonio 2 -->
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p class="testimonial-text">"El odontograma es rapidísimo. Los pacientes aprecian poder ver su plan de tratamiento de forma tan clara y visual."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">DA</div>
+                        <div class="author-info">
+                            <h4>Dra. Ana López</h4>
+                            <p>CDMX, México</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Testimonio 3 -->
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p class="testimonial-text">"Poder consultar el expediente clínico desde mi celular fuera del consultorio me ha salvado de varias emergencias."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">DS</div>
+                        <div class="author-info">
+                            <h4>Dr. Sergio Ramos</h4>
+                            <p>Lima, Perú</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Testimonio 4 -->
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p class="testimonial-text">"El soporte técnico es excepcional y la interfaz es tan intuitiva que mis asistentes aprendieron a usarla en un día."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">DM</div>
+                        <div class="author-info">
+                            <h4>Dra. María Paz</h4>
+                            <p>Santiago, Chile</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA Banner -->
+            <div class="cta-banner">
+                <h2>¿Listo para modernizar tu consultorio? Únete a miles de dentistas que ya gestionan su práctica con DentaSync.</h2>
+                <a href="#" class="btn btn-white" style="margin-top: 16px;">Iniciar Sesión → Comenzar ahora</a>
             </div>
         </div>
-    </footer>
+    </section>
+
+    <!-- 7. CONTACTO Y FOOTER -->
+    <section id="contacto" class="section section-gray" style="padding-bottom: 0;">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">CONTACTO</span>
+                <h2 class="section-title">¿Tienes alguna pregunta?</h2>
+            </div>
+            
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <svg class="contact-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                    <h3>Teléfono</h3>
+                    <p>+1 (800) DENTA-SY</p>
+                </div>
+                <div class="contact-card">
+                    <svg class="contact-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                    <h3>Email</h3>
+                    <p>soporte@dentasync.com</p>
+                </div>
+                <div class="contact-card">
+                    <svg class="contact-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <h3>Cobertura</h3>
+                    <p>Toda Latinoamérica</p>
+                </div>
+            </div>
+        </div>
+
+        <footer id="nosotros">
+            <div class="container">
+                <div class="footer-grid">
+                    <div>
+                        <div class="footer-logo">
+                            <div class="logo-icon">DS</div>
+                            <div class="logo-text"><span class="denta">Denta</span><span class="sync">Sync</span></div>
+                        </div>
+                        <p class="footer-about">DentaSync centraliza tu agenda, pacientes y expedientes clínicos en una plataforma moderna, segura y fácil de usar.</p>
+                    </div>
+                    
+                    <div>
+                        <h4 class="footer-title">Plataforma</h4>
+                        <ul class="footer-links">
+                            <li><a href="#funciones">Funciones</a></li>
+                            <li><a href="#novedades">Novedades</a></li>
+                            <li><a href="#">Precios</a></li>
+                            <li><a href="#">Seguridad</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="footer-title">Empresa</h4>
+                        <ul class="footer-links">
+                            <li><a href="#">Sobre Nosotros</a></li>
+                            <li><a href="#opiniones">Testimonios</a></li>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#contacto">Contacto</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="footer-title">Síguenos</h4>
+                        <div class="social-links">
+                            <a href="#" class="social-circle">in</a>
+                            <a href="#" class="social-circle">ig</a>
+                            <a href="#" class="social-circle">fb</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="footer-bottom">
+                    <p>© 2026 DentaSync. Todos los derechos reservados.</p>
+                    <div class="legal-links">
+                        <a href="#">Privacidad</a>
+                        <a href="#">Términos</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </section>
 
 </body>
 </html>
