@@ -199,9 +199,14 @@
 
                     <!-- Links Inferiores -->
                     <div class="mt-6 text-center space-y-3">
-                        <p class="text-sm text-slate-600">
-                            ¿No tienes cuenta? 
-                            <a href="#" class="font-semibold text-brandDark hover:text-brandLight transition-colors">Crear cuenta gratis</a>
+                        <div id="signup-footer-container">
+                            <p class="text-sm text-slate-600">
+                                ¿No tienes cuenta? 
+                                <a href="#" class="font-semibold text-brandDark hover:text-brandLight transition-colors">Crear cuenta gratis</a>
+                            </p>
+                        </div>
+                        <p id="staff-warning-footer" class="text-sm text-[#6B7280] hidden text-center">
+                            Para recuperar su cuenta debe contactar con su administrador de su consultorio
                         </p>
                         <a href="index.html" class="inline-flex items-center text-sm font-semibold text-slate-500 hover:text-slate-800 transition-colors">
                             <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
@@ -230,6 +235,8 @@
             const eyeIcon = document.getElementById('eye-icon');
             const recoveryLink = document.getElementById('recovery-link');
             const recoveryText = document.getElementById('recovery-text');
+            const signupFooterContainer = document.getElementById('signup-footer-container');
+            const staffWarningFooter = document.getElementById('staff-warning-footer');
 
             // Corrección de QA: Separar las clases en Array para que classList.add() no falle (DOMTokenList error)
             const colorRings = {
@@ -288,6 +295,9 @@
                         
                         recoveryLink.classList.remove('hidden');
                         recoveryText.classList.add('hidden');
+                        
+                        signupFooterContainer.classList.remove('hidden');
+                        staffWarningFooter.classList.add('hidden');
                     } else if (role === 'staff') {
                         fieldCode.classList.add('hidden');
                         suffixEmail.classList.remove('hidden');
@@ -295,7 +305,10 @@
                         inputEmail.placeholder = 'nombre.usuario';
                         
                         recoveryLink.classList.add('hidden');
-                        recoveryText.classList.remove('hidden');
+                        recoveryText.classList.add('hidden');
+                        
+                        signupFooterContainer.classList.add('hidden');
+                        staffWarningFooter.classList.remove('hidden');
                     } else if (role === 'patient') {
                         fieldCode.classList.add('hidden');
                         suffixEmail.classList.add('hidden');
@@ -304,6 +317,9 @@
                         
                         recoveryLink.classList.remove('hidden');
                         recoveryText.classList.add('hidden');
+                        
+                        signupFooterContainer.classList.remove('hidden');
+                        staffWarningFooter.classList.add('hidden');
                     }
                 });
             });
