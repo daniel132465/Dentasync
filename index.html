@@ -408,8 +408,8 @@
                 <!-- Tarjeta 1: Gratuito -->
                 <div class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
                     <h4 class="text-xl font-bold text-slate-800 mb-2">Gratuito</h4>
-                    <div class="text-4xl font-extrabold text-slate-900 mb-6">0 Bs.<span class="text-lg font-medium text-slate-500">/mes</span></div>
-                    <ul class="space-y-4 mb-8 text-slate-600">
+                    <div class="text-4xl font-extrabold text-slate-900 mb-6"><span id="price-gratuito">0</span> Bs.<span class="text-lg font-medium text-slate-500">/mes</span></div>
+                    <ul id="features-gratuito" class="space-y-4 mb-8 text-slate-600">
                         <li class="flex items-start">
                             <svg class="w-5 h-5 text-brandLight mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                             <span>1 consultorio en simultáneo</span>
@@ -442,8 +442,8 @@
                         Más Popular
                     </div>
                     <h4 class="text-xl font-bold text-brandDark mb-2">Básico</h4>
-                    <div class="text-4xl font-extrabold text-slate-900 mb-6">199 Bs.<span class="text-lg font-medium text-slate-500">/mes</span></div>
-                    <ul class="space-y-4 mb-8 text-slate-600">
+                    <div class="text-4xl font-extrabold text-slate-900 mb-6"><span id="price-basico">199</span> Bs.<span class="text-lg font-medium text-slate-500">/mes</span></div>
+                    <ul id="features-basico" class="space-y-4 mb-8 text-slate-600">
                         <li class="flex items-start">
                             <svg class="w-5 h-5 text-brandLight mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                             <span>2 consultorios en simultáneo</span>
@@ -477,8 +477,8 @@
                 <!-- Tarjeta 3: Avanzado -->
                 <div class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
                     <h4 class="text-xl font-bold text-slate-800 mb-2">Avanzado</h4>
-                    <div class="text-4xl font-extrabold text-slate-900 mb-6">499 Bs.<span class="text-lg font-medium text-slate-500">/mes</span></div>
-                    <ul class="space-y-4 mb-8 text-slate-600">
+                    <div class="text-4xl font-extrabold text-slate-900 mb-6"><span id="price-avanzado">499</span> Bs.<span class="text-lg font-medium text-slate-500">/mes</span></div>
+                    <ul id="features-avanzado" class="space-y-4 mb-8 text-slate-600">
                         <li class="flex items-start">
                             <svg class="w-5 h-5 text-brandLight mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                             <span>4 consultorios en simultáneo</span>
@@ -730,8 +730,10 @@
     </footer>
 
     <!-- LÓGICA JAVASCRIPT -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
+    <script type="module">
+        import { supabase } from './supabase-config.js';
+
+        document.addEventListener('DOMContentLoaded', async () => {
             // Smooth Scroll for all navigation links
             const navLinks = document.querySelectorAll('.nav-link');
             
@@ -793,6 +795,98 @@
                     navbar.classList.remove('shadow-md');
                 }
             });
+
+            // --- SINCRONIZACIÓN DINÁMICA CON SUPABASE ---
+            const defaultPlanes = [
+                { nombre: 'Gratuito', precio_mensual: 0, limite_pacientes_mes: 50, limite_consultorios_simultaneos: 1, limite_medicos: 1 },
+                { nombre: 'Básico', precio_mensual: 199, limite_pacientes_mes: 80, limite_consultorios_simultaneos: 2, limite_medicos: 5 },
+                { nombre: 'Avanzado', precio_mensual: 499, limite_pacientes_mes: 300, limite_consultorios_simultaneos: 4, limite_medicos: 20 }
+            ];
+
+            let planes = [];
+            try {
+                const { data: listaPlanes, error } = await supabase
+                    .from('planes_suscripcion')
+                    .select('nombre, precio_mensual, limite_pacientes_mes, limite_consultorios_simultaneos, limite_medicos')
+                    .order('precio_mensual', { ascending: true });
+
+                if (error) throw error;
+                if (listaPlanes && listaPlanes.length > 0) {
+                    planes = listaPlanes;
+                    localStorage.setItem('planes_suscripcion_cache', JSON.stringify(planes));
+                } else {
+                    throw new Error('No se retornaron datos de planes');
+                }
+            } catch (err) {
+                console.warn('Error fetching subscription plans for index.html, loading from cache/fallbacks:', err);
+                const cached = localStorage.getItem('planes_suscripcion_cache');
+                if (cached) {
+                    try {
+                        planes = JSON.parse(cached);
+                    } catch (_) {
+                        planes = defaultPlanes;
+                    }
+                } else {
+                    planes = defaultPlanes;
+                }
+            } finally {
+                // Renderizado blindado contra fallos usando optional chaining (?.)
+                const mapPlan = (plan, key) => {
+                    if (!plan) return;
+                    
+                    // Actualizar precio
+                    const priceEl = document.getElementById(`price-${key}`);
+                    if (priceEl) {
+                        priceEl.textContent = Math.round(plan?.precio_mensual ?? 0);
+                    }
+                    
+                    // Actualizar lista de beneficios
+                    const featuresEl = document.getElementById(`features-${key}`);
+                    if (featuresEl) {
+                        featuresEl.innerHTML = '';
+                        
+                        const liPacientes = document.createElement('li');
+                        liPacientes.className = 'flex items-start';
+                        liPacientes.innerHTML = `
+                            <svg class="w-5 h-5 text-brandLight mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span>Hasta ${plan?.limite_pacientes_mes ?? 0} pacientes activos por médico</span>
+                        `;
+                        
+                        const liConsultorios = document.createElement('li');
+                        liConsultorios.className = 'flex items-start';
+                        liConsultorios.innerHTML = `
+                            <svg class="w-5 h-5 text-brandLight mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span>Máximo ${plan?.limite_consultorios_simultaneos ?? 0} consultorios en simultáneo</span>
+                        `;
+                        
+                        const liMedicos = document.createElement('li');
+                        liMedicos.className = 'flex items-start';
+                        const medicosDisplay = plan?.limite_medicos >= 9999 ? 'colaboradores ilimitados' : `${plan?.limite_medicos ?? 0} médicos o colaboradores`;
+                        liMedicos.innerHTML = `
+                            <svg class="w-5 h-5 text-brandLight mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span>Máximo ${medicosDisplay}</span>
+                        `;
+                        
+                        featuresEl.appendChild(liPacientes);
+                        featuresEl.appendChild(liConsultorios);
+                        featuresEl.appendChild(liMedicos);
+                    }
+                };
+
+                const planGratuito = planes?.find(p => p?.nombre?.toLowerCase()?.includes('grat') || p?.nombre?.toLowerCase()?.includes('free')) || planes?.[0] || defaultPlanes[0];
+                const planBasico = planes?.find(p => p?.nombre?.toLowerCase()?.includes('bas') || p?.nombre?.toLowerCase()?.includes('bás')) || planes?.[1] || defaultPlanes[1];
+                const planAvanzado = planes?.find(p => p?.nombre?.toLowerCase()?.includes('avanz') || p?.nombre?.toLowerCase()?.includes('prem')) || planes?.[2] || defaultPlanes[2];
+
+                mapPlan(planGratuito, 'gratuito');
+                mapPlan(planBasico, 'basico');
+                mapPlan(planAvanzado, 'avanzado');
+            }
         });
     </script>
 </body>
