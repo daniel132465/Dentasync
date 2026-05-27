@@ -394,33 +394,46 @@
                     try {
                         // FASE 1: EXTRACCIÓN Y TRATAMIENTO DEL LOGO (Supabase Storage)
                         let urlLogoFinal = null;
+                        console.log("Iniciando lectura de caché local...");
+                        
                         if (registrationData.logoBase64) {
                             try {
-                                const base64Parts = registrationData.logoBase64.split(',');
-                                const mimeType = base64Parts[0].match(/:(.*?);/)?.[1] || 'image/png';
-                                const byteString = atob(base64Parts[1]);
-                                const ab = new ArrayBuffer(byteString.length);
-                                const ia = new Uint8Array(ab);
-                                for (let i = 0; i < byteString.length; i++) {
-                                    ia[i] = byteString.charCodeAt(i);
+                                function base64ToBlob(base64Data, contentType = 'image/png') {
+                                    if (!base64Data) return null;
+                                    // Limpiar prefijos si el FileReader los incluyó
+                                    const base64Clean = base64Data.includes(',') ? base64Data.split(',')[1] : base64Data;
+                                    const byteCharacters = atob(base64Clean);
+                                    const byteNumbers = new Array(byteCharacters.length);
+                                    for (let i = 0; i < byteCharacters.length; i++) {
+                                        byteNumbers[i] = byteCharacters.charCodeAt(i);
+                                    }
+                                    const byteArray = new Uint8Array(byteNumbers);
+                                    return new Blob([byteArray], { type: contentType });
                                 }
-                                const logoBlob = new Blob([ab], { type: mimeType });
+
+                                const logoBlob = base64ToBlob(registrationData.logoBase64, 'image/png');
                                 const fileName = `logo-${Date.now()}.png`;
 
                                 const { data: storageData, error: storageError } = await supabase.storage
                                     .from('logos_clinicas')
                                     .upload(`public/${fileName}`, logoBlob, { contentType: 'image/png' });
                                 
-                                if (storageError) throw storageError;
-
-                                const { data: publicUrlData } = supabase.storage
-                                    .from('logos_clinicas')
-                                    .getPublicUrl(`public/${fileName}`);
-                                
-                                urlLogoFinal = publicUrlData.publicUrl;
+                                if (storageError) {
+                                    console.error("❌ Error físico al subir al Storage de Supabase:", storageError.message, storageError);
+                                    // No detengas el registro, pero avisa por qué falló
+                                } else {
+                                    console.log("✅ Imagen subida con éxito al Storage:", storageData.path);
+                                    const { data: publicUrlData } = supabase.storage
+                                        .from('logos_clinicas')
+                                        .getPublicUrl(`public/${fileName}`);
+                                    
+                                    urlLogoFinal = publicUrlData.publicUrl;
+                                }
                             } catch (errLogo) {
                                 console.error("Error al procesar/subir el logo:", errLogo);
                             }
+                        } else {
+                            console.warn("No se detectó ninguna imagen de logo en el localStorage.");
                         }
 
                         // FASE 2: CONSTRUCCIÓN CORRECTA DEL PERFIL (usuarios_perfiles)
