@@ -259,7 +259,7 @@
                                 <!-- Documento de Identidad Dinámico -->
                                 <div class="input-group">
                                     <label id="m-doc-id-label" for="m-doc-id" class="block text-sm font-semibold text-slate-700 mb-1">CI (Cédula de Identidad)*</label>
-                                    <input type="number" id="m-doc-id" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-brandLight focus:ring-2 focus:ring-sky-100 outline-none transition-all text-slate-700 text-sm" placeholder="Introduce tu número de identidad">
+                                    <input type="text" inputmode="numeric" pattern="[0-9]*" id="m-doc-id" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-brandLight focus:ring-2 focus:ring-sky-100 outline-none transition-all text-slate-700 text-sm" placeholder="Introduce tu número de identidad">
                                     <p class="error-msg text-xs text-red-500 font-semibold mt-1 hidden">Este campo es obligatorio.</p>
                                 </div>
                             </div>
@@ -429,6 +429,25 @@
                             </label>
                         </div>
                         <p id="m-terms-error" class="text-xs text-red-500 font-semibold hidden">Debe aceptar los términos para continuar.</p>
+
+                        <!-- Reestructuración del Pie del Formulario Médico -->
+                        <div class="mt-6 space-y-4">
+                            <!-- Barra de control de doble botón -->
+                            <div class="flex gap-4 w-full">
+                                <button type="button" id="btn-admin-back" class="w-1/2 border border-gray-300 bg-white text-gray-700 rounded-xl p-4 font-bold hover:bg-gray-50 transition-colors text-center cursor-pointer outline-none">
+                                    ← Atrás
+                                </button>
+                                <button type="submit" id="btn-admin-submit" class="w-1/2 bg-gradient-to-r from-brandLight to-brandDark text-white rounded-xl p-4 font-bold hover:opacity-90 transition-opacity shadow-lg text-center cursor-pointer outline-none">
+                                    Continuar →
+                                </button>
+                            </div>
+                            
+                            <!-- Enlaces inferiores -->
+                            <div class="text-center space-y-2 text-sm text-[#6B7280]">
+                                <div>¿Ya tienes cuenta? <a href="login.html" class="text-brandLight hover:underline font-medium">Iniciar sesión</a></div>
+                                <div><a href="index.html" class="text-brandLight hover:underline font-medium mt-2 block">← Volver a la página principal</a></div>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- CAMPOS DEL PACIENTE -->
@@ -502,18 +521,30 @@
                             </label>
                         </div>
                         <p id="p-terms-error" class="text-xs text-red-500 font-semibold hidden">Debe aceptar los términos para continuar.</p>
+
+                        <!-- Reestructuración del Pie del Formulario Paciente -->
+                        <div class="mt-6 space-y-4">
+                            <!-- Barra de control de doble botón -->
+                            <div class="flex gap-4 w-full">
+                                <button type="button" id="btn-patient-back" class="w-1/2 border border-gray-300 bg-white text-gray-700 rounded-xl p-4 font-bold hover:bg-gray-50 transition-colors text-center cursor-pointer outline-none">
+                                    ← Atrás
+                                </button>
+                                <button type="submit" id="btn-patient-submit" class="w-1/2 bg-gradient-to-r from-brandLight to-brandDark text-white rounded-xl p-4 font-bold hover:opacity-90 transition-opacity shadow-lg text-center cursor-pointer outline-none">
+                                    Finalizar Registro ✓
+                                </button>
+                            </div>
+                            
+                            <!-- Enlaces inferiores -->
+                            <div class="text-center space-y-2 text-sm text-[#6B7280]">
+                                <div>¿Ya tienes cuenta? <a href="login.html" class="text-brandLight hover:underline font-medium">Iniciar sesión</a></div>
+                                <div><a href="index.html" class="text-brandLight hover:underline font-medium mt-2 block">← Volver a la página principal</a></div>
+                            </div>
+                        </div>
                     </div>
 
                 </form>
 
-                <!-- Pie del formulario expandido -->
-                <div class="pt-4 shrink-0 bg-white">
-                    <a href="login.html" class="text-sm text-brandLight hover:underline font-medium block text-center mb-3">Iniciar sesión</a>
-                    
-                    <button id="btn-submit-form" class="w-full py-3.5 px-4 bg-gradient-to-r from-brandDark to-brandLight text-white hover:from-sky-600 hover:to-sky-400 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center">
-                        <span id="submit-btn-text">Confirmar</span>
-                    </button>
-                </div>
+                <!-- Pie del formulario (removido y reestructurado por rol) -->
 
             </div>
 
@@ -530,14 +561,11 @@
             const stateSelectRole = document.getElementById('state-select-role');
             const stateExpandedForm = document.getElementById('state-expanded-form');
             const btnContinueRole = document.getElementById('btn-continue-role');
-            const btnBackToRoles = document.getElementById('btn-back-to-roles');
             const roleSelectors = document.querySelectorAll('.role-selector-btn');
             
             const formTitle = document.getElementById('form-title');
             const adminFields = document.getElementById('admin-fields');
             const patientFields = document.getElementById('patient-fields');
-            const submitBtnText = document.getElementById('submit-btn-text');
-            const btnSubmitForm = document.getElementById('btn-submit-form');
             const unifiedForm = document.getElementById('unified-form');
 
             // --- 1. SELECCIÓN DE ROL ---
@@ -580,12 +608,10 @@
                 // Adaptar contenido y título según rol
                 if (selectedRole === 'medico-admin') {
                     formTitle.innerText = "Registro: Médico Administrador";
-                    submitBtnText.innerText = "Configurar Plan →";
                     adminFields.classList.remove('hidden');
                     patientFields.classList.add('hidden');
                 } else {
                     formTitle.innerText = "Registro: Paciente";
-                    submitBtnText.innerText = "Finalizar Registro ✓";
                     patientFields.classList.remove('hidden');
                     adminFields.classList.add('hidden');
                 }
@@ -595,8 +621,27 @@
             });
 
             // --- 3. RETORNO DE FORMULARIO A ROLES (Safeguarded) ---
-            if (btnBackToRoles) {
-                btnBackToRoles.addEventListener('click', (e) => {
+            const btnAdminBack = document.getElementById('btn-admin-back');
+            if (btnAdminBack) {
+                btnAdminBack.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    
+                    // Ocultar formulario
+                    stateExpandedForm.classList.add('hidden');
+                    stateExpandedForm.classList.remove('flex');
+                    
+                    // Mostrar selección
+                    stateSelectRole.classList.remove('hidden');
+                    stateSelectRole.classList.add('flex');
+                    
+                    // Limpiar errores previos
+                    clearAllErrors();
+                });
+            }
+
+            const btnPatientBack = document.getElementById('btn-patient-back');
+            if (btnPatientBack) {
+                btnPatientBack.addEventListener('click', (e) => {
                     e.preventDefault();
                     
                     // Ocultar formulario
@@ -635,8 +680,8 @@
             // --- 5. DRAG AND DROP LOGO ---
             const dropzone = document.getElementById('m-logo-dropzone');
             const fileInput = document.getElementById('m-logo');
-            const filenameSpan = document.getElementById('m-logo-filename');
-            if (dropzone && fileInput && filenameSpan) {
+            
+            if (dropzone && fileInput) {
                 dropzone.addEventListener('click', () => fileInput.click());
                 
                 // Efectos visuales de drag over
@@ -652,19 +697,33 @@
                     dropzone.classList.remove('border-brandLight', 'bg-sky-50/50');
                     if (e.dataTransfer.files.length > 0) {
                         fileInput.files = e.dataTransfer.files;
-                        updateLogoName();
+                        handleLogoUpload(fileInput.files[0]);
                     }
                 });
                 
-                fileInput.addEventListener('change', updateLogoName);
-                
-                function updateLogoName() {
+                fileInput.addEventListener('change', () => {
                     if (fileInput.files.length > 0) {
-                        filenameSpan.innerText = `✓ ${fileInput.files[0].name}`;
-                        filenameSpan.classList.remove('hidden');
-                    } else {
-                        filenameSpan.classList.add('hidden');
+                        handleLogoUpload(fileInput.files[0]);
                     }
+                });
+                
+                function handleLogoUpload(file) {
+                    if (!file || !file.type.startsWith('image/')) return;
+                    
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        if (!dropzone.dataset.originalHtml) {
+                            dropzone.dataset.originalHtml = dropzone.innerHTML;
+                        }
+                        dropzone.innerHTML = `
+                            <div class="space-y-2 w-full">
+                                <img src="${e.target.result}" class="max-h-32 mx-auto rounded-xl shadow-md object-contain" alt="Vista previa del logo" />
+                                <p class="text-xs text-brandDark font-bold mt-2 truncate px-2">✓ ${file.name}</p>
+                                <p class="text-[10px] text-slate-400">Haz clic o arrastra para cambiar la imagen</p>
+                            </div>
+                        `;
+                    };
+                    reader.readAsDataURL(file);
                 }
             }
 
@@ -722,12 +781,78 @@
 
             // --- 7. VALIDACIÓN DEL FORMULARIO Y REGISTRO ---
             
+            // Declarative validation rules
+            const adminRules = {
+                'm-nombre': {
+                    validate: val => val.trim() !== '' && /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(val),
+                    message: "Este campo es obligatorio y solo debe contener letras."
+                },
+                'm-apellido1': {
+                    validate: val => val.trim() !== '' && /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(val),
+                    message: "Este campo es obligatorio y solo debe contener letras."
+                },
+                'm-apellido2': {
+                    validate: val => val.trim() !== '' && /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(val),
+                    message: "Este campo es obligatorio y solo debe contener letras."
+                },
+                'm-doc-id': {
+                    validate: val => val.trim() !== '' && /^\d+$/.test(val),
+                    message: "El documento debe ser puramente numérico."
+                },
+                'm-celular': {
+                    validate: val => val.trim() !== '' && /^\d+$/.test(val),
+                    message: "El número de celular es obligatorio y solo debe contener números."
+                },
+                'm-tel-fijo': {
+                    validate: val => val.trim() === '' || /^\d+$/.test(val),
+                    message: "Si rellena este campo, solo se admiten números."
+                },
+                'm-direccion': {
+                    validate: val => true, // Totalmente liberado
+                    message: ""
+                },
+                'm-mapa': {
+                    validate: val => val.trim() === '' || /^https?:\/\//i.test(val),
+                    message: "El enlace debe ser una URL válida que comience con http:// o https://"
+                },
+                'm-correo': {
+                    validate: val => val.trim() !== '' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val),
+                    message: "Introduce un correo electrónico válido."
+                },
+                'm-correo-corp': {
+                    validate: val => val.trim() !== '',
+                    message: "Debes definir un nombre de usuario corporativo."
+                },
+                'm-pwd': {
+                    validate: val => val !== '' && /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/.test(val),
+                    message: "La contraseña no cumple con los requisitos de seguridad indicados.",
+                    emptyMsg: "La contraseña es obligatoria."
+                },
+                'm-pwd-confirm': {
+                    validate: (val, all) => val !== '' && val === all['m-pwd'],
+                    message: "Las contraseñas no coinciden.",
+                    emptyMsg: "La contraseña es obligatoria."
+                },
+                'm-clinic': {
+                    validate: val => val.trim() !== '',
+                    message: "Este campo es obligatorio para el registro."
+                },
+                'm-terms': {
+                    validate: (val, all, el) => el.checked,
+                    message: "Debes aceptar los términos y condiciones para continuar."
+                }
+            };
+
             function clearAllErrors() {
+                // Borrar mensajes de error inyectados dinámicamente
+                document.querySelectorAll('.error-message-node').forEach(el => el.remove());
                 document.querySelectorAll('.error-msg').forEach(el => el.classList.add('hidden'));
+                
                 document.querySelectorAll('input, select').forEach(el => {
-                    el.classList.remove('border-red-400', 'focus:border-red-500', 'focus:ring-red-100');
-                    el.classList.add('border-slate-200', 'focus:border-brandLight');
+                    el.classList.remove('border-red-400', 'focus:border-red-500', 'focus:ring-red-100', 'border-red-500', 'focus:ring-red-500');
+                    el.classList.add('border-slate-200', 'focus:border-brandLight', 'focus:ring-sky-100');
                 });
+                
                 const adminMatchErr = document.getElementById('m-pwd-match-error');
                 const patientMatchErr = document.getElementById('p-pwd-match-error');
                 const adminTermsErr = document.getElementById('m-terms-error');
@@ -738,6 +863,80 @@
                 if (patientTermsErr) patientTermsErr.classList.add('hidden');
             }
 
+            function validateField(id, triggerMatchUpdate = true) {
+                const input = document.getElementById(id);
+                if (!input) return true;
+
+                const rule = adminRules[id];
+                if (!rule) return true;
+
+                const val = input.type === 'checkbox' ? input.checked : input.value;
+                const allValues = {};
+                Object.keys(adminRules).forEach(k => {
+                    const el = document.getElementById(k);
+                    if (el) allValues[k] = el.value;
+                });
+
+                let isValid = false;
+                let errorMsgText = rule.message;
+
+                if (input.type === 'checkbox') {
+                    isValid = rule.validate(val, allValues, input);
+                } else {
+                    const trimmedVal = typeof val === 'string' ? val.trim() : val;
+                    if (trimmedVal === '' && rule.emptyMsg) {
+                        isValid = false;
+                        errorMsgText = rule.emptyMsg;
+                    } else {
+                        isValid = rule.validate(val, allValues, input);
+                    }
+                }
+
+                // Clean previous dynamic error messages for this field
+                const group = input.closest('.input-group');
+                if (group) {
+                    group.querySelectorAll('.error-message-node').forEach(node => node.remove());
+                }
+
+                if (!isValid) {
+                    // Apply red border classes
+                    input.classList.remove('border-slate-200', 'focus:border-brandLight', 'focus:ring-sky-100');
+                    input.classList.add('border-red-500', 'focus:border-red-500', 'focus:ring-2', 'focus:ring-red-100');
+
+                    // Inject new error message
+                    if (group && errorMsgText) {
+                        const errorMsg = document.createElement('p');
+                        errorMsg.className = 'text-xs text-red-500 mt-1 error-message-node font-semibold';
+                        errorMsg.innerText = errorMsgText;
+                        group.appendChild(errorMsg);
+                    }
+                } else {
+                    // Restore default styling classes
+                    input.classList.remove('border-red-500', 'focus:border-red-500', 'focus:ring-red-100');
+                    input.classList.add('border-slate-200', 'focus:border-brandLight', 'focus:ring-sky-100');
+                }
+
+                if (triggerMatchUpdate && id === 'm-pwd') {
+                    validateField('m-pwd-confirm', false);
+                }
+
+                return isValid;
+            }
+
+            // Validar de forma reactiva
+            Object.keys(adminRules).forEach(id => {
+                const input = document.getElementById(id);
+                if (!input) return;
+
+                if (input.type === 'checkbox' || input.tagName === 'SELECT') {
+                    input.addEventListener('change', () => validateField(id));
+                } else {
+                    input.addEventListener('input', () => validateField(id));
+                    input.addEventListener('blur', () => validateField(id));
+                }
+            });
+
+            // Para la sección paciente, mantenemos validateInput por compatibilidad
             function validateInput(input) {
                 const group = input.closest('.input-group');
                 if (!group) return true;
@@ -756,22 +955,19 @@
                 }
             }
 
-            // Validar al escribir
-            document.querySelectorAll('input').forEach(input => {
-                input.addEventListener('input', () => {
-                    validateInput(input);
-                    
-                    // Validación en vivo de contraseñas iguales
-                    if (selectedRole === 'medico-admin' && (input.id === 'm-pwd' || input.id === 'm-pwd-confirm')) {
-                        const p1 = document.getElementById('m-pwd').value;
-                        const p2 = document.getElementById('m-pwd-confirm').value;
-                        const matchErr = document.getElementById('m-pwd-match-error');
-                        if (p1 && p2 && p1 !== p2) {
-                            matchErr.classList.remove('hidden');
-                        } else {
-                            matchErr.classList.add('hidden');
-                        }
+            // Validar al escribir e interactuar en vivo (Paciente)
+            document.querySelectorAll('#patient-fields input, #patient-fields select').forEach(input => {
+                const clearCurrentError = () => {
+                    const group = input.closest('.input-group');
+                    if (group) {
+                        group.querySelectorAll('.error-message-node').forEach(el => el.remove());
                     }
+                    input.classList.remove('border-red-500', 'focus:ring-red-500', 'border-red-400', 'focus:border-red-500', 'focus:ring-red-100');
+                    input.classList.add('border-slate-200', 'focus:border-brandLight');
+                };
+
+                input.addEventListener('input', () => {
+                    clearCurrentError();
                     if (selectedRole === 'paciente' && (input.id === 'p-pwd' || input.id === 'p-pwd-confirm')) {
                         const p1 = document.getElementById('p-pwd').value;
                         const p2 = document.getElementById('p-pwd-confirm').value;
@@ -783,52 +979,41 @@
                         }
                     }
                 });
+                input.addEventListener('change', clearCurrentError);
             });
 
-            btnSubmitForm.addEventListener('click', (e) => {
-                e.preventDefault();
-                
-                let isFormValid = true;
-                
-                if (selectedRole === 'medico-admin') {
-                    // Validar campos de Admin extendidos
-                    const requiredAdminIds = [
-                        'm-nombre', 'm-apellido1', 'm-apellido2', 'm-doc-id', 
-                        'm-tel-fijo', 'm-celular', 'm-direccion', 'm-mapa', 
-                        'm-correo', 'm-correo-corp', 'm-pwd', 'm-pwd-confirm', 'm-clinic'
-                    ];
-                    requiredAdminIds.forEach(id => {
-                        const input = document.getElementById(id);
-                        if (input && !validateInput(input)) isFormValid = false;
+            // --- 8. ENVÍO DE FORMULARIO: MÉDICO ADMINISTRADOR (Motor Defensivo) ---
+            const btnAdminSubmit = document.getElementById('btn-admin-submit');
+            if (btnAdminSubmit) {
+                btnAdminSubmit.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    
+                    let firstInvalidElement = null;
+                    
+                    Object.keys(adminRules).forEach(id => {
+                        const isValid = validateField(id);
+                        if (!isValid && !firstInvalidElement) {
+                            firstInvalidElement = document.getElementById(id);
+                        }
                     });
                     
-                    // Verificar Contraseñas
-                    const pwd1 = document.getElementById('m-pwd').value;
-                    const pwd2 = document.getElementById('m-pwd-confirm').value;
-                    const matchErr = document.getElementById('m-pwd-match-error');
-                    if (pwd1 !== pwd2) {
-                        matchErr.classList.remove('hidden');
-                        isFormValid = false;
+                    if (firstInvalidElement) {
+                        firstInvalidElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        firstInvalidElement.focus();
                     } else {
-                        matchErr.classList.add('hidden');
-                    }
-                    
-                    // Verificar Términos
-                    const terms = document.getElementById('m-terms');
-                    const termsErr = document.getElementById('m-terms-error');
-                    if (!terms.checked) {
-                        termsErr.classList.remove('hidden');
-                        isFormValid = false;
-                    } else {
-                        termsErr.classList.add('hidden');
-                    }
-                    
-                    // Redirección si es válido
-                    if (isFormValid) {
                         window.location.href = 'planes.html';
                     }
+                });
+            }
+
+            // --- 9. ENVÍO DE FORMULARIO: PACIENTE ---
+            const btnPatientSubmit = document.getElementById('btn-patient-submit');
+            if (btnPatientSubmit) {
+                btnPatientSubmit.addEventListener('click', (e) => {
+                    e.preventDefault();
                     
-                } else if (selectedRole === 'paciente') {
+                    let isFormValid = true;
+                    
                     // Validar campos de Paciente
                     const requiredPatientIds = ['p-nombre', 'p-telefono', 'p-correo', 'p-pwd', 'p-pwd-confirm', 'p-code'];
                     requiredPatientIds.forEach(id => {
@@ -862,8 +1047,8 @@
                         alert("¡Cuenta de Paciente creada con éxito!");
                         window.location.href = 'login.html';
                     }
-                }
-            });
+                });
+            }
         });
     </script>
 </body>
