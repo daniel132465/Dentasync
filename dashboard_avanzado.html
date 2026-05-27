@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DentaSync - Dashboard Avanzado</title>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome v6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brandDark: '#0284c7',
+                        brandLight: '#0ea5e9',
+                        sidebarBg: '#0E1E38',
+                        mainBg: '#F8FAFC',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="antialiased text-slate-800 font-sans flex h-screen overflow-hidden bg-mainBg">
+
+    <!-- COMPONENTE 1: BARRA LATERAL IZQUIERDA -->
+    <aside class="w-64 h-full bg-[#0E1E38] text-white flex flex-col shrink-0 overflow-y-auto custom-scrollbar shadow-2xl relative z-20">
+        <!-- Cabecera Logo -->
+        <div class="p-6 flex items-center gap-3 border-b border-white/10">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brandDark to-brandLight flex items-center justify-center shadow-lg shrink-0">
+                <span class="text-white font-bold text-lg tracking-wider">DS</span>
+            </div>
+            <span class="text-xl font-bold tracking-tight">DentaSync</span>
+        </div>
+
+        <!-- Perfil Integrado -->
+        <div class="px-4 py-6 border-b border-white/10">
+            <div class="bg-white/5 rounded-2xl p-4 border border-white/10 backdrop-blur-sm flex flex-col items-center text-center">
+                <div class="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center text-xl font-bold shadow-md mb-3 border-2 border-white/20">
+                    DC
+                </div>
+                <h3 class="font-bold text-sm">Dr. Carlos Mendoza</h3>
+                <span class="mt-1 px-3 py-1 text-[10px] uppercase font-bold tracking-wider bg-brandDark/40 text-brandLight rounded-full border border-brandLight/30">
+                    Médico Administrador
+                </span>
+            </div>
+        </div>
+
+        <!-- Menú de Navegación -->
+        <nav class="flex-1 px-4 py-6 space-y-1 overflow-y-auto custom-scrollbar">
+            <!-- Panel General (Active Item) -->
+            <a href="#" class="flex items-center gap-3 px-4 py-3 bg-brandDark/20 text-brandLight rounded-xl border-l-4 border-brandLight font-medium transition-colors">
+                <i class="fa-solid fa-chart-line w-5 text-center"></i>
+                <span class="text-sm">Panel General</span>
+            </a>
+            
+            <a href="#" class="flex items-center justify-between px-4 py-3 text-slate-400 hover:text-white hover:bg-white/5 rounded-xl transition-colors group border-l-4 border-transparent">
+                <div class="flex items-center gap-3">
+                    <i class="fa-regular fa-calendar-check w-5 text-center group-hover:text-brandLight transition-colors"></i>
+                    <span class="text-sm font-medium">Agenda de Citas</span>
+                </div>
+                <span class="w-5 h-5 rounded-full bg-red-500 text-white text-[10px] font-bold flex items-center justify-center shadow-sm shadow-red-500/30">3</span>
+            </a>
+            
+            <a href="#" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-white hover:bg-white/5 rounded-xl transition-colors group border-l-4 border-transparent">
+                <i class="fa-solid fa-users w-5 text-center group-hover:text-brandLight transition-colors"></i>
+                <span class="text-sm font-medium">Pacientes</span>
+            </a>
+
+            <a href="#" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-white hover:bg-white/5 rounded-xl transition-colors group border-l-4 border-transparent">
+                <i class="fa-solid fa-folder-open w-5 text-center group-hover:text-brandLight transition-colors"></i>
+                <span class="text-sm font-medium">Expedientes</span>
+            </a>
+
+            <a href="#" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-white hover:bg-white/5 rounded-xl transition-colors group border-l-4 border-transparent">
+                <i class="fa-solid fa-user-doctor w-5 text-center group-hover:text-brandLight transition-colors"></i>
+                <span class="text-sm font-medium">Personal Médico</span>
+            </a>
+
+            <a href="#" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-white hover:bg-white/5 rounded-xl transition-colors group border-l-4 border-transparent">
+                <i class="fa-solid fa-tooth w-5 text-center group-hover:text-brandLight transition-colors"></i>
+                <span class="text-sm font-medium">Tratamientos</span>
+            </a>
+
+            <a href="#" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-white hover:bg-white/5 rounded-xl transition-colors group border-l-4 border-transparent">
+                <i class="fa-solid fa-file-invoice-dollar w-5 text-center group-hover:text-brandLight transition-colors"></i>
+                <span class="text-sm font-medium">Presupuestos</span>
+            </a>
+
+            <a href="#" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-white hover:bg-white/5 rounded-xl transition-colors group border-l-4 border-transparent">
+                <i class="fa-solid fa-plus-circle w-5 text-center group-hover:text-brandLight transition-colors"></i>
+                <span class="text-sm font-medium">Nueva Consulta</span>
+            </a>
+
+            <div class="pt-4 pb-2">
+                <span class="px-4 text-[10px] font-bold text-slate-500 uppercase tracking-wider">Gestión & Ajustes</span>
+            </div>
+
+            <a href="#" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-white hover:bg-white/5 rounded-xl transition-colors group border-l-4 border-transparent">
+                <i class="fa-solid fa-bullhorn w-5 text-center group-hover:text-brandLight transition-colors"></i>
+                <span class="text-sm font-medium">Marketing</span>
+            </a>
+
+            <a href="#" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-white hover:bg-white/5 rounded-xl transition-colors group border-l-4 border-transparent">
+                <i class="fa-solid fa-graduation-cap w-5 text-center group-hover:text-brandLight transition-colors"></i>
+                <span class="text-sm font-medium">Capacitación</span>
+            </a>
+
+            <a href="#" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-white hover:bg-white/5 rounded-xl transition-colors group border-l-4 border-transparent">
+                <i class="fa-solid fa-gear w-5 text-center group-hover:text-brandLight transition-colors"></i>
+                <span class="text-sm font-medium">Configuración</span>
+            </a>
+        </nav>
+
+        <!-- Pie Sidebar -->
+        <div class="mt-auto p-4 border-t border-white/10 shrink-0">
+            <a href="login.html" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-white hover:bg-red-500/10 hover:text-red-400 rounded-xl transition-colors group">
+                <i class="fa-solid fa-right-from-bracket w-5 text-center"></i>
+                <span class="text-sm font-medium">Cerrar sesión</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- COLUMNA PRINCIPAL DERECHA -->
+    <main class="flex-1 bg-[#F8FAFC] h-full overflow-y-auto flex flex-col relative custom-scrollbar">
+        
+        <!-- COMPONENTE 2: BARRA SUPERIOR DE CONTROL -->
+        <header class="flex justify-between items-center bg-white border-b border-slate-200 p-4 px-8 sticky top-0 z-10 shadow-sm shrink-0">
+            <!-- Ruta / Breadcrumb -->
+            <div class="flex items-center text-sm font-medium text-slate-500">
+                <span class="text-slate-400 hover:text-brandDark cursor-pointer transition-colors">Panel General</span>
+                <span class="mx-2 text-slate-300">/</span>
+                <span class="text-slate-700 font-bold">DentaSync — Médico Administrador</span>
+            </div>
+
+            <!-- Buscador Central -->
+            <div class="hidden md:flex flex-1 max-w-lg mx-8 relative">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                    <i class="fa-solid fa-magnifying-glass text-slate-400"></i>
+                </div>
+                <input type="text" class="w-full pl-11 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-brandLight focus:border-transparent transition-all placeholder-slate-400 text-slate-700 font-medium" placeholder="Buscar pacientes, citas...">
+            </div>
+
+            <!-- Controles Derechos -->
+            <div class="flex items-center gap-5 shrink-0">
+                <!-- Botón Acción Rápida -->
+                <button class="hidden lg:flex items-center gap-2 bg-brandDark hover:bg-brandLight text-white text-sm font-bold py-2 px-4 rounded-lg transition-colors shadow-sm">
+                    <i class="fa-solid fa-plus"></i>
+                    <span>Nueva Cita</span>
+                </button>
+
+                <!-- Campana Notificaciones -->
+                <div class="relative cursor-pointer group">
+                    <div class="w-10 h-10 rounded-full hover:bg-slate-100 flex items-center justify-center transition-colors">
+                        <i class="fa-regular fa-bell text-xl text-slate-500 group-hover:text-brandDark transition-colors"></i>
+                    </div>
+                    <span class="absolute top-1 right-1 w-4 h-4 bg-red-500 rounded-full flex items-center justify-center text-[9px] font-bold text-white border-2 border-white shadow-sm">4</span>
+                </div>
+
+                <!-- Divisor -->
+                <div class="w-px h-8 bg-slate-200"></div>
+
+                <!-- Perfil Dropdown -->
+                <div class="flex items-center gap-3 cursor-pointer group">
+                    <div class="flex flex-col items-end hidden sm:flex">
+                        <span class="text-sm font-bold text-slate-700 group-hover:text-brandDark transition-colors">Dr. Carlos</span>
+                        <span class="text-[11px] text-slate-500 font-medium">Administrador</span>
+                    </div>
+                    <div class="w-10 h-10 rounded-full bg-gradient-to-br from-brandLight to-blue-300 flex items-center justify-center text-white font-bold text-sm border-2 border-white shadow-sm group-hover:ring-2 ring-brandLight transition-all">
+                        DC
+                    </div>
+                    <i class="fa-solid fa-chevron-down text-xs text-slate-400"></i>
+                </div>
+            </div>
+        </header>
+
+        <!-- CONTENIDO SCROLLABLE DE MAIN -->
+        <div class="p-8 pb-12 w-full max-w-7xl mx-auto space-y-6 flex-1">
+            
+            <!-- COMPONENTE 3: BLOQUE DE BIENVENIDA Y ESTADO -->
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+                <div>
+                    <h1 class="text-3xl md:text-4xl font-extrabold text-slate-800 tracking-tight flex items-center gap-3">
+                        Buenos días, Dr. <span class="origin-bottom-right hover:rotate-12 transition-transform cursor-default inline-block">👋</span>
+                    </h1>
+                    <p class="text-slate-500 mt-2 font-medium">Lunes, 26 de Mayo 2026 — Tienes <strong class="text-brandDark">12 citas</strong> programadas hoy</p>
+                </div>
+                
+                <div class="flex items-center gap-2 bg-green-50 text-green-700 px-4 py-2 rounded-xl border border-green-200 text-sm font-bold shadow-sm animate-pulse-slow shrink-0">
+                    <i class="fa-solid fa-check-circle"></i>
+                    <span>Sistema operando normalmente</span>
+                </div>
+            </div>
+
+            <!-- COMPONENTE 4: FILA DE TARJETAS INDICADORAS (KPI) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 pt-2">
+                <!-- Tarjeta 1: Citas -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col justify-between hover:shadow-md transition-shadow relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-blue-50/60 rounded-bl-full -mr-4 -mt-4 opacity-50 group-hover:scale-110 transition-transform"></div>
+                    
+                    <div class="flex justify-between items-start z-10">
+                        <div class="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center text-blue-600 text-xl shadow-inner">
+                            <i class="fa-regular fa-calendar-check"></i>
+                        </div>
+                        <span class="bg-green-100 text-green-700 text-[11px] font-bold px-2 py-1 rounded-full flex items-center gap-1 border border-green-200">
+                            <i class="fa-solid fa-arrow-up text-[9px]"></i> +2 vs ayer
+                        </span>
+                    </div>
+                    
+                    <div class="mt-5 z-10">
+                        <h4 class="text-4xl font-extrabold text-slate-800">12</h4>
+                        <p class="text-slate-500 font-semibold text-sm mt-1">Citas hoy</p>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 2: Pacientes activos -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col justify-between hover:shadow-md transition-shadow relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-cyan-50/60 rounded-bl-full -mr-4 -mt-4 opacity-50 group-hover:scale-110 transition-transform"></div>
+                    
+                    <div class="flex justify-between items-start z-10">
+                        <div class="w-12 h-12 rounded-xl bg-cyan-100 flex items-center justify-center text-cyan-600 text-xl shadow-inner">
+                            <i class="fa-solid fa-hospital-user"></i>
+                        </div>
+                        <span class="bg-green-100 text-green-700 text-[11px] font-bold px-2 py-1 rounded-full flex items-center gap-1 border border-green-200">
+                            <i class="fa-solid fa-arrow-up text-[9px]"></i> +12 este mes
+                        </span>
+                    </div>
+                    
+                    <div class="mt-5 z-10">
+                        <h4 class="text-4xl font-extrabold text-slate-800">248</h4>
+                        <p class="text-slate-500 font-semibold text-sm mt-1">Pacientes activos</p>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 3: Completadas -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col justify-between hover:shadow-md transition-shadow relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-emerald-50/60 rounded-bl-full -mr-4 -mt-4 opacity-50 group-hover:scale-110 transition-transform"></div>
+                    
+                    <div class="flex justify-between items-start z-10">
+                        <div class="w-12 h-12 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-600 text-xl shadow-inner">
+                            <i class="fa-solid fa-clipboard-check"></i>
+                        </div>
+                        <span class="bg-green-100 text-green-700 text-[11px] font-bold px-2 py-1 rounded-full flex items-center gap-1 border border-green-200">
+                            <i class="fa-solid fa-arrow-up text-[9px]"></i> 67% de meta diaria
+                        </span>
+                    </div>
+                    
+                    <div class="mt-5 z-10">
+                        <h4 class="text-4xl font-extrabold text-slate-800">8</h4>
+                        <p class="text-slate-500 font-semibold text-sm mt-1">Completadas hoy</p>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 4: Tiempo de espera -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col justify-between hover:shadow-md transition-shadow relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-orange-50/60 rounded-bl-full -mr-4 -mt-4 opacity-50 group-hover:scale-110 transition-transform"></div>
+                    
+                    <div class="flex justify-between items-start z-10">
+                        <div class="w-12 h-12 rounded-xl bg-orange-100 flex items-center justify-center text-orange-600 text-xl shadow-inner">
+                            <i class="fa-regular fa-clock"></i>
+                        </div>
+                        <span class="bg-red-100 text-red-700 text-[11px] font-bold px-2 py-1 rounded-full flex items-center gap-1 border border-red-200">
+                            <i class="fa-solid fa-arrow-down text-[9px]"></i> -3 min vs semana pasada
+                        </span>
+                    </div>
+                    
+                    <div class="mt-5 z-10 flex items-baseline gap-2">
+                        <h4 class="text-4xl font-extrabold text-slate-800">14</h4>
+                        <span class="text-slate-500 font-bold">min</span>
+                    </div>
+                    <p class="text-slate-500 font-semibold text-sm relative z-10">Tiempo espera prom.</p>
+                </div>
+            </div>
+
+            <!-- COMPONENTE 5: SECCIÓN DE GRÁFICOS ANALÍTICOS -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 pt-2">
+                
+                <!-- Gráfico Lineal (Col 2/3) -->
+                <div class="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-slate-100 p-6 flex flex-col">
+                    <!-- Cabecera Gráfico -->
+                    <div class="flex justify-between items-start mb-6">
+                        <div>
+                            <h3 class="font-bold text-lg text-slate-800">Citas por mes</h3>
+                            <p class="text-xs text-slate-500 font-medium mt-0.5">Comparativa Total vs Completadas</p>
+                        </div>
+                        <select class="bg-slate-50 border border-slate-200 text-sm font-bold text-slate-700 py-1.5 px-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-brandLight cursor-pointer hover:bg-slate-100 transition-colors">
+                            <option value="2026">2026</option>
+                            <option value="2025" selected>2025</option>
+                            <option value="2024">2024</option>
+                        </select>
+                    </div>
+
+                    <!-- Gráfico SVG Simulado -->
+                    <div class="flex-1 relative w-full min-h-[260px] mt-2">
+                        <svg class="w-full h-full" viewBox="0 0 800 250" preserveAspectRatio="none">
+                            <defs>
+                                <linearGradient id="gradBlue" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stop-color="#0ea5e9" stop-opacity="0.3"/>
+                                    <stop offset="100%" stop-color="#0ea5e9" stop-opacity="0.0"/>
+                                </linearGradient>
+                                <linearGradient id="gradGreen" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stop-color="#10b981" stop-opacity="0.3"/>
+                                    <stop offset="100%" stop-color="#10b981" stop-opacity="0.0"/>
+                                </linearGradient>
+                            </defs>
+                            
+                            <!-- Grid lines (Y axis) -->
+                            <path d="M0,50 L800,50" stroke="#f1f5f9" stroke-width="1.5" stroke-dasharray="4 4" />
+                            <path d="M0,100 L800,100" stroke="#f1f5f9" stroke-width="1.5" stroke-dasharray="4 4" />
+                            <path d="M0,150 L800,150" stroke="#f1f5f9" stroke-width="1.5" stroke-dasharray="4 4" />
+                            <path d="M0,200 L800,200" stroke="#e2e8f0" stroke-width="1.5" />
+
+                            <!-- Area paths -->
+                            <path d="M0,200 L0,120 C100,105 150,150 250,90 C350,30 400,110 500,70 C600,30 700,90 800,60 L800,200 Z" fill="url(#gradBlue)" />
+                            <path d="M0,200 L0,150 C100,135 150,170 250,120 C350,70 400,140 500,100 C600,60 700,120 800,90 L800,200 Z" fill="url(#gradGreen)" />
+
+                            <!-- Line paths -->
+                            <!-- Línea Azul (Total) -->
+                            <path d="M0,120 C100,105 150,150 250,90 C350,30 400,110 500,70 C600,30 700,90 800,60" fill="none" stroke="#0ea5e9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="drop-shadow-sm" />
+                            
+                            <!-- Línea Verde (Completadas) -->
+                            <path d="M0,150 C100,135 150,170 250,120 C350,70 400,140 500,100 C600,60 700,120 800,90" fill="none" stroke="#10b981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="drop-shadow-sm" />
+
+                            <!-- Data points markers (Just a few for aesthetic) -->
+                            <circle cx="250" cy="90" r="4.5" fill="white" stroke="#0ea5e9" stroke-width="2.5" />
+                            <circle cx="500" cy="70" r="4.5" fill="white" stroke="#0ea5e9" stroke-width="2.5" />
+                            <circle cx="250" cy="120" r="4.5" fill="white" stroke="#10b981" stroke-width="2.5" />
+                            <circle cx="500" cy="100" r="4.5" fill="white" stroke="#10b981" stroke-width="2.5" />
+                        </svg>
+                        
+                        <!-- Etiquetas de meses (Eje X) -->
+                        <div class="absolute bottom-0 w-full flex justify-between text-[11px] text-slate-400 font-bold pt-2 pb-1 px-2">
+                            <span>Ene</span>
+                            <span>Feb</span>
+                            <span>Mar</span>
+                            <span>Abr</span>
+                            <span>May</span>
+                            <span>Jun</span>
+                            <span>Jul</span>
+                            <span>Ago</span>
+                            <span>Sep</span>
+                            <span>Oct</span>
+                            <span>Nov</span>
+                            <span>Dic</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Leyenda del gráfico -->
+                    <div class="flex justify-center gap-8 mt-5 pt-4 border-t border-slate-100">
+                        <div class="flex items-center gap-2.5">
+                            <span class="w-3.5 h-3.5 rounded-md bg-brandLight shadow-sm"></span>
+                            <span class="text-xs font-bold text-slate-600">Total citas</span>
+                        </div>
+                        <div class="flex items-center gap-2.5">
+                            <span class="w-3.5 h-3.5 rounded-md bg-emerald-500 shadow-sm"></span>
+                            <span class="text-xs font-bold text-slate-600">Completadas</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gráfico de Donas (Col 1/3) -->
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 flex flex-col justify-between">
+                    <div>
+                        <h3 class="font-bold text-lg text-slate-800">Tipos de tratamiento</h3>
+                        <p class="text-xs text-slate-500 font-medium mt-0.5">Distribución este mes</p>
+                    </div>
+
+                    <!-- Contenedor Donut y Centro -->
+                    <div class="relative w-52 h-52 mx-auto my-6 flex items-center justify-center">
+                        <svg class="w-full h-full transform -rotate-90 drop-shadow-sm" viewBox="0 0 100 100">
+                            <!-- Círculo base gris claro -->
+                            <circle cx="50" cy="50" r="40" fill="none" stroke="#f8fafc" stroke-width="12"></circle>
+                            
+                            <!-- Segmentos simulados con stroke-dasharray (Perímetro = 251.2) -->
+                            <!-- Consulta: 38% -> 95.4 -->
+                            <circle cx="50" cy="50" r="40" fill="none" stroke="#0ea5e9" stroke-width="12" stroke-dasharray="95.4 155.8" stroke-dashoffset="0" class="hover:stroke-width-[14px] transition-all cursor-pointer"></circle>
+                            <!-- Limpieza: 25% -> 62.8 -->
+                            <circle cx="50" cy="50" r="40" fill="none" stroke="#38bdf8" stroke-width="12" stroke-dasharray="62.8 188.4" stroke-dashoffset="-95.4" class="hover:stroke-width-[14px] transition-all cursor-pointer"></circle>
+                            <!-- Extracción: 15% -> 37.6 -->
+                            <circle cx="50" cy="50" r="40" fill="none" stroke="#10b981" stroke-width="12" stroke-dasharray="37.6 213.6" stroke-dashoffset="-158.2" class="hover:stroke-width-[14px] transition-all cursor-pointer"></circle>
+                            <!-- Curación: 12% -> 30.1 -->
+                            <circle cx="50" cy="50" r="40" fill="none" stroke="#eab308" stroke-width="12" stroke-dasharray="30.1 221.1" stroke-dashoffset="-195.8" class="hover:stroke-width-[14px] transition-all cursor-pointer"></circle>
+                            <!-- Ortodoncia: 7% -> 17.5 -->
+                            <circle cx="50" cy="50" r="40" fill="none" stroke="#8b5cf6" stroke-width="12" stroke-dasharray="17.5 233.7" stroke-dashoffset="-225.9" class="hover:stroke-width-[14px] transition-all cursor-pointer"></circle>
+                            <!-- Otros: 3% -> 7.5 -->
+                            <circle cx="50" cy="50" r="40" fill="none" stroke="#cbd5e1" stroke-width="12" stroke-dasharray="7.5 243.7" stroke-dashoffset="-243.4"></circle>
+                        </svg>
+                        <!-- Texto Central -->
+                        <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none mt-1">
+                            <span class="text-3xl font-extrabold text-slate-800 tracking-tight">420</span>
+                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Total</span>
+                        </div>
+                    </div>
+
+                    <!-- Leyenda detallada -->
+                    <div class="grid grid-cols-2 gap-x-2 gap-y-3 mt-2">
+                        <div class="flex items-center justify-between group cursor-default">
+                            <div class="flex items-center gap-2">
+                                <span class="w-2.5 h-2.5 rounded-full bg-[#0ea5e9] group-hover:scale-125 transition-transform"></span>
+                                <span class="text-[11px] font-semibold text-slate-600">Consulta</span>
+                            </div>
+                            <span class="text-[11px] font-extrabold text-slate-800">38%</span>
+                        </div>
+                        <div class="flex items-center justify-between group cursor-default">
+                            <div class="flex items-center gap-2">
+                                <span class="w-2.5 h-2.5 rounded-full bg-[#38bdf8] group-hover:scale-125 transition-transform"></span>
+                                <span class="text-[11px] font-semibold text-slate-600">Limpieza</span>
+                            </div>
+                            <span class="text-[11px] font-extrabold text-slate-800">25%</span>
+                        </div>
+                        <div class="flex items-center justify-between group cursor-default">
+                            <div class="flex items-center gap-2">
+                                <span class="w-2.5 h-2.5 rounded-full bg-[#10b981] group-hover:scale-125 transition-transform"></span>
+                                <span class="text-[11px] font-semibold text-slate-600">Extracción</span>
+                            </div>
+                            <span class="text-[11px] font-extrabold text-slate-800">15%</span>
+                        </div>
+                        <div class="flex items-center justify-between group cursor-default">
+                            <div class="flex items-center gap-2">
+                                <span class="w-2.5 h-2.5 rounded-full bg-[#eab308] group-hover:scale-125 transition-transform"></span>
+                                <span class="text-[11px] font-semibold text-slate-600">Curación</span>
+                            </div>
+                            <span class="text-[11px] font-extrabold text-slate-800">12%</span>
+                        </div>
+                        <div class="flex items-center justify-between group cursor-default">
+                            <div class="flex items-center gap-2">
+                                <span class="w-2.5 h-2.5 rounded-full bg-[#8b5cf6] group-hover:scale-125 transition-transform"></span>
+                                <span class="text-[11px] font-semibold text-slate-600">Ortodoncia</span>
+                            </div>
+                            <span class="text-[11px] font-extrabold text-slate-800">7%</span>
+                        </div>
+                        <div class="flex items-center justify-between group cursor-default">
+                            <div class="flex items-center gap-2">
+                                <span class="w-2.5 h-2.5 rounded-full bg-[#cbd5e1] group-hover:scale-125 transition-transform"></span>
+                                <span class="text-[11px] font-semibold text-slate-600">Otros</span>
+                            </div>
+                            <span class="text-[11px] font-extrabold text-slate-800">3%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- COMPONENTE 6: SECCIÓN INFERIOR DE ACCESOS RÁPIDOS Y ALERTAS -->
+            <div class="grid grid-cols-1 xl:grid-cols-3 gap-6 pt-2">
+                
+                <!-- Próximos pacientes (Ocupa 2 cols) -->
+                <div class="xl:col-span-2 bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden flex flex-col">
+                    <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50/30">
+                        <h3 class="font-bold text-lg text-slate-800">Pacientes esta semana</h3>
+                        <a href="#" class="text-xs font-bold text-brandLight hover:text-brandDark transition-colors bg-brandLight/10 px-3 py-1.5 rounded-lg">Ver todos →</a>
+                    </div>
+                    
+                    <div class="overflow-x-auto flex-1 custom-scrollbar">
+                        <table class="w-full text-left border-collapse min-w-[500px]">
+                            <thead>
+                                <tr>
+                                    <th class="px-6 py-4 border-b border-slate-100 bg-white text-[11px] font-extrabold text-slate-400 uppercase tracking-wider">Paciente</th>
+                                    <th class="px-6 py-4 border-b border-slate-100 bg-white text-[11px] font-extrabold text-slate-400 uppercase tracking-wider">Tratamiento</th>
+                                    <th class="px-6 py-4 border-b border-slate-100 bg-white text-[11px] font-extrabold text-slate-400 uppercase tracking-wider">Fecha / Hora</th>
+                                    <th class="px-6 py-4 border-b border-slate-100 bg-white text-[11px] font-extrabold text-slate-400 uppercase tracking-wider text-right">Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-50 text-sm">
+                                <tr class="hover:bg-slate-50/50 transition-colors cursor-pointer group">
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-9 h-9 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center font-bold text-xs border border-purple-200 group-hover:scale-105 transition-transform">MR</div>
+                                            <div>
+                                                <p class="font-bold text-slate-800">María Rodríguez</p>
+                                                <p class="text-[11px] text-slate-500 font-medium">Exp: #0429</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 font-semibold text-slate-600">Ortodoncia (Control)</td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex flex-col">
+                                            <span class="font-bold text-slate-700">Hoy</span>
+                                            <span class="text-[11px] font-medium text-slate-500">09:30 AM</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-right">
+                                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold bg-amber-50 text-amber-600 border border-amber-200/60 shadow-sm">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
+                                            En sala
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50 transition-colors cursor-pointer group">
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-9 h-9 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-xs border border-blue-200 group-hover:scale-105 transition-transform">JG</div>
+                                            <div>
+                                                <p class="font-bold text-slate-800">José García</p>
+                                                <p class="text-[11px] text-slate-500 font-medium">Exp: #0511</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 font-semibold text-slate-600">Limpieza Profunda</td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex flex-col">
+                                            <span class="font-bold text-slate-700">Hoy</span>
+                                            <span class="text-[11px] font-medium text-slate-500">11:00 AM</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-right">
+                                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold bg-slate-50 text-slate-600 border border-slate-200 shadow-sm">
+                                            Confirmado
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50 transition-colors cursor-pointer group">
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-9 h-9 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold text-xs border border-emerald-200 group-hover:scale-105 transition-transform">LF</div>
+                                            <div>
+                                                <p class="font-bold text-slate-800">Laura Fernández</p>
+                                                <p class="text-[11px] text-slate-500 font-medium">Exp: #0294</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 font-semibold text-slate-600">Extracción Molar</td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex flex-col">
+                                            <span class="font-bold text-slate-700">Mañana</span>
+                                            <span class="text-[11px] font-medium text-slate-500">10:15 AM</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-right">
+                                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold bg-slate-50 text-slate-600 border border-slate-200 shadow-sm">
+                                            Por confirmar
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Alertas del sistema & Acciones rápidas (1 col) -->
+                <div class="flex flex-col gap-6">
+                    <!-- Alertas -->
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 flex-1">
+                        <h3 class="font-bold text-lg text-slate-800 mb-5 flex items-center gap-2">
+                            <i class="fa-regular fa-bell text-brandLight"></i>
+                            Alertas del sistema
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="flex gap-3 items-start cursor-pointer group">
+                                <div class="w-9 h-9 rounded-full bg-red-50 flex items-center justify-center text-red-500 shrink-0 border border-red-100 group-hover:bg-red-100 transition-colors">
+                                    <i class="fa-solid fa-triangle-exclamation text-xs"></i>
+                                </div>
+                                <div>
+                                    <p class="text-[13px] font-bold text-slate-700 leading-tight group-hover:text-brandLight transition-colors">Stock bajo: Resina Compuesta</p>
+                                    <p class="text-[11px] font-medium text-slate-500 mt-1">Quedan 2 unidades en el inventario principal.</p>
+                                </div>
+                            </div>
+                            <div class="w-full h-px bg-slate-50"></div>
+                            <div class="flex gap-3 items-start cursor-pointer group">
+                                <div class="w-9 h-9 rounded-full bg-amber-50 flex items-center justify-center text-amber-500 shrink-0 border border-amber-100 group-hover:bg-amber-100 transition-colors">
+                                    <i class="fa-solid fa-screwdriver-wrench text-xs"></i>
+                                </div>
+                                <div>
+                                    <p class="text-[13px] font-bold text-slate-700 leading-tight group-hover:text-brandLight transition-colors">Mantenimiento preventivo</p>
+                                    <p class="text-[11px] font-medium text-slate-500 mt-1">Sillón #2 requiere revisión trimestral mañana.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Acciones Rápidas -->
+                    <div class="bg-gradient-to-br from-[#0E1E38] to-[#1A365D] rounded-2xl shadow-md border border-[#1A365D] p-6 text-white relative overflow-hidden shrink-0">
+                        <!-- Efectos de luz -->
+                        <div class="absolute -right-12 -top-12 w-32 h-32 rounded-full bg-brandLight opacity-20 blur-2xl"></div>
+                        <div class="absolute -left-8 -bottom-8 w-24 h-24 rounded-full bg-cyan-400 opacity-10 blur-xl"></div>
+                        
+                        <h3 class="font-bold text-lg mb-5 relative z-10 flex items-center gap-2">
+                            <i class="fa-solid fa-bolt text-amber-400"></i>
+                            Acciones rápidas
+                        </h3>
+                        
+                        <div class="grid grid-cols-2 gap-3 relative z-10">
+                            <button class="bg-white/5 hover:bg-white/15 border border-white/10 p-3.5 rounded-xl flex flex-col items-center justify-center gap-2 transition-all hover:-translate-y-0.5 text-center group">
+                                <div class="w-8 h-8 rounded-full bg-brandLight/20 flex items-center justify-center text-brandLight group-hover:scale-110 transition-transform">
+                                    <i class="fa-solid fa-file-prescription"></i>
+                                </div>
+                                <span class="text-[11px] font-bold tracking-wide">Receta</span>
+                            </button>
+                            <button class="bg-white/5 hover:bg-white/15 border border-white/10 p-3.5 rounded-xl flex flex-col items-center justify-center gap-2 transition-all hover:-translate-y-0.5 text-center group">
+                                <div class="w-8 h-8 rounded-full bg-emerald-400/20 flex items-center justify-center text-emerald-400 group-hover:scale-110 transition-transform">
+                                    <i class="fa-solid fa-notes-medical"></i>
+                                </div>
+                                <span class="text-[11px] font-bold tracking-wide">Historial</span>
+                            </button>
+                            <button class="bg-white/5 hover:bg-white/15 border border-white/10 p-3.5 rounded-xl flex flex-col items-center justify-center gap-2 transition-all hover:-translate-y-0.5 text-center group">
+                                <div class="w-8 h-8 rounded-full bg-green-400/20 flex items-center justify-center text-green-400 group-hover:scale-110 transition-transform">
+                                    <i class="fa-solid fa-money-bill-wave"></i>
+                                </div>
+                                <span class="text-[11px] font-bold tracking-wide">Cobro</span>
+                            </button>
+                            <button class="bg-white/5 hover:bg-white/15 border border-white/10 p-3.5 rounded-xl flex flex-col items-center justify-center gap-2 transition-all hover:-translate-y-0.5 text-center group">
+                                <div class="w-8 h-8 rounded-full bg-purple-400/20 flex items-center justify-center text-purple-400 group-hover:scale-110 transition-transform">
+                                    <i class="fa-solid fa-x-ray"></i>
+                                </div>
+                                <span class="text-[11px] font-bold tracking-wide">Rx / Lab</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+    
+    <!-- Animaciones y estilos custom -->
+    <style>
+        .animate-pulse-slow {
+            animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(148, 163, 184, 0.3);
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(148, 163, 184, 0.5);
+        }
+        
+        aside.custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        aside.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</body>
+</html>

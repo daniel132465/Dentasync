@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DentaSync - Dashboard Básico</title>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome v6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brandDark: '#0284c7',
+                        brandLight: '#0ea5e9',
+                        sidebarBg: '#0E1E38',
+                        mainBg: '#F8FAFC',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="antialiased text-slate-800 font-sans flex h-screen overflow-hidden bg-mainBg">
+
+    <!-- COMPONENTE 1: BARRA LATERAL IZQUIERDA -->
+    <aside class="w-64 h-full bg-[#0E1E38] text-white flex flex-col shrink-0 overflow-y-auto shadow-2xl relative z-20">
+        <!-- Cabecera Logo -->
+        <div class="p-6 flex items-center gap-3 border-b border-white/10">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brandDark to-brandLight flex items-center justify-center shadow-lg shrink-0">
+                <span class="text-white font-bold text-lg tracking-wider">DS</span>
+            </div>
+            <span class="text-xl font-bold tracking-tight">DentaSync</span>
+        </div>
+
+        <!-- Perfil Integrado -->
+        <div class="px-4 py-6 border-b border-white/10">
+            <div class="bg-white/5 rounded-2xl p-4 border border-white/10 backdrop-blur-sm flex flex-col items-center text-center">
+                <div class="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center text-xl font-bold shadow-md mb-3 border-2 border-white/20">
+                    DC
+                </div>
+                <h3 class="font-bold text-sm">Dr. Carlos Mendoza</h3>
+                <span class="mt-1 px-3 py-1 text-[10px] uppercase font-bold tracking-wider bg-brandDark/40 text-brandLight rounded-full border border-brandLight/30">
+                    Plan Básico
+                </span>
+            </div>
+        </div>
+
+        <!-- Menú de Navegación -->
+        <nav class="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
+            <!-- Panel General (Active Item) -->
+            <a href="#" class="flex items-center gap-3 px-4 py-3 bg-brandDark/20 text-brandLight rounded-xl border-l-4 border-brandLight font-medium transition-colors">
+                <i class="fa-solid fa-chart-line w-5 text-center"></i>
+                <span class="text-sm">Panel General</span>
+            </a>
+            
+            <a href="#" class="flex items-center justify-between px-4 py-3 text-slate-400 hover:text-white hover:bg-white/5 rounded-xl transition-colors group border-l-4 border-transparent">
+                <div class="flex items-center gap-3">
+                    <i class="fa-regular fa-calendar-check w-5 text-center group-hover:text-brandLight transition-colors"></i>
+                    <span class="text-sm font-medium">Agenda de Citas</span>
+                </div>
+            </a>
+            
+            <a href="#" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-white hover:bg-white/5 rounded-xl transition-colors group border-l-4 border-transparent">
+                <i class="fa-solid fa-users w-5 text-center group-hover:text-brandLight transition-colors"></i>
+                <span class="text-sm font-medium">Pacientes</span>
+            </a>
+
+            <a href="#" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-white hover:bg-white/5 rounded-xl transition-colors group border-l-4 border-transparent">
+                <i class="fa-solid fa-folder-open w-5 text-center group-hover:text-brandLight transition-colors"></i>
+                <span class="text-sm font-medium">Expedientes</span>
+            </a>
+
+            <a href="#" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-white hover:bg-white/5 rounded-xl transition-colors group border-l-4 border-transparent">
+                <i class="fa-solid fa-tooth w-5 text-center group-hover:text-brandLight transition-colors"></i>
+                <span class="text-sm font-medium">Tratamientos</span>
+            </a>
+
+            <a href="#" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-white hover:bg-white/5 rounded-xl transition-colors group border-l-4 border-transparent">
+                <i class="fa-solid fa-gear w-5 text-center group-hover:text-brandLight transition-colors"></i>
+                <span class="text-sm font-medium">Configuración</span>
+            </a>
+        </nav>
+
+        <!-- Pie Sidebar -->
+        <div class="mt-auto p-4 border-t border-white/10 shrink-0">
+            <a href="login.html" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-white hover:bg-red-500/10 hover:text-red-400 rounded-xl transition-colors group">
+                <i class="fa-solid fa-right-from-bracket w-5 text-center"></i>
+                <span class="text-sm font-medium">Cerrar sesión</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- COLUMNA PRINCIPAL DERECHA -->
+    <main class="flex-1 bg-[#F8FAFC] h-full overflow-y-auto flex flex-col relative">
+        
+        <!-- COMPONENTE 2: BARRA SUPERIOR DE CONTROL -->
+        <header class="flex justify-between items-center bg-white border-b border-slate-200 p-4 px-8 sticky top-0 z-10 shadow-sm shrink-0">
+            <!-- Ruta / Breadcrumb -->
+            <div class="flex items-center text-sm font-medium text-slate-500">
+                <span class="text-slate-400 hover:text-brandDark cursor-pointer transition-colors">Panel General</span>
+                <span class="mx-2 text-slate-300">/</span>
+                <span class="text-slate-700 font-bold">DentaSync — Plan Básico</span>
+            </div>
+
+            <!-- Controles Derechos -->
+            <div class="flex items-center gap-5 shrink-0">
+                <!-- Divisor -->
+                <div class="w-px h-8 bg-slate-200"></div>
+
+                <!-- Perfil Dropdown -->
+                <div class="flex items-center gap-3 cursor-pointer group">
+                    <div class="flex flex-col items-end hidden sm:flex">
+                        <span class="text-sm font-bold text-slate-700 group-hover:text-brandDark transition-colors">Dr. Carlos</span>
+                        <span class="text-[11px] text-slate-500 font-medium">Básico</span>
+                    </div>
+                    <div class="w-10 h-10 rounded-full bg-gradient-to-br from-brandLight to-blue-300 flex items-center justify-center text-white font-bold text-sm border-2 border-white shadow-sm group-hover:ring-2 ring-brandLight transition-all">
+                        DC
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- CONTENIDO CENTRAL -->
+        <div class="p-8 flex-1 flex items-center justify-center">
+            <div class="max-w-xl w-full bg-white border border-slate-100 rounded-3xl p-10 shadow-lg text-center flex flex-col items-center justify-center space-y-6">
+                <!-- Icono de Construcción / Código -->
+                <div class="w-24 h-24 bg-sky-50 text-brandLight rounded-2xl flex items-center justify-center shadow-inner border border-sky-100 mb-2">
+                    <i class="fa-solid fa-laptop-code text-4xl"></i>
+                </div>
+                
+                <h1 class="text-3xl font-extrabold text-slate-800">Dashboard: Plan Básico</h1>
+                
+                <!-- Banner Estilizado -->
+                <div class="bg-blue-50 border border-blue-200 text-blue-800 text-sm font-semibold rounded-2xl py-4 px-6 w-full shadow-sm">
+                    Sección en Construcción — Próximamente integración de módulos recortados
+                </div>
+                
+                <p class="text-slate-500 text-sm leading-relaxed">
+                    Estamos trabajando intensamente en optimizar y recortar los módulos específicos del Plan Básico para ofrecer la mejor experiencia adaptada a tu consultorio.
+                </p>
+                
+                <a href="login.html" class="inline-flex items-center justify-center px-6 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl transition-colors text-sm shadow-sm">
+                    ← Regresar al Inicio de Sesión
+                </a>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>
