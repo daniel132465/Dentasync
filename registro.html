@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DentaSync - Crear Cuenta</title>
+    <title>DentaSync - Registro Unificado</title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -31,500 +31,595 @@
     </script>
     <style>
         body { font-family: 'Inter', sans-serif; }
+        
         /* Transiciones suaves */
-        .fade-enter { opacity: 0; transform: translateY(10px); }
-        .fade-enter-active { opacity: 1; transform: translateY(0); transition: opacity 300ms ease-out, transform 300ms ease-out; }
-        /* Ocultar barra de scroll */
+        .fade-transition {
+            transition: opacity 300ms ease-out, transform 300ms ease-out;
+        }
+        
+        /* Scrollbar personalizado elegante para el formulario interno */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 5px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        
+        /* Ocultar barra de scroll global */
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        
-        /* Animaciones para los checks */
-        @keyframes scale-in {
-            0% { transform: scale(0); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-        .animate-scale-in { animation: scale-in 0.3s ease-out forwards; }
     </style>
 </head>
-<body class="antialiased text-slate-800">
+<body class="antialiased text-slate-800 min-h-screen w-screen overflow-y-auto flex flex-col md:flex-row bg-gradient-to-br from-[#0E1E38] to-[#1A365D] select-none">
 
-    <div class="h-screen w-screen overflow-hidden flex flex-col md:flex-row bg-[#0E1E38]">
+    <!-- COLUMNA IZQUIERDA: BIENVENIDA Y BENEFICIOS -->
+    <div class="lg:w-2/5 md:w-5/12 h-full flex flex-col justify-between px-8 lg:px-12 py-8 relative overflow-hidden bg-transparent">
         
-        <!-- COLUMNA IZQUIERDA: PANEL DE ESTADO -->
-        <div class="lg:w-2/5 md:w-5/12 bg-gradient-to-br from-hospitalDark to-hospitalLight h-full flex flex-col justify-between px-8 lg:px-12 py-8 relative overflow-hidden">
+        <!-- Enlace superior de retorno -->
+        <div class="z-10">
+            <a href="index.html" class="inline-flex items-center text-sm font-semibold text-slate-300 hover:text-white transition-colors mb-6 group">
+                <svg class="w-4 h-4 mr-2 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                Volver a la página principal
+            </a>
             
-            <!-- Arriba: Enlace y Logo -->
-            <div class="z-10">
-                <a href="login.html" class="inline-flex items-center text-sm font-semibold text-slate-300 hover:text-white transition-colors mb-8 group">
-                    <svg class="w-4 h-4 mr-2 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-                    Volver al Login
-                </a>
-                
-                <div class="flex items-center">
-                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brandDark to-brandLight flex items-center justify-center shadow-lg">
-                        <span class="text-white font-bold text-lg tracking-wider">DS</span>
-                    </div>
-                    <span class="ml-3 text-2xl font-bold text-white tracking-tight">DentaSync</span>
+            <div class="flex items-center">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brandDark to-brandLight flex items-center justify-center shadow-lg">
+                    <span class="text-white font-bold text-lg tracking-wider">DS</span>
                 </div>
+                <span class="ml-3 text-2xl font-bold text-white tracking-tight">DentaSync</span>
             </div>
-
-            <!-- Centro: Textos -->
-            <div class="z-10 mt-8 mb-12 flex-grow flex flex-col justify-center">
-                <h1 class="text-3xl lg:text-4xl font-extrabold text-white mb-4 leading-tight">
-                    Únete a la <br/>
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-brandLight to-sky-300">revolución dental</span>
-                </h1>
-                <p class="text-slate-300 max-w-sm leading-relaxed">
-                    Crea tu cuenta y accede a la plataforma de gestión dental más completa del mercado.
-                </p>
-            </div>
-
-            <!-- Abajo: Asistente Visual (Vertical Checklist) -->
-            <div class="z-10 pb-4">
-                <div class="space-y-6 relative">
-                    <!-- Línea conectora -->
-                    <div class="absolute left-4 top-2 bottom-6 w-0.5 bg-slate-700 z-0"></div>
-                    
-                    <!-- Paso 1 -->
-                    <div class="flex items-start relative z-10 step-indicator" data-step="1">
-                        <div class="w-8 h-8 rounded-full border-2 border-brandLight bg-hospitalDark text-brandLight flex items-center justify-center font-bold text-sm shadow-[0_0_15px_rgba(14,165,233,0.3)] transition-all duration-300 step-circle">
-                            1
-                        </div>
-                        <div class="ml-4 mt-1">
-                            <p class="text-sm font-bold text-white step-text transition-colors duration-300">Tipo de usuario</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Paso 2 -->
-                    <div class="flex items-start relative z-10 step-indicator opacity-50" data-step="2">
-                        <div class="w-8 h-8 rounded-full border-2 border-slate-600 bg-hospitalDark text-slate-400 flex items-center justify-center font-bold text-sm transition-all duration-300 step-circle">
-                            2
-                        </div>
-                        <div class="ml-4 mt-1">
-                            <p class="text-sm font-semibold text-slate-400 step-text transition-colors duration-300">Datos personales</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Paso 3 -->
-                    <div class="flex items-start relative z-10 step-indicator opacity-50" data-step="3">
-                        <div class="w-8 h-8 rounded-full border-2 border-slate-600 bg-hospitalDark text-slate-400 flex items-center justify-center font-bold text-sm transition-all duration-300 step-circle">
-                            3
-                        </div>
-                        <div class="ml-4 mt-1">
-                            <p class="text-sm font-semibold text-slate-400 step-text transition-colors duration-300">Datos de acceso y clínica</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Background Shapes -->
-            <div class="absolute -top-24 -left-24 w-80 h-80 bg-brandDark rounded-full mix-blend-multiply filter blur-3xl opacity-20 pointer-events-none"></div>
-            <div class="absolute -bottom-24 -right-24 w-80 h-80 bg-brandLight rounded-full mix-blend-multiply filter blur-3xl opacity-20 pointer-events-none"></div>
         </div>
 
-        <!-- COLUMNA DERECHA: TARJETA FLOTANTE -->
-        <div class="lg:w-3/5 md:w-7/12 bg-gray-50 h-full flex items-center justify-center md:justify-end md:pr-16 lg:pr-24 py-6 relative">
+        <!-- Contenido Central: Título y Viñetas de Beneficios -->
+        <div class="z-10 my-auto flex flex-col justify-center">
+            <h1 class="text-3xl lg:text-4xl font-extrabold text-white mb-6 leading-tight">
+                Únete a la <br/>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-brandLight to-sky-300">revolución dental</span>
+            </h1>
             
-            <div class="max-w-md w-full max-h-[92vh] flex flex-col justify-between p-8 rounded-3xl shadow-2xl bg-white relative mx-auto md:mx-0 overflow-y-auto no-scrollbar transition-all duration-500">
+            <!-- Beneficios con viñetas estéticas -->
+            <div class="space-y-4 text-slate-300 mt-2 max-w-sm">
+                <div class="flex items-start">
+                    <span class="w-5 h-5 rounded-full bg-brandLight/20 text-brandLight flex items-center justify-center font-bold mr-3 text-xs mt-0.5 shrink-0">✓</span>
+                    <span class="font-medium text-sm lg:text-base">Control total de tu consultorio</span>
+                </div>
+                <div class="flex items-start">
+                    <span class="w-5 h-5 rounded-full bg-brandLight/20 text-brandLight flex items-center justify-center font-bold mr-3 text-xs mt-0.5 shrink-0">✓</span>
+                    <span class="font-medium text-sm lg:text-base">Historial clínico digital e inteligente</span>
+                </div>
+                <div class="flex items-start">
+                    <span class="w-5 h-5 rounded-full bg-brandLight/20 text-brandLight flex items-center justify-center font-bold mr-3 text-xs mt-0.5 shrink-0">✓</span>
+                    <span class="font-medium text-sm lg:text-base">Gestión de recetas y reportes ejecutivos</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pie de página de la columna izquierda -->
+        <div class="z-10 text-slate-400 text-xs mt-4">
+            © 2026 DentaSync. Todos los derechos reservados.
+        </div>
+
+        <!-- Background Shapes -->
+        <div class="absolute -top-24 -left-24 w-80 h-80 bg-brandDark rounded-full mix-blend-multiply filter blur-3xl opacity-20 pointer-events-none"></div>
+        <div class="absolute -bottom-24 -right-24 w-80 h-80 bg-brandLight rounded-full mix-blend-multiply filter blur-3xl opacity-20 pointer-events-none"></div>
+    </div>
+
+    <!-- COLUMNA DERECHA: TARJETA UNIFICADA -->
+    <div class="lg:w-3/5 md:w-7/12 h-full w-full flex items-center justify-center p-4 md:p-8 bg-transparent relative">
+        
+        <!-- Tarjeta Blanca -->
+        <div class="max-w-md w-full h-auto flex flex-col p-6 md:p-8 rounded-3xl shadow-2xl bg-white relative overflow-hidden transition-all duration-500">
+            
+            <!-- ESTADO 1: SELECCIÓN DE ROL (PANTALLA INICIAL) -->
+            <div id="state-select-role" class="flex flex-col h-full w-full justify-between fade-transition">
+                <div class="text-center mb-6">
+                    <h2 class="text-3xl font-extrabold text-slate-900 mb-2">Crear cuenta</h2>
+                    <p class="text-slate-500">¿Cómo usarás DentaSync?</p>
+                </div>
+
+                <div class="space-y-4 mb-6">
+                    <!-- Opción Médico -->
+                    <button class="role-selector-btn w-full flex items-start p-5 rounded-2xl border-2 border-slate-200 hover:border-brandLight hover:bg-sky-50 transition-all duration-200 text-left group" data-role="medico-admin">
+                        <div class="text-3xl mr-4 group-hover:scale-110 transition-transform">👨‍⚕️</div>
+                        <div>
+                            <h4 class="text-lg font-bold text-slate-800 group-hover:text-brandDark transition-colors">Médico Administrador</h4>
+                            <p class="text-sm text-slate-500 mt-1">Gestiona toda la clínica, añade pacientes y colaboradores.</p>
+                        </div>
+                    </button>
+                    
+                    <!-- Opción Paciente -->
+                    <button class="role-selector-btn w-full flex items-start p-5 rounded-2xl border-2 border-slate-200 hover:border-emerald-500 hover:bg-emerald-50 transition-all duration-200 text-left group" data-role="paciente">
+                        <div class="text-3xl mr-4 group-hover:scale-110 transition-transform">😷</div>
+                        <div>
+                            <h4 class="text-lg font-bold text-slate-800 group-hover:text-emerald-700 transition-colors">Paciente</h4>
+                            <p class="text-sm text-slate-500 mt-1">Portal exclusivo para pacientes para seguimiento y citas.</p>
+                        </div>
+                    </button>
+                </div>
+
+                <div class="pt-2">
+                    <a href="login.html" class="text-sm text-brandLight hover:underline font-medium block text-center mb-4">Iniciar sesión</a>
+                    
+                    <button id="btn-continue-role" class="w-full py-4 px-4 bg-slate-200 text-slate-400 rounded-xl font-bold text-lg transition-all duration-300 flex items-center justify-center cursor-not-allowed" disabled>
+                        Continuar <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- ESTADO 2: FORMULARIO EXPANDIDO (VISTA ÚNICA) -->
+            <div id="state-expanded-form" class="hidden flex-col h-full w-full justify-between fade-transition">
                 
-                <!-- VISTA 1: Selección de Rol -->
-                <div id="view-step-1" class="flex flex-col w-full fade-enter fade-enter-active">
-                    <div class="text-center mb-8">
-                        <h2 class="text-3xl font-extrabold text-slate-900 mb-2">Crear cuenta</h2>
-                        <p class="text-slate-500">¿Cómo usarás DentaSync?</p>
-                    </div>
-
-                    <div class="space-y-4 mb-8">
-                        <!-- Opción Médico -->
-                        <button class="role-selector w-full flex items-start p-5 rounded-2xl border-2 border-slate-200 hover:border-brandLight hover:bg-sky-50 transition-all duration-200 text-left group" data-select="admin">
-                            <div class="text-3xl mr-4 group-hover:scale-110 transition-transform">👨‍⚕️</div>
-                            <div>
-                                <h4 class="text-lg font-bold text-slate-800 group-hover:text-brandDark transition-colors">Médico Administrador</h4>
-                                <p class="text-sm text-slate-500 mt-1">Gestiona toda la clínica, añade pacientes y colaboradores.</p>
-                            </div>
-                        </button>
-                        
-                        <!-- Opción Paciente -->
-                        <button class="role-selector w-full flex items-start p-5 rounded-2xl border-2 border-slate-200 hover:border-emerald-500 hover:bg-emerald-50 transition-all duration-200 text-left group" data-select="patient">
-                            <div class="text-3xl mr-4 group-hover:scale-110 transition-transform">😷</div>
-                            <div>
-                                <h4 class="text-lg font-bold text-slate-800 group-hover:text-emerald-700 transition-colors">Paciente</h4>
-                                <p class="text-sm text-slate-500 mt-1">Portal exclusivo para pacientes para seguimiento y citas.</p>
-                            </div>
-                        </button>
-                    </div>
-
-                    <div class="mt-auto pt-4">
-                        <button id="btn-next-1" class="w-full py-4 px-4 bg-slate-200 text-slate-400 rounded-xl font-bold text-lg transition-all duration-300 flex items-center justify-center cursor-not-allowed" disabled>
-                            Continuar <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                        </button>
-                    </div>
+                <!-- Cabecera y Botón Atrás -->
+                <div class="mb-4 shrink-0">
+                    <button id="btn-back-to-roles" class="text-sm text-slate-400 hover:text-brandDark font-medium inline-flex items-center mb-2 transition-colors">
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg> 
+                        Volver a elegir rol
+                    </button>
+                    <h2 id="form-title" class="text-2xl font-extrabold text-slate-900 leading-tight">Registro</h2>
+                    <p class="text-sm text-slate-500 mt-0.5">Completa el formulario de registro único</p>
                 </div>
 
-                <!-- VISTA 2: Datos Personales -->
-                <div id="view-step-2" class="hidden flex-col w-full fade-enter">
-                    <div class="mb-6">
-                        <button class="btn-back text-sm text-slate-400 hover:text-brandDark font-medium inline-flex items-center mb-2 transition-colors">
-                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg> Atrás
-                        </button>
-                        <h2 id="title-step-2" class="text-2xl font-extrabold text-slate-900 mb-1">Registro</h2>
-                        <p class="text-sm text-slate-500">Completa tu información personal</p>
-                    </div>
+                <!-- Formulario Principal con Scroll Interno -->
+                <form id="unified-form" class="flex-grow space-y-4" novalidate>
+                    
+                    <!-- CAMPOS DEL MÉDICO ADMINISTRADOR -->
+                    <div id="admin-fields" class="space-y-4 hidden">
+                        <!-- Nombre y Apellidos -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="input-group">
+                                <label for="m-nombre" class="block text-sm font-semibold text-slate-700 mb-1">Nombre*</label>
+                                <input type="text" id="m-nombre" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-brandLight focus:ring-2 focus:ring-sky-100 outline-none transition-all text-slate-700 text-sm" placeholder="Tu nombre">
+                                <p class="error-msg text-xs text-red-500 font-semibold mt-1 hidden">Este campo es obligatorio.</p>
+                            </div>
+                            <div class="input-group">
+                                <label for="m-apellidos" class="block text-sm font-semibold text-slate-700 mb-1">Apellidos*</label>
+                                <input type="text" id="m-apellidos" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-brandLight focus:ring-2 focus:ring-sky-100 outline-none transition-all text-slate-700 text-sm" placeholder="Tus apellidos">
+                                <p class="error-msg text-xs text-red-500 font-semibold mt-1 hidden">Este campo es obligatorio.</p>
+                            </div>
+                        </div>
 
-                    <form id="form-step-2" class="space-y-4 flex-grow" novalidate>
-                        <!-- Campos Dinámicos se inyectan aquí según el rol -->
-                        <div id="fields-step-2" class="space-y-4"></div>
-                    </form>
+                        <!-- Teléfono de contacto con prefijo -->
+                        <div class="input-group">
+                            <label for="m-telefono" class="block text-sm font-semibold text-slate-700 mb-1">Teléfono de contacto*</label>
+                            <div class="relative flex items-center">
+                                <div class="absolute left-4 inset-y-0 flex items-center pointer-events-none font-semibold text-slate-500 text-sm">+591</div>
+                                <input type="tel" id="m-telefono" class="w-full pl-16 pr-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-brandLight focus:ring-2 focus:ring-sky-100 outline-none transition-all text-slate-700 text-sm" placeholder="70000000">
+                            </div>
+                            <p class="error-msg text-xs text-red-500 font-semibold mt-1 hidden">Este campo es obligatorio.</p>
+                        </div>
 
-                    <div class="mt-8 pt-4">
-                        <button id="btn-next-2" class="w-full py-3.5 px-4 bg-brandDark text-white hover:bg-brandLight rounded-xl font-bold text-lg shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center">
-                            Continuar <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                        </button>
-                    </div>
-                </div>
+                        <!-- Correo Electrónico -->
+                        <div class="input-group">
+                            <label for="m-correo" class="block text-sm font-semibold text-slate-700 mb-1">Correo electrónico*</label>
+                            <input type="email" id="m-correo" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-brandLight focus:ring-2 focus:ring-sky-100 outline-none transition-all text-slate-700 text-sm" placeholder="dr.ejemplo@gmail.com">
+                            <p class="error-msg text-xs text-red-500 font-semibold mt-1 hidden">Este campo es obligatorio.</p>
+                        </div>
 
-                <!-- VISTA 3: Datos de acceso y clínica -->
-                <div id="view-step-3" class="hidden flex-col w-full fade-enter">
-                    <div class="mb-6">
-                        <button class="btn-back text-sm text-slate-400 hover:text-brandDark font-medium inline-flex items-center mb-2 transition-colors">
-                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg> Atrás
-                        </button>
-                        <h2 class="text-2xl font-extrabold text-slate-900 mb-1">Casi terminamos</h2>
-                        <p class="text-sm text-slate-500">Configura tu acceso y seguridad</p>
-                    </div>
+                        <!-- País de residencia (Dropdown fijo) -->
+                        <div class="input-group">
+                            <label for="m-pais" class="block text-sm font-semibold text-slate-700 mb-1">País de residencia*</label>
+                            <select id="m-pais" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-brandLight focus:ring-2 focus:ring-sky-100 outline-none transition-all text-slate-700 text-sm font-medium">
+                                <option value="BO">Bolivia (Estado Plurinacional de)</option>
+                            </select>
+                        </div>
 
-                    <form id="form-step-3" class="space-y-4 flex-grow" novalidate>
-                        <!-- Campos Dinámicos -->
-                        <div id="fields-step-3" class="space-y-4"></div>
-                        
-                        <div class="flex items-start pt-2">
+                        <!-- Contraseña y Confirmar Contraseña -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="input-group">
+                                <label for="m-pwd" class="block text-sm font-semibold text-slate-700 mb-1">Contraseña*</label>
+                                <div class="relative">
+                                    <input type="password" id="m-pwd" class="w-full pl-4 pr-10 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-brandLight focus:ring-2 focus:ring-sky-100 outline-none transition-all text-slate-700 text-sm" placeholder="••••••••">
+                                    <button type="button" class="toggle-pwd-btn absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-brandDark transition-colors">
+                                        <svg class="w-4 h-4 eye-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                                    </button>
+                                </div>
+                                <p class="error-msg text-xs text-red-500 font-semibold mt-1 hidden">La contraseña es obligatoria.</p>
+                            </div>
+                            <div class="input-group">
+                                <label for="m-pwd-confirm" class="block text-sm font-semibold text-slate-700 mb-1">Confirmar*</label>
+                                <div class="relative">
+                                    <input type="password" id="m-pwd-confirm" class="w-full pl-4 pr-10 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-brandLight focus:ring-2 focus:ring-sky-100 outline-none transition-all text-slate-700 text-sm" placeholder="••••••••">
+                                    <button type="button" class="toggle-pwd-btn absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-brandDark transition-colors">
+                                        <svg class="w-4 h-4 eye-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                                    </button>
+                                </div>
+                                <p class="error-msg text-xs text-red-500 font-semibold mt-1 hidden">La contraseña es obligatoria.</p>
+                            </div>
+                        </div>
+                        <p id="m-pwd-match-error" class="text-xs text-red-500 font-semibold hidden">Las contraseñas no coinciden.</p>
+
+                        <!-- Nombre del Consultorio Dental -->
+                        <div class="input-group">
+                            <label for="m-clinic" class="block text-sm font-semibold text-slate-700 mb-1">Nombre del consultorio dental*</label>
+                            <input type="text" id="m-clinic" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-brandLight focus:ring-2 focus:ring-sky-100 outline-none transition-all text-slate-700 text-sm" placeholder="Ej. Dental Care">
+                            <p class="error-msg text-xs text-red-500 font-semibold mt-1 hidden">Este campo es obligatorio.</p>
+                        </div>
+
+                        <!-- Número de profesionales en la clínica -->
+                        <div class="input-group">
+                            <label for="m-workers" class="block text-sm font-semibold text-slate-700 mb-1">Número de profesionales en la clínica*</label>
+                            <input type="number" id="m-workers" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-brandLight focus:ring-2 focus:ring-sky-100 outline-none transition-all text-slate-700 text-sm" placeholder="Ej. 3">
+                            <p class="error-msg text-xs text-red-500 font-semibold mt-1 hidden">Este campo es obligatorio.</p>
+                        </div>
+
+                        <!-- Ubicación del consultorio -->
+                        <div class="input-group">
+                            <label for="m-location" class="block text-sm font-semibold text-slate-700 mb-1">Ubicación del consultorio*</label>
+                            <input type="text" id="m-location" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-brandLight focus:ring-2 focus:ring-sky-100 outline-none transition-all text-slate-700 text-sm" placeholder="Enlace o Link de Google Maps">
+                            <p class="error-msg text-xs text-red-500 font-semibold mt-1 hidden">Este campo es obligatorio.</p>
+                        </div>
+
+                        <!-- Términos -->
+                        <div class="input-group flex items-start pt-1">
                             <div class="flex items-center h-5">
-                                <input id="terms" type="checkbox" class="w-4 h-4 text-brandDark bg-slate-100 border-slate-300 rounded focus:ring-brandLight">
+                                <input id="m-terms" type="checkbox" class="w-4 h-4 text-brandDark bg-slate-100 border-slate-300 rounded focus:ring-brandLight">
                             </div>
-                            <label for="terms" class="ml-2 text-sm text-slate-600">
-                                Acepto las <a href="#" class="font-medium text-brandDark hover:underline">políticas de privacidad y términos</a>*
+                            <label for="m-terms" class="ml-2 text-xs text-slate-600 leading-normal">
+                                Acepto las <a href="#" class="font-medium text-brandDark hover:underline">políticas de privacidad y términos de servicio</a>*
                             </label>
                         </div>
-                        <p id="error-terms" class="text-xs text-red-500 font-medium hidden">Debe aceptar los términos para continuar.</p>
-                    </form>
-
-                    <div class="mt-8 pt-4">
-                        <button id="btn-submit" class="w-full py-3.5 px-4 bg-gradient-to-r from-brandDark to-brandLight text-white hover:from-sky-600 hover:to-sky-400 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center">
-                            <!-- El texto del botón cambia según el rol -->
-                            <span id="submit-text">Configurar Plan →</span>
-                        </button>
+                        <p id="m-terms-error" class="text-xs text-red-500 font-semibold hidden">Debe aceptar los términos para continuar.</p>
                     </div>
+
+                    <!-- CAMPOS DEL PACIENTE -->
+                    <div id="patient-fields" class="space-y-4 hidden">
+                        <!-- Nombre Completo -->
+                        <div class="input-group">
+                            <label for="p-nombre" class="block text-sm font-semibold text-slate-700 mb-1">Nombre Completo*</label>
+                            <input type="text" id="p-nombre" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-brandLight focus:ring-2 focus:ring-sky-100 outline-none transition-all text-slate-700 text-sm" placeholder="Juan Pérez">
+                            <p class="error-msg text-xs text-red-500 font-semibold mt-1 hidden">Este campo es obligatorio.</p>
+                        </div>
+
+                        <!-- Teléfono de contacto con prefijo -->
+                        <div class="input-group">
+                            <label for="p-telefono" class="block text-sm font-semibold text-slate-700 mb-1">Teléfono de contacto*</label>
+                            <div class="relative flex items-center">
+                                <div class="absolute left-4 inset-y-0 flex items-center pointer-events-none font-semibold text-slate-500 text-sm">+591</div>
+                                <input type="tel" id="p-telefono" class="w-full pl-16 pr-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-brandLight focus:ring-2 focus:ring-sky-100 outline-none transition-all text-slate-700 text-sm" placeholder="70000000">
+                            </div>
+                            <p class="error-msg text-xs text-red-500 font-semibold mt-1 hidden">Este campo es obligatorio.</p>
+                        </div>
+
+                        <!-- Correo Electrónico -->
+                        <div class="input-group">
+                            <label for="p-correo" class="block text-sm font-semibold text-slate-700 mb-1">Correo electrónico*</label>
+                            <input type="email" id="p-correo" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-brandLight focus:ring-2 focus:ring-sky-100 outline-none transition-all text-slate-700 text-sm" placeholder="tu@email.com">
+                            <p class="error-msg text-xs text-red-500 font-semibold mt-1 hidden">Este campo es obligatorio.</p>
+                        </div>
+
+                        <!-- Contraseña y Confirmar Contraseña -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="input-group">
+                                <label for="p-pwd" class="block text-sm font-semibold text-slate-700 mb-1">Contraseña*</label>
+                                <div class="relative">
+                                    <input type="password" id="p-pwd" class="w-full pl-4 pr-10 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-brandLight focus:ring-2 focus:ring-sky-100 outline-none transition-all text-slate-700 text-sm" placeholder="••••••••">
+                                    <button type="button" class="toggle-pwd-btn absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-brandDark transition-colors">
+                                        <svg class="w-4 h-4 eye-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                                    </button>
+                                </div>
+                                <p class="error-msg text-xs text-red-500 font-semibold mt-1 hidden">La contraseña es obligatoria.</p>
+                            </div>
+                            <div class="input-group">
+                                <label for="p-pwd-confirm" class="block text-sm font-semibold text-slate-700 mb-1">Confirmar*</label>
+                                <div class="relative">
+                                    <input type="password" id="p-pwd-confirm" class="w-full pl-4 pr-10 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-brandLight focus:ring-2 focus:ring-sky-100 outline-none transition-all text-slate-700 text-sm" placeholder="••••••••">
+                                    <button type="button" class="toggle-pwd-btn absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-brandDark transition-colors">
+                                        <svg class="w-4 h-4 eye-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                                    </button>
+                                </div>
+                                <p class="error-msg text-xs text-red-500 font-semibold mt-1 hidden">La contraseña es obligatoria.</p>
+                            </div>
+                        </div>
+                        <p id="p-pwd-match-error" class="text-xs text-red-500 font-semibold hidden">Las contraseñas no coinciden.</p>
+
+                        <!-- Código de Uso Único -->
+                        <div class="input-group">
+                            <label for="p-code" class="block text-sm font-semibold text-slate-700 mb-1">Código de Uso Único*</label>
+                            <input type="text" id="p-code" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-brandLight focus:ring-2 focus:ring-sky-100 outline-none transition-all text-slate-700 text-sm" placeholder="Introduce el código único provisto por tu doctor">
+                            <p class="error-msg text-xs text-red-500 font-semibold mt-1 hidden">Este campo es obligatorio.</p>
+                            <p class="text-[11px] text-slate-500 bg-sky-50 p-2 rounded-lg border border-sky-100 mt-2 leading-relaxed">
+                                ⚠️ Este código te conecta directamente con tu historial clínico y consultorio correspondiente.
+                            </p>
+                        </div>
+
+                        <!-- Términos -->
+                        <div class="input-group flex items-start pt-1">
+                            <div class="flex items-center h-5">
+                                <input id="p-terms" type="checkbox" class="w-4 h-4 text-brandDark bg-slate-100 border-slate-300 rounded focus:ring-brandLight">
+                            </div>
+                            <label for="p-terms" class="ml-2 text-xs text-slate-600 leading-normal">
+                                Acepto las <a href="#" class="font-medium text-brandDark hover:underline">políticas de privacidad</a>*
+                            </label>
+                        </div>
+                        <p id="p-terms-error" class="text-xs text-red-500 font-semibold hidden">Debe aceptar los términos para continuar.</p>
+                    </div>
+
+                </form>
+
+                <!-- Pie del formulario expandido -->
+                <div class="pt-4 shrink-0 bg-white">
+                    <a href="login.html" class="text-sm text-brandLight hover:underline font-medium block text-center mb-3">Iniciar sesión</a>
+                    
+                    <button id="btn-submit-form" class="w-full py-3.5 px-4 bg-gradient-to-r from-brandDark to-brandLight text-white hover:from-sky-600 hover:to-sky-400 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center">
+                        <span id="submit-btn-text">Confirmar</span>
+                    </button>
                 </div>
 
             </div>
+
         </div>
     </div>
 
-    <!-- Lógica Vanilla JS Avanzada -->
+    <!-- Lógica Vanilla JS de una Sola Vista -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // State Machine
-            let currentStep = 1;
+            // State
             let selectedRole = null; // 'admin' o 'patient'
             
             // DOM Elements
-            const views = {
-                1: document.getElementById('view-step-1'),
-                2: document.getElementById('view-step-2'),
-                3: document.getElementById('view-step-3')
-            };
+            const stateSelectRole = document.getElementById('state-select-role');
+            const stateExpandedForm = document.getElementById('state-expanded-form');
+            const btnContinueRole = document.getElementById('btn-continue-role');
+            const btnBackToRoles = document.getElementById('btn-back-to-roles');
+            const roleSelectors = document.querySelectorAll('.role-selector-btn');
             
-            const btnNext1 = document.getElementById('btn-next-1');
-            const btnNext2 = document.getElementById('btn-next-2');
-            const btnSubmit = document.getElementById('btn-submit');
-            const roleSelectors = document.querySelectorAll('.role-selector');
-            const backBtns = document.querySelectorAll('.btn-back');
-            
-            const stepIndicators = document.querySelectorAll('.step-indicator');
-            const titleStep2 = document.getElementById('title-step-2');
-            const fieldsStep2 = document.getElementById('fields-step-2');
-            const fieldsStep3 = document.getElementById('fields-step-3');
-            const submitText = document.getElementById('submit-text');
-            const termsCheckbox = document.getElementById('terms');
-            const errorTerms = document.getElementById('error-terms');
+            const formTitle = document.getElementById('form-title');
+            const adminFields = document.getElementById('admin-fields');
+            const patientFields = document.getElementById('patient-fields');
+            const submitBtnText = document.getElementById('submit-btn-text');
+            const btnSubmitForm = document.getElementById('btn-submit-form');
+            const unifiedForm = document.getElementById('unified-form');
 
-            // Icono del check SVG para los pasos completados
-            const checkIcon = `<svg class="w-4 h-4 animate-scale-in" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>`;
-
-            // --- STEP 1: Selección de Rol ---
+            // --- 1. SELECCIÓN DE ROL ---
             roleSelectors.forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     e.preventDefault();
-                    // Limpiar selección previa
+                    
+                    // Limpiar selecciones previas
                     roleSelectors.forEach(r => {
                         r.classList.remove('border-brandDark', 'bg-sky-50', 'ring-2', 'ring-brandLight', 'border-emerald-500', 'bg-emerald-50');
                         r.classList.add('border-slate-200');
                     });
                     
-                    selectedRole = btn.getAttribute('data-select');
+                    selectedRole = btn.getAttribute('data-role');
                     
                     // Resaltar seleccionado
                     btn.classList.remove('border-slate-200');
-                    if (selectedRole === 'admin') {
+                    if (selectedRole === 'medico-admin') {
                         btn.classList.add('border-brandDark', 'bg-sky-50', 'ring-2', 'ring-brandLight');
                     } else {
                         btn.classList.add('border-emerald-500', 'bg-emerald-50', 'ring-2', 'ring-emerald-400');
                     }
 
-                    // Habilitar botón Continuar
-                    btnNext1.disabled = false;
-                    btnNext1.classList.remove('bg-slate-200', 'text-slate-400', 'cursor-not-allowed');
-                    if (selectedRole === 'admin') {
-                        btnNext1.classList.add('bg-brandDark', 'text-white', 'hover:bg-brandLight', 'shadow-md');
-                        btnNext1.classList.remove('bg-emerald-600', 'hover:bg-emerald-500');
+                    // Habilitar botón de continuar y adaptarlo visualmente al rol
+                    btnContinueRole.disabled = false;
+                    btnContinueRole.classList.remove('bg-slate-200', 'text-slate-400', 'cursor-not-allowed');
+                    if (selectedRole === 'medico-admin') {
+                        btnContinueRole.classList.add('bg-brandDark', 'text-white', 'hover:bg-brandLight', 'shadow-md');
+                        btnContinueRole.classList.remove('bg-emerald-600', 'hover:bg-emerald-500');
                     } else {
-                        btnNext1.classList.add('bg-emerald-600', 'text-white', 'hover:bg-emerald-500', 'shadow-md');
-                        btnNext1.classList.remove('bg-brandDark', 'hover:bg-brandLight');
+                        btnContinueRole.classList.add('bg-emerald-600', 'text-white', 'hover:bg-emerald-500', 'shadow-md');
+                        btnContinueRole.classList.remove('bg-brandDark', 'hover:bg-brandLight');
                     }
                 });
             });
 
-            // Generador de Inputs HTML dinámicos
-            function renderInput(id, label, placeholder, type = 'text', prefix = null, extraClass = '') {
-                const prefixHtml = prefix ? `<div class="absolute left-4 inset-y-0 flex items-center pointer-events-none font-semibold text-slate-500">${prefix}</div>` : '';
-                const paddingClass = prefix ? 'pl-14' : 'px-4';
-                
-                return `
-                <div class="input-group">
-                    <label for="${id}" class="block text-sm font-semibold text-slate-700 mb-1.5">${label}</label>
-                    <div class="relative flex items-center">
-                        ${prefixHtml}
-                        <input type="${type}" id="${id}" class="w-full ${paddingClass} py-3 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-brandLight focus:ring-2 focus:ring-sky-100 outline-none transition-all text-slate-700 ${extraClass}" placeholder="${placeholder}">
-                    </div>
-                    <p class="error-msg text-xs text-red-500 font-medium mt-1 hidden">Este campo es obligatorio.</p>
-                </div>`;
-            }
-            
-            function renderSelect(id, label, options) {
-                let optsHtml = options.map(opt => `<option value="${opt.val}">${opt.text}</option>`).join('');
-                return `
-                <div class="input-group">
-                    <label for="${id}" class="block text-sm font-semibold text-slate-700 mb-1.5">${label}</label>
-                    <select id="${id}" class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-brandLight focus:ring-2 focus:ring-sky-100 outline-none transition-all text-slate-700 appearance-none font-medium">
-                        ${optsHtml}
-                    </select>
-                </div>`;
-            }
-
-            function renderPassword(id, label) {
-                return `
-                <div class="input-group">
-                    <label for="${id}" class="block text-sm font-semibold text-slate-700 mb-1.5">${label}</label>
-                    <div class="relative">
-                        <input type="password" id="${id}" class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-brandLight focus:ring-2 focus:ring-sky-100 outline-none transition-all text-slate-700 pr-12" placeholder="••••••••">
-                        <button type="button" class="toggle-pwd-btn absolute inset-y-0 right-0 pr-4 flex items-center text-slate-400 hover:text-brandDark transition-colors">
-                            <svg class="w-5 h-5 eye-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
-                        </button>
-                    </div>
-                    <p class="error-msg text-xs text-red-500 font-medium mt-1 hidden">La contraseña es obligatoria.</p>
-                </div>`;
-            }
-
-            // --- NAVEGACIÓN Y RENDERIZADO DINÁMICO ---
-            
-            function updateWizardVisuals(step) {
-                stepIndicators.forEach((ind, index) => {
-                    const circle = ind.querySelector('.step-circle');
-                    const text = ind.querySelector('.step-text');
-                    const s = index + 1;
-                    
-                    if (s < step) {
-                        // Pasado
-                        ind.classList.remove('opacity-50');
-                        circle.classList.remove('border-slate-600', 'bg-hospitalDark', 'text-slate-400', 'border-brandLight', 'text-brandLight', 'shadow-[0_0_15px_rgba(14,165,233,0.3)]');
-                        circle.classList.add('bg-brandLight', 'border-brandLight', 'text-white');
-                        circle.innerHTML = checkIcon;
-                        text.classList.remove('text-slate-400', 'font-semibold', 'text-white', 'font-bold');
-                        text.classList.add('text-slate-300', 'font-medium');
-                    } else if (s === step) {
-                        // Actual
-                        ind.classList.remove('opacity-50');
-                        circle.classList.remove('bg-brandLight', 'text-white', 'border-slate-600', 'text-slate-400');
-                        circle.classList.add('border-brandLight', 'bg-hospitalDark', 'text-brandLight', 'shadow-[0_0_15px_rgba(14,165,233,0.3)]');
-                        circle.innerHTML = s;
-                        text.classList.remove('text-slate-300', 'text-slate-400', 'font-medium', 'font-semibold');
-                        text.classList.add('text-white', 'font-bold');
-                    } else {
-                        // Futuro
-                        ind.classList.add('opacity-50');
-                        circle.classList.remove('bg-brandLight', 'border-brandLight', 'text-brandLight', 'shadow-[0_0_15px_rgba(14,165,233,0.3)]', 'text-white');
-                        circle.classList.add('border-slate-600', 'bg-hospitalDark', 'text-slate-400');
-                        circle.innerHTML = s;
-                        text.classList.remove('text-white', 'font-bold', 'text-slate-300');
-                        text.classList.add('text-slate-400', 'font-semibold');
-                    }
-                });
-            }
-
-            function showView(step) {
-                // Ocultar todas
-                Object.values(views).forEach(v => {
-                    if(!v.classList.contains('hidden')) {
-                        v.classList.remove('flex');
-                        v.classList.add('hidden');
-                        v.classList.remove('fade-enter-active');
-                    }
-                });
-                
-                // Mostrar objetivo
-                const targetView = views[step];
-                targetView.classList.remove('hidden');
-                targetView.classList.add('flex');
-                setTimeout(() => {
-                    targetView.classList.add('fade-enter-active');
-                }, 20);
-                
-                updateWizardVisuals(step);
-            }
-
-            // Ir al Paso 2
-            btnNext1.addEventListener('click', (e) => {
+            // --- 2. TRANSICIÓN A VISTA ÚNICA EXPANDIDA ---
+            btnContinueRole.addEventListener('click', (e) => {
                 e.preventDefault();
+                if (!selectedRole) return;
                 
-                // Configurar Vistas 2 y 3 basado en el rol
-                if (selectedRole === 'admin') {
-                    titleStep2.innerText = "Registro: Médico Administrador";
-                    fieldsStep2.innerHTML = `
-                        <div class="grid grid-cols-2 gap-4">
-                            ${renderInput('r-nombre', 'Nombre*', 'Tu nombre')}
-                            ${renderInput('r-apellidos', 'Apellidos*', 'Tus apellidos')}
-                        </div>
-                        ${renderInput('r-telefono', 'Teléfono de contacto*', '70000000', 'tel', '+591')}
-                        ${renderInput('r-correo', 'Correo electrónico*', 'dr.ejemplo@gmail.com', 'email')}
-                        ${renderSelect('r-pais', 'País de residencia*', [{val: 'BO', text: 'Bolivia (Estado Plurinacional de)'}, {val: 'OT', text: 'Otro'}])}
-                    `;
-                    
-                    fieldsStep3.innerHTML = `
-                        ${renderPassword('r-pwd', 'Contraseña*')}
-                        ${renderInput('r-clinic', 'Nombre del consultorio dental*', 'Ej. Dental Care')}
-                        ${renderInput('r-workers', 'Número de profesionales*', 'Ej. 3', 'number')}
-                        ${renderInput('r-location', 'Ubicación del consultorio*', 'Enlace o Link de Google Maps')}
-                    `;
-                    submitText.innerText = "Configurar Plan →";
-                    
-                } else if (selectedRole === 'patient') {
-                    titleStep2.innerText = "Registro: Paciente";
-                    fieldsStep2.innerHTML = `
-                        ${renderInput('r-nombre', 'Nombre Completo*', 'Juan Pérez')}
-                        ${renderInput('r-telefono', 'Teléfono de contacto*', '70000000', 'tel', '+591')}
-                        ${renderInput('r-correo', 'Correo electrónico*', 'tu@email.com', 'email')}
-                    `;
-                    
-                    fieldsStep3.innerHTML = `
-                        ${renderPassword('r-pwd', 'Contraseña*')}
-                        ${renderInput('r-code', 'Código de Uso Único*', 'Introduce el código único provisto por tu doctor')}
-                        <p class="text-xs text-slate-500 bg-sky-50 p-2 rounded-lg border border-sky-100">
-                            ⚠️ Este código te conecta directamente con tu historial clínico y consultorio correspondiente.
-                        </p>
-                    `;
-                    submitText.innerText = "Finalizar Registro ✓";
+                // Ocultar selección de roles con fade
+                stateSelectRole.classList.add('hidden');
+                stateSelectRole.classList.remove('flex');
+                
+                // Mostrar formulario con fade
+                stateExpandedForm.classList.remove('hidden');
+                stateExpandedForm.classList.add('flex');
+                
+                // Adaptar contenido y título según rol
+                if (selectedRole === 'medico-admin') {
+                    formTitle.innerText = "Registro: Médico Administrador";
+                    submitBtnText.innerText = "Configurar Plan →";
+                    adminFields.classList.remove('hidden');
+                    patientFields.classList.add('hidden');
+                } else {
+                    formTitle.innerText = "Registro: Paciente";
+                    submitBtnText.innerText = "Finalizar Registro ✓";
+                    patientFields.classList.remove('hidden');
+                    adminFields.classList.add('hidden');
                 }
                 
-                attachPasswordToggle();
-                currentStep = 2;
-                showView(2);
+                // Resetear scroll interno arriba
+                unifiedForm.scrollTop = 0;
             });
 
-            // Validador genérico
-            function validateContainer(container) {
-                let valid = true;
-                const inputs = container.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], input[type="number"], input[type="password"]');
-                
-                inputs.forEach(input => {
-                    const group = input.closest('.input-group');
-                    const errorMsg = group.querySelector('.error-msg');
-                    if (input.value.trim() === '') {
-                        valid = false;
-                        input.classList.add('border-red-400', 'focus:border-red-500', 'focus:ring-red-100');
-                        input.classList.remove('border-slate-200', 'focus:border-brandLight');
-                        if(errorMsg) errorMsg.classList.remove('hidden');
-                    } else {
-                        input.classList.remove('border-red-400', 'focus:border-red-500', 'focus:ring-red-100');
-                        input.classList.add('border-slate-200', 'focus:border-brandLight');
-                        if(errorMsg) errorMsg.classList.add('hidden');
-                    }
-                    
-                    // Limpiar al escribir
-                    input.addEventListener('input', () => {
-                        input.classList.remove('border-red-400', 'focus:border-red-500', 'focus:ring-red-100');
-                        input.classList.add('border-slate-200', 'focus:border-brandLight');
-                        if(errorMsg) errorMsg.classList.add('hidden');
-                    }, {once: true});
-                });
-                return valid;
-            }
-
-            // Ir al Paso 3
-            btnNext2.addEventListener('click', (e) => {
+            // --- 3. RETORNO DE FORMULARIO A ROLES ---
+            btnBackToRoles.addEventListener('click', (e) => {
                 e.preventDefault();
-                if (validateContainer(fieldsStep2)) {
-                    currentStep = 3;
-                    showView(3);
-                }
+                
+                // Ocultar formulario
+                stateExpandedForm.classList.add('hidden');
+                stateExpandedForm.classList.remove('flex');
+                
+                // Mostrar selección
+                stateSelectRole.classList.remove('hidden');
+                stateSelectRole.classList.add('flex');
+                
+                // Limpiar errores previos
+                clearAllErrors();
             });
 
-            // Botones de Atrás
-            backBtns.forEach(btn => {
+            // --- 4. CONTROL DE VISIBILIDAD DE CONTRASEÑA ---
+            document.querySelectorAll('.toggle-pwd-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     e.preventDefault();
-                    if (currentStep > 1) {
-                        currentStep--;
-                        showView(currentStep);
+                    const input = btn.previousElementSibling;
+                    const icon = btn.querySelector('.eye-icon');
+                    const isPwd = input.getAttribute('type') === 'password';
+                    
+                    input.setAttribute('type', isPwd ? 'text' : 'password');
+                    
+                    if (isPwd) {
+                        // Icono Ojo Cerrado
+                        icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path>';
+                    } else {
+                        // Icono Ojo Abierto
+                        icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>';
                     }
                 });
             });
 
-            // Toggle Password Function
-            function attachPasswordToggle() {
-                const toggles = document.querySelectorAll('.toggle-pwd-btn');
-                toggles.forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        const input = btn.previousElementSibling;
-                        const icon = btn.querySelector('.eye-icon');
-                        const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
-                        input.setAttribute('type', type);
-                        
-                        if(type === 'text') {
-                            icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path>';
-                        } else {
-                            icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>';
-                        }
-                    });
+            // --- 5. VALIDACIÓN DEL FORMULARIO Y REGISTRO ---
+            
+            function clearAllErrors() {
+                document.querySelectorAll('.error-msg').forEach(el => el.classList.add('hidden'));
+                document.querySelectorAll('input').forEach(el => {
+                    el.classList.remove('border-red-400', 'focus:border-red-500', 'focus:ring-red-100');
+                    el.classList.add('border-slate-200', 'focus:border-brandLight');
                 });
+                const adminMatchErr = document.getElementById('m-pwd-match-error');
+                const patientMatchErr = document.getElementById('p-pwd-match-error');
+                const adminTermsErr = document.getElementById('m-terms-error');
+                const patientTermsErr = document.getElementById('p-terms-error');
+                if (adminMatchErr) adminMatchErr.classList.add('hidden');
+                if (patientMatchErr) patientMatchErr.classList.add('hidden');
+                if (adminTermsErr) adminTermsErr.classList.add('hidden');
+                if (patientTermsErr) patientTermsErr.classList.add('hidden');
             }
 
-            // Submit Final
-            btnSubmit.addEventListener('click', (e) => {
+            function validateInput(input) {
+                const group = input.closest('.input-group');
+                if (!group) return true;
+                const errorMsg = group.querySelector('.error-msg');
+                
+                if (input.value.trim() === '') {
+                    input.classList.add('border-red-400', 'focus:border-red-500', 'focus:ring-red-100');
+                    input.classList.remove('border-slate-200', 'focus:border-brandLight');
+                    if (errorMsg) errorMsg.classList.remove('hidden');
+                    return false;
+                } else {
+                    input.classList.remove('border-red-400', 'focus:border-red-500', 'focus:ring-red-100');
+                    input.classList.add('border-slate-200', 'focus:border-brandLight');
+                    if (errorMsg) errorMsg.classList.add('hidden');
+                    return true;
+                }
+            }
+
+            // Validar al escribir
+            document.querySelectorAll('input').forEach(input => {
+                input.addEventListener('input', () => {
+                    validateInput(input);
+                    
+                    // Validación en vivo de contraseñas iguales
+                    if (selectedRole === 'medico-admin' && (input.id === 'm-pwd' || input.id === 'm-pwd-confirm')) {
+                        const p1 = document.getElementById('m-pwd').value;
+                        const p2 = document.getElementById('m-pwd-confirm').value;
+                        const matchErr = document.getElementById('m-pwd-match-error');
+                        if (p1 && p2 && p1 !== p2) {
+                            matchErr.classList.remove('hidden');
+                        } else {
+                            matchErr.classList.add('hidden');
+                        }
+                    }
+                    if (selectedRole === 'paciente' && (input.id === 'p-pwd' || input.id === 'p-pwd-confirm')) {
+                        const p1 = document.getElementById('p-pwd').value;
+                        const p2 = document.getElementById('p-pwd-confirm').value;
+                        const matchErr = document.getElementById('p-pwd-match-error');
+                        if (p1 && p2 && p1 !== p2) {
+                            matchErr.classList.remove('hidden');
+                        } else {
+                            matchErr.classList.add('hidden');
+                        }
+                    }
+                });
+            });
+
+            btnSubmitForm.addEventListener('click', (e) => {
                 e.preventDefault();
                 
-                const isValid = validateContainer(fieldsStep3);
+                let isFormValid = true;
                 
-                if (!termsCheckbox.checked) {
-                    errorTerms.classList.remove('hidden');
-                } else {
-                    errorTerms.classList.add('hidden');
-                }
-                
-                termsCheckbox.addEventListener('change', () => {
-                    if (termsCheckbox.checked) errorTerms.classList.add('hidden');
-                });
-
-                if (isValid && termsCheckbox.checked) {
-                    if (selectedRole === 'admin') {
-                        // Simulación de redirección a planes
+                if (selectedRole === 'medico-admin') {
+                    // Validar campos de Admin
+                    const requiredAdminIds = ['m-nombre', 'm-apellidos', 'm-telefono', 'm-correo', 'm-pwd', 'm-pwd-confirm', 'm-clinic', 'm-workers', 'm-location'];
+                    requiredAdminIds.forEach(id => {
+                        const input = document.getElementById(id);
+                        if (!validateInput(input)) isFormValid = false;
+                    });
+                    
+                    // Verificar Contraseñas
+                    const pwd1 = document.getElementById('m-pwd').value;
+                    const pwd2 = document.getElementById('m-pwd-confirm').value;
+                    const matchErr = document.getElementById('m-pwd-match-error');
+                    if (pwd1 !== pwd2) {
+                        matchErr.classList.remove('hidden');
+                        isFormValid = false;
+                    } else {
+                        matchErr.classList.add('hidden');
+                    }
+                    
+                    // Verificar Términos
+                    const terms = document.getElementById('m-terms');
+                    const termsErr = document.getElementById('m-terms-error');
+                    if (!terms.checked) {
+                        termsErr.classList.remove('hidden');
+                        isFormValid = false;
+                    } else {
+                        termsErr.classList.add('hidden');
+                    }
+                    
+                    // Redirección si es válido
+                    if (isFormValid) {
                         window.location.href = 'planes.html';
-                    } else if (selectedRole === 'patient') {
+                    }
+                    
+                } else if (selectedRole === 'paciente') {
+                    // Validar campos de Paciente
+                    const requiredPatientIds = ['p-nombre', 'p-telefono', 'p-correo', 'p-pwd', 'p-pwd-confirm', 'p-code'];
+                    requiredPatientIds.forEach(id => {
+                        const input = document.getElementById(id);
+                        if (!validateInput(input)) isFormValid = false;
+                    });
+                    
+                    // Verificar Contraseñas
+                    const pwd1 = document.getElementById('p-pwd').value;
+                    const pwd2 = document.getElementById('p-pwd-confirm').value;
+                    const matchErr = document.getElementById('p-pwd-match-error');
+                    if (pwd1 !== pwd2) {
+                        matchErr.classList.remove('hidden');
+                        isFormValid = false;
+                    } else {
+                        matchErr.classList.add('hidden');
+                    }
+                    
+                    // Verificar Términos
+                    const terms = document.getElementById('p-terms');
+                    const termsErr = document.getElementById('p-terms-error');
+                    if (!terms.checked) {
+                        termsErr.classList.remove('hidden');
+                        isFormValid = false;
+                    } else {
+                        termsErr.classList.add('hidden');
+                    }
+                    
+                    // Alerta y Redirección si es válido
+                    if (isFormValid) {
                         alert("¡Cuenta de Paciente creada con éxito!");
                         window.location.href = 'login.html';
                     }
                 }
             });
-
         });
     </script>
 </body>
