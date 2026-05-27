@@ -451,33 +451,48 @@
                     </div>
 
                     <!-- CAMPOS DEL PACIENTE -->
-                    <div id="patient-fields" class="space-y-4 hidden">
-                        <!-- Nombre Completo -->
-                        <div class="input-group">
-                            <label for="p-nombre" class="block text-sm font-semibold text-slate-700 mb-1">Nombre Completo*</label>
-                            <input type="text" id="p-nombre" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-brandLight focus:ring-2 focus:ring-sky-100 outline-none transition-all text-slate-700 text-sm" placeholder="Juan Pérez">
-                            <p class="error-msg text-xs text-red-500 font-semibold mt-1 hidden">Este campo es obligatorio.</p>
-                        </div>
-
-                        <!-- Teléfono de contacto con prefijo -->
-                        <div class="input-group">
-                            <label for="p-telefono" class="block text-sm font-semibold text-slate-700 mb-1">Teléfono de contacto*</label>
-                            <div class="relative flex items-center">
-                                <div class="absolute left-4 inset-y-0 flex items-center pointer-events-none font-semibold text-slate-500 text-sm">+591</div>
-                                <input type="tel" id="p-telefono" class="w-full pl-16 pr-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-brandLight focus:ring-2 focus:ring-sky-100 outline-none transition-all text-slate-700 text-sm" placeholder="70000000">
-                            </div>
-                            <p class="error-msg text-xs text-red-500 font-semibold mt-1 hidden">Este campo es obligatorio.</p>
-                        </div>
-
-                        <!-- Correo Electrónico -->
-                        <div class="input-group">
-                            <label for="p-correo" class="block text-sm font-semibold text-slate-700 mb-1">Correo electrónico*</label>
-                            <input type="email" id="p-correo" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-brandLight focus:ring-2 focus:ring-sky-100 outline-none transition-all text-slate-700 text-sm" placeholder="tu@email.com">
-                            <p class="error-msg text-xs text-red-500 font-semibold mt-1 hidden">Este campo es obligatorio.</p>
-                        </div>
-
-                        <!-- Contraseña y Confirmar Contraseña -->
+                    <div id="patient-fields" class="space-y-6 hidden">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- Nombre -->
+                            <div class="input-group">
+                                <label for="p-nombre" class="block text-sm font-semibold text-slate-700 mb-1">Nombre*</label>
+                                <input type="text" id="p-nombre" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-brandLight focus:ring-2 focus:ring-sky-100 outline-none transition-all text-slate-700 text-sm" placeholder="Juan">
+                            </div>
+                            
+                            <!-- Vacío para alinear en grid -->
+                            <div class="hidden md:block"></div>
+
+                            <!-- Primer Apellido -->
+                            <div class="input-group">
+                                <label for="p-apellido1" class="block text-sm font-semibold text-slate-700 mb-1">Primer Apellido*</label>
+                                <input type="text" id="p-apellido1" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-brandLight focus:ring-2 focus:ring-sky-100 outline-none transition-all text-slate-700 text-sm" placeholder="Pérez">
+                            </div>
+
+                            <!-- Segundo Apellido -->
+                            <div class="input-group">
+                                <label for="p-apellido2" class="block text-sm font-semibold text-slate-700 mb-1">Segundo Apellido*</label>
+                                <input type="text" id="p-apellido2" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-brandLight focus:ring-2 focus:ring-sky-100 outline-none transition-all text-slate-700 text-sm" placeholder="Gómez">
+                            </div>
+
+                            <!-- Teléfono (Opcional) -->
+                            <div class="input-group md:col-span-2">
+                                <label for="p-telefono" class="block text-sm font-semibold text-slate-700 mb-1">Teléfono (Opcional)</label>
+                                <input type="tel" id="p-telefono" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-brandLight focus:ring-2 focus:ring-sky-100 outline-none transition-all text-slate-700 text-sm" placeholder="70000000">
+                                <p class="text-[11px] text-slate-500 mt-1.5 font-medium">
+                                    💡 Opcional. Si lo registras, servirá como canal alternativo de contacto.
+                                </p>
+                            </div>
+
+                            <!-- Correo electrónico -->
+                            <div class="input-group md:col-span-2">
+                                <label for="p-correo" class="block text-sm font-semibold text-slate-700 mb-1">Correo electrónico*</label>
+                                <input type="email" id="p-correo" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-brandLight focus:ring-2 focus:ring-sky-100 outline-none transition-all text-slate-700 text-sm" placeholder="tu@email.com">
+                                <p class="text-[11px] text-slate-500 mt-1.5 font-medium">
+                                    📧 Este correo será tu usuario único para iniciar sesión en el sistema.
+                                </p>
+                            </div>
+
+                            <!-- Contraseña -->
                             <div class="input-group">
                                 <label for="p-pwd" class="block text-sm font-semibold text-slate-700 mb-1">Contraseña*</label>
                                 <div class="relative">
@@ -486,41 +501,44 @@
                                         <svg class="w-4 h-4 eye-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
                                     </button>
                                 </div>
-                                <p class="error-msg text-xs text-red-500 font-semibold mt-1 hidden">La contraseña es obligatoria.</p>
                             </div>
+
+                            <!-- Confirmar Contraseña -->
                             <div class="input-group">
-                                <label for="p-pwd-confirm" class="block text-sm font-semibold text-slate-700 mb-1">Confirmar*</label>
+                                <label for="p-pwd-confirm" class="block text-sm font-semibold text-slate-700 mb-1">Confirmar Contraseña*</label>
                                 <div class="relative">
                                     <input type="password" id="p-pwd-confirm" class="w-full pl-4 pr-10 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-brandLight focus:ring-2 focus:ring-sky-100 outline-none transition-all text-slate-700 text-sm" placeholder="••••••••">
                                     <button type="button" class="toggle-pwd-btn absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-brandDark transition-colors">
                                         <svg class="w-4 h-4 eye-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
                                     </button>
                                 </div>
-                                <p class="error-msg text-xs text-red-500 font-semibold mt-1 hidden">La contraseña es obligatoria.</p>
+                            </div>
+
+                            <div class="md:col-span-2">
+                                <p class="text-[11px] text-slate-500 font-medium">
+                                    🔒 Recomendación: Mínimo 8 caracteres, usa letras mayúsculas, minúsculas, números y símbolos.
+                                </p>
+                            </div>
+
+                            <!-- Código de Uso Único -->
+                            <div class="input-group md:col-span-2">
+                                <label for="p-code" class="block text-sm font-semibold text-slate-700 mb-1">Código de Uso Único*</label>
+                                <input type="text" id="p-code" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-brandLight focus:ring-2 focus:ring-sky-100 outline-none transition-all text-slate-700 text-sm" placeholder="Introduce el código único provisto por tu doctor">
+                                <p class="text-[11px] text-slate-500 bg-sky-50 p-2.5 rounded-lg border border-sky-100 mt-2 leading-relaxed font-medium">
+                                    ⚠️ Este código es proporcionado por tu médico tratante para conectar de forma automática tu historial clínico y tu consultorio correspondiente.
+                                </p>
                             </div>
                         </div>
-                        <p id="p-pwd-match-error" class="text-xs text-red-500 font-semibold hidden">Las contraseñas no coinciden.</p>
 
-                        <!-- Código de Uso Único -->
-                        <div class="input-group">
-                            <label for="p-code" class="block text-sm font-semibold text-slate-700 mb-1">Código de Uso Único*</label>
-                            <input type="text" id="p-code" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-brandLight focus:ring-2 focus:ring-sky-100 outline-none transition-all text-slate-700 text-sm" placeholder="Introduce el código único provisto por tu doctor">
-                            <p class="error-msg text-xs text-red-500 font-semibold mt-1 hidden">Este campo es obligatorio.</p>
-                            <p class="text-[11px] text-slate-500 bg-sky-50 p-2 rounded-lg border border-sky-100 mt-2 leading-relaxed">
-                                ⚠️ Este código te conecta directamente con tu historial clínico y consultorio correspondiente.
-                            </p>
-                        </div>
-
-                        <!-- Términos -->
+                        <!-- Checkbox Términos -->
                         <div class="input-group flex items-start pt-1">
                             <div class="flex items-center h-5">
                                 <input id="p-terms" type="checkbox" class="w-4 h-4 text-brandDark bg-slate-100 border-slate-300 rounded focus:ring-brandLight">
                             </div>
-                            <label for="p-terms" class="ml-2 text-xs text-slate-600 leading-normal">
-                                Acepto las <a href="#" class="font-medium text-brandDark hover:underline">políticas de privacidad</a>*
+                            <label for="p-terms" class="ml-2 text-xs text-slate-600 leading-normal font-semibold">
+                                Acepto las <a href="#" class="font-medium text-brandDark hover:underline">políticas de privacidad y términos de servicio</a>*
                             </label>
                         </div>
-                        <p id="p-terms-error" class="text-xs text-red-500 font-semibold hidden">Debe aceptar los términos para continuar.</p>
 
                         <!-- Reestructuración del Pie del Formulario Paciente -->
                         <div class="mt-6 space-y-4">
@@ -779,9 +797,7 @@
                 updateDynamicFields(); // Ejecutar al cargar
             }
 
-            // --- 7. VALIDACIÓN DEL FORMULARIO Y REGISTRO ---
-            
-            // Declarative validation rules
+            // Declarative validation rules (Admin)
             const adminRules = {
                 'm-nombre': {
                     validate: val => val.trim() !== '' && /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(val),
@@ -843,6 +859,48 @@
                 }
             };
 
+            // Declarative validation rules (Paciente)
+            const pacienteRules = {
+                'p-nombre': {
+                    validate: val => val.trim() !== '' && /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(val),
+                    message: "Este campo es obligatorio y solo debe contener letras, espacios y acentos."
+                },
+                'p-apellido1': {
+                    validate: val => val.trim() !== '' && /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(val),
+                    message: "Este campo es obligatorio y solo debe contener letras."
+                },
+                'p-apellido2': {
+                    validate: val => val.trim() !== '' && /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(val),
+                    message: "Este campo es obligatorio y solo debe contener letras."
+                },
+                'p-telefono': {
+                    validate: val => val.trim() === '' || /^\d+$/.test(val),
+                    message: "El teléfono solo debe contener números."
+                },
+                'p-correo': {
+                    validate: val => val.trim() !== '' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val),
+                    message: "Introduce un correo electrónico válido."
+                },
+                'p-pwd': {
+                    validate: val => val !== '' && /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/.test(val),
+                    message: "La contraseña debe tener mínimo 8 caracteres, letras mayúsculas, minúsculas, números y símbolos.",
+                    emptyMsg: "La contraseña es obligatoria."
+                },
+                'p-pwd-confirm': {
+                    validate: (val, all) => val !== '' && val === all['p-pwd'],
+                    message: "Las contraseñas no coinciden.",
+                    emptyMsg: "La contraseña es obligatoria."
+                },
+                'p-code': {
+                    validate: val => val.trim() !== '',
+                    message: "El código de uso único es obligatorio."
+                },
+                'p-terms': {
+                    validate: (val, all, el) => el.checked,
+                    message: "Debes aceptar los términos y políticas para continuar."
+                }
+            };
+
             function clearAllErrors() {
                 // Borrar mensajes de error inyectados dinámicamente
                 document.querySelectorAll('.error-message-node').forEach(el => el.remove());
@@ -867,12 +925,13 @@
                 const input = document.getElementById(id);
                 if (!input) return true;
 
-                const rule = adminRules[id];
+                const rules = selectedRole === 'medico-admin' ? adminRules : pacienteRules;
+                const rule = rules[id];
                 if (!rule) return true;
 
                 const val = input.type === 'checkbox' ? input.checked : input.value;
                 const allValues = {};
-                Object.keys(adminRules).forEach(k => {
+                Object.keys(rules).forEach(k => {
                     const el = document.getElementById(k);
                     if (el) allValues[k] = el.value;
                 });
@@ -916,14 +975,15 @@
                     input.classList.add('border-slate-200', 'focus:border-brandLight', 'focus:ring-sky-100');
                 }
 
-                if (triggerMatchUpdate && id === 'm-pwd') {
-                    validateField('m-pwd-confirm', false);
+                if (triggerMatchUpdate) {
+                    if (id === 'm-pwd') validateField('m-pwd-confirm', false);
+                    if (id === 'p-pwd') validateField('p-pwd-confirm', false);
                 }
 
                 return isValid;
             }
 
-            // Validar de forma reactiva
+            // Validar de forma reactiva (Admin)
             Object.keys(adminRules).forEach(id => {
                 const input = document.getElementById(id);
                 if (!input) return;
@@ -936,50 +996,17 @@
                 }
             });
 
-            // Para la sección paciente, mantenemos validateInput por compatibilidad
-            function validateInput(input) {
-                const group = input.closest('.input-group');
-                if (!group) return true;
-                const errorMsg = group.querySelector('.error-msg');
-                
-                if (input.value.trim() === '') {
-                    input.classList.add('border-red-400', 'focus:border-red-500', 'focus:ring-red-100');
-                    input.classList.remove('border-slate-200', 'focus:border-brandLight');
-                    if (errorMsg) errorMsg.classList.remove('hidden');
-                    return false;
+            // Validar de forma reactiva (Paciente)
+            Object.keys(pacienteRules).forEach(id => {
+                const input = document.getElementById(id);
+                if (!input) return;
+
+                if (input.type === 'checkbox' || input.tagName === 'SELECT') {
+                    input.addEventListener('change', () => validateField(id));
                 } else {
-                    input.classList.remove('border-red-400', 'focus:border-red-500', 'focus:ring-red-100');
-                    input.classList.add('border-slate-200', 'focus:border-brandLight');
-                    if (errorMsg) errorMsg.classList.add('hidden');
-                    return true;
+                    input.addEventListener('input', () => validateField(id));
+                    input.addEventListener('blur', () => validateField(id));
                 }
-            }
-
-            // Validar al escribir e interactuar en vivo (Paciente)
-            document.querySelectorAll('#patient-fields input, #patient-fields select').forEach(input => {
-                const clearCurrentError = () => {
-                    const group = input.closest('.input-group');
-                    if (group) {
-                        group.querySelectorAll('.error-message-node').forEach(el => el.remove());
-                    }
-                    input.classList.remove('border-red-500', 'focus:ring-red-500', 'border-red-400', 'focus:border-red-500', 'focus:ring-red-100');
-                    input.classList.add('border-slate-200', 'focus:border-brandLight');
-                };
-
-                input.addEventListener('input', () => {
-                    clearCurrentError();
-                    if (selectedRole === 'paciente' && (input.id === 'p-pwd' || input.id === 'p-pwd-confirm')) {
-                        const p1 = document.getElementById('p-pwd').value;
-                        const p2 = document.getElementById('p-pwd-confirm').value;
-                        const matchErr = document.getElementById('p-pwd-match-error');
-                        if (p1 && p2 && p1 !== p2) {
-                            matchErr.classList.remove('hidden');
-                        } else {
-                            matchErr.classList.add('hidden');
-                        }
-                    }
-                });
-                input.addEventListener('change', clearCurrentError);
             });
 
             // --- 8. ENVÍO DE FORMULARIO: MÉDICO ADMINISTRADOR (Motor Defensivo) ---
@@ -1012,38 +1039,19 @@
                 btnPatientSubmit.addEventListener('click', (e) => {
                     e.preventDefault();
                     
-                    let isFormValid = true;
+                    let firstInvalidElement = null;
                     
-                    // Validar campos de Paciente
-                    const requiredPatientIds = ['p-nombre', 'p-telefono', 'p-correo', 'p-pwd', 'p-pwd-confirm', 'p-code'];
-                    requiredPatientIds.forEach(id => {
-                        const input = document.getElementById(id);
-                        if (input && !validateInput(input)) isFormValid = false;
+                    Object.keys(pacienteRules).forEach(id => {
+                        const isValid = validateField(id);
+                        if (!isValid && !firstInvalidElement) {
+                            firstInvalidElement = document.getElementById(id);
+                        }
                     });
                     
-                    // Verificar Contraseñas
-                    const pwd1 = document.getElementById('p-pwd').value;
-                    const pwd2 = document.getElementById('p-pwd-confirm').value;
-                    const matchErr = document.getElementById('p-pwd-match-error');
-                    if (pwd1 !== pwd2) {
-                        matchErr.classList.remove('hidden');
-                        isFormValid = false;
+                    if (firstInvalidElement) {
+                        firstInvalidElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        firstInvalidElement.focus();
                     } else {
-                        matchErr.classList.add('hidden');
-                    }
-                    
-                    // Verificar Términos
-                    const terms = document.getElementById('p-terms');
-                    const termsErr = document.getElementById('p-terms-error');
-                    if (!terms.checked) {
-                        termsErr.classList.remove('hidden');
-                        isFormValid = false;
-                    } else {
-                        termsErr.classList.add('hidden');
-                    }
-                    
-                    // Alerta y Redirección si es válido
-                    if (isFormValid) {
                         alert("¡Cuenta de Paciente creada con éxito!");
                         window.location.href = 'login.html';
                     }
