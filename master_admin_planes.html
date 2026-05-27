@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DentaSync Cloud - Modo Desarrollador</title>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome v6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brandDark: '#0284c7',
+                        brandLight: '#0ea5e9',
+                        bgDark: '#0F172A',
+                        cardDark: '#1E293B',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-bgDark text-slate-100 min-h-screen font-sans flex flex-col antialiased selection:bg-brandLight/30 selection:text-white">
+
+    <!-- HEADER / CONTROL SUPERIOR -->
+    <header class="border-b border-slate-850 bg-slate-900/60 backdrop-blur-md sticky top-0 z-50 px-6 py-4">
+        <div class="max-w-6xl mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brandDark to-brandLight flex items-center justify-center shadow-lg shadow-sky-500/20">
+                    <span class="text-white font-extrabold text-lg tracking-wider">DS</span>
+                </div>
+                <div>
+                    <h1 class="text-lg font-extrabold tracking-tight text-white flex items-center gap-2">
+                        DentaSync Cloud 
+                        <span class="text-[10px] uppercase bg-amber-500/20 text-amber-400 px-2 py-0.5 rounded-full font-bold tracking-wider border border-amber-500/30">Dev Mode</span>
+                    </h1>
+                    <p class="text-xs text-slate-400 font-medium">Gestión Central de Suscripciones (Modo Desarrollador)</p>
+                </div>
+            </div>
+            
+            <a href="login.html" class="flex items-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-xl text-xs font-bold transition-all border border-slate-700/50 shadow-inner group">
+                <i class="fa-solid fa-arrow-left group-hover:-translate-x-0.5 transition-transform"></i>
+                <span>Salir del Panel</span>
+            </a>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-6xl w-full mx-auto px-6 py-10 space-y-8">
+        
+        <!-- WARNING BANNER / STATUS -->
+        <div id="connection-status-banner" class="hidden flex items-center gap-3 bg-amber-500/10 border border-amber-500/20 text-amber-300 p-4 rounded-2xl shadow-sm animate-pulse-slow">
+            <i class="fa-solid fa-triangle-exclamation text-xl"></i>
+            <div>
+                <h4 class="font-bold text-sm">Modo Demostración / Offline Activo</h4>
+                <p class="text-xs text-amber-400/80 mt-0.5 font-medium">No se detectaron credenciales reales de Supabase en <code class="bg-amber-500/20 px-1.5 py-0.5 rounded font-mono">supabase-config.js</code>. Los cambios se guardarán localmente en la caché del navegador para esta demostración.</p>
+            </div>
+        </div>
+
+        <div id="demo-banner" class="hidden flex items-center gap-3 bg-amber-500/10 border border-amber-500/20 text-amber-300 p-4 rounded-2xl shadow-sm animate-pulse-slow">
+            <i class="fa-solid fa-triangle-exclamation text-xl"></i>
+            <div>
+                <h4 class="font-bold text-sm">Modo Demo Activo (Sin conexión a la nube)</h4>
+                <p class="text-xs text-amber-400/80 mt-0.5 font-medium">Se produjo un error de conexión a Supabase. Cargando datos de contingencia locales (localStorage).</p>
+            </div>
+        </div>
+
+        <!-- INTRO MODO DESARROLLADOR -->
+        <div class="bg-gradient-to-r from-slate-900 to-slate-800 border border-slate-800 p-8 rounded-3xl relative overflow-hidden shadow-2xl">
+            <div class="absolute -right-8 -top-8 w-32 h-32 rounded-full bg-brandLight opacity-10 blur-2xl"></div>
+            <div class="relative z-10 space-y-3">
+                <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold bg-sky-500/10 text-brandLight border border-sky-500/20">
+                    <span class="w-1.5 h-1.5 rounded-full bg-brandLight animate-ping"></span>
+                    Conexión Directa a la Nube
+                </div>
+                <h2 class="text-2xl font-extrabold text-white tracking-tight">Consola de Control de Precios</h2>
+                <p class="text-sm text-slate-400 max-w-3xl leading-relaxed">
+                    Esta interfaz secreta permite auditar y redefinir los montos de facturación mensual del Software como Servicio (SaaS). Las modificaciones afectarán de manera instantánea y reactiva las tarifas que se despliegan en el selector global de planes.
+                </p>
+            </div>
+        </div>
+
+        <!-- LOADING OVERLAY / SPINNER -->
+        <div id="loading-overlay" class="flex flex-col items-center justify-center py-20 space-y-4">
+            <div class="w-12 h-12 border-4 border-slate-800 border-t-brandLight rounded-full animate-spin"></div>
+            <p class="text-sm text-slate-400 font-medium">Estableciendo túnel y leyendo base de datos...</p>
+        </div>
+
+        <!-- GRID DE TARJETAS / PLANES -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 animate-fadeIn hidden" id="planes-grid">
+        </div>
+
+    </main>
+
+    <!-- NOTIFICACIÓN FLOTANTE (TOAST) -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 flex items-center gap-3 bg-emerald-500 text-white font-bold px-6 py-4 rounded-2xl shadow-xl shadow-emerald-950/20 border border-emerald-400 translate-y-20 opacity-0 pointer-events-none transition-all duration-300">
+        <i class="fa-solid fa-cloud-arrow-up text-lg"></i>
+        <span id="toast-message">Tarifa actualizada en la nube con éxito</span>
+    </div>
+
+    <!-- SCRIPT DE CONEXIÓN Y LÓGICA -->
+    <script type="module">
+        import { supabase } from './supabase-config.js';
+
+        // Mock data base en caso de fallo o configuración vacía
+        const mockPlanes = [
+            { nombre: 'Gratuito', precio_mensual: 0, limite_pacientes_mes: 10, limite_consultorios_simultaneos: 1 },
+            { nombre: 'Básico', precio_mensual: 150, limite_pacientes_mes: 100, limite_consultorios_simultaneos: 3 },
+            { nombre: 'Avanzado', precio_mensual: 350, limite_pacientes_mes: 9999, limite_consultorios_simultaneos: 10 }
+        ];
+
+        let isDemoMode = false;
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                // Verificar si las credenciales siguen por defecto de forma segura
+                try {
+                    const configTest = await fetch('./supabase-config.js');
+                    if (configTest.ok) {
+                        const text = await configTest.text();
+                        if (text.includes('YOUR_SUPABASE_URL_HERE') || text.includes('YOUR_SUPABASE_ANON_KEY_HERE')) {
+                            isDemoMode = true;
+                            document.getElementById('connection-status-banner')?.classList.remove('hidden');
+                        }
+                    }
+                } catch (e) {
+                    console.warn("No se pudo comprobar el archivo de configuración de forma remota, se asume configuración actual.", e);
+                }
+
+                // Inicializar base de datos local en demo si no existe
+                if (isDemoMode && !localStorage.getItem('dentas_mock_planes')) {
+                    localStorage.setItem('dentas_mock_planes', JSON.stringify(mockPlanes));
+                }
+
+                await cargarPlanes();
+            } catch (critError) {
+                console.error("Error crítico irrecuperable en la inicialización:", critError);
+                // Última línea de defensa en caso de fallo crítico
+                document.getElementById('loading-overlay')?.classList.add('hidden');
+                document.getElementById('planes-grid')?.classList.remove('hidden');
+            }
+        });
+
+        function cargarPlanesDesdeLocalStorage() {
+            if (!localStorage.getItem('dentas_mock_planes')) {
+                localStorage.setItem('dentas_mock_planes', JSON.stringify(mockPlanes));
+            }
+            return JSON.parse(localStorage.getItem('dentas_mock_planes')) || mockPlanes;
+        }
+
+        async function cargarPlanes() {
+            const spinner = document.getElementById('loading-overlay');
+            const grid = document.getElementById('planes-grid');
+            
+            spinner?.classList.remove('hidden');
+            grid?.classList.add('hidden');
+
+            try {
+                if (isDemoMode) {
+                    throw new Error("Modo demostración forzado o configuración de credenciales vacía.");
+                }
+
+                // Intentar leer de Supabase
+                const { data, error } = await supabase
+                    .from('planes_suscripcion')
+                    .select('id, nombre, precio_mensual, limite_pacientes_mes, limite_consultorios_simultaneos')
+                    .order('precio_mensual', { ascending: true });
+
+                if (error) throw error;
+
+                if (data && data.length > 0) {
+                    renderizarPlanes(data);
+                } else {
+                    // Sembrar datos de prueba si la tabla en Supabase está vacía
+                    console.log("Tabla de planes vacía en Supabase. Insertando mockup...");
+                    await supabase.from('planes_suscripcion').insert(mockPlanes);
+                    
+                    const { data: refetched } = await supabase
+                        .from('planes_suscripcion')
+                        .select('*')
+                        .order('precio_mensual', { ascending: true });
+                    
+                    renderizarPlanes(refetched || mockPlanes);
+                }
+
+            } catch (error) {
+                console.error("Error crítico de conexión a Supabase:", error);
+                console.warn("Conmutando automáticamente a base de datos local (localStorage)...");
+                
+                isDemoMode = true;
+                
+                // Mostrar banner de contingencia local
+                const demoBanner = document.getElementById('demo-banner');
+                demoBanner?.classList.remove('hidden');
+
+                const localData = cargarPlanesDesdeLocalStorage();
+                renderizarPlanes(localData);
+
+            } finally {
+                // REGLA DE ORO: Ocultar el spinner y mostrar el grid bajo cualquier circunstancia usando optional chaining
+                spinner?.classList.add('hidden');
+                grid?.classList.remove('hidden');
+            }
+        }
+
+        function renderizarPlanes(planes) {
+            const grid = document.getElementById('planes-grid');
+            grid.innerHTML = '';
+
+            planes.forEach(plan => {
+                const limitPacientes = plan.limite_pacientes_mes >= 9999 ? 'Ilimitados' : `${plan.limite_pacientes_mes} pacientes`;
+                const limitConsultorios = plan.limite_consultorios_simultaneos >= 9999 ? 'Ilimitados' : `${plan.limite_consultorios_simultaneos} salas`;
+                
+                const card = document.createElement('div');
+                card.className = 'bg-slate-900 border border-slate-800 rounded-3xl p-6 hover:border-brandLight/40 transition-all duration-300 flex flex-col justify-between hover:shadow-xl hover:shadow-brandDark/5 group';
+                
+                card.innerHTML = `
+                    <div class="space-y-5">
+                        <!-- Cabecera Tarjeta -->
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs uppercase font-extrabold tracking-widest text-brandLight bg-brandLight/10 px-3 py-1 rounded-full border border-brandLight/20">
+                                Plan ${plan.nombre}
+                            </span>
+                            <div class="w-8 h-8 rounded-lg bg-slate-800/80 flex items-center justify-center text-slate-400 group-hover:text-brandLight transition-colors">
+                                <i class="fa-solid ${plan.nombre === 'Gratuito' ? 'fa-gift' : plan.nombre === 'Básico' ? 'fa-shield-halved' : 'fa-gem'}"></i>
+                            </div>
+                        </div>
+
+                        <!-- Detalles de Límites -->
+                        <div class="space-y-2.5 pt-2">
+                            <div class="flex items-center justify-between text-xs font-semibold text-slate-400">
+                                <span>Límite de Pacientes:</span>
+                                <span class="text-slate-200 font-bold">${limitPacientes}</span>
+                            </div>
+                            <div class="flex items-center justify-between text-xs font-semibold text-slate-400">
+                                <span>Límite de Consultorios:</span>
+                                <span class="text-slate-200 font-bold">${limitConsultorios}</span>
+                            </div>
+                        </div>
+
+                        <!-- Precio Actual -->
+                        <div class="pt-4 border-t border-slate-850">
+                            <span class="text-xs text-slate-400 font-semibold block">Tarifa Mensual Actual:</span>
+                            <div class="flex items-baseline gap-1 mt-1">
+                                <span class="text-3xl font-extrabold text-white">${plan.precio_mensual}</span>
+                                <span class="text-xs font-bold text-slate-400">Bs. / mes</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Editor de Configuración -->
+                    <div class="mt-8 pt-6 border-t border-slate-800/60 space-y-4">
+                        <div class="space-y-1">
+                            <label class="block text-[10px] uppercase font-bold tracking-wider text-slate-400">Precio Mensual (Bs.)</label>
+                            <input type="number" min="0" value="${plan.precio_mensual}" class="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs outline-none text-white focus:border-brandLight focus:ring-1 focus:ring-brandLight font-bold" id="input-price-${plan.nombre}">
+                        </div>
+                        <div class="space-y-1">
+                            <label class="block text-[10px] uppercase font-bold tracking-wider text-slate-400">Límite Pacientes / mes</label>
+                            <input type="number" min="0" value="${plan.limite_pacientes_mes}" class="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs outline-none text-white focus:border-brandLight focus:ring-1 focus:ring-brandLight font-bold" id="input-patients-${plan.nombre}">
+                        </div>
+                        <div class="space-y-1">
+                            <label class="block text-[10px] uppercase font-bold tracking-wider text-slate-400">Límite Consultorios / sim</label>
+                            <input type="number" min="0" value="${plan.limite_consultorios_simultaneos}" class="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs outline-none text-white focus:border-brandLight focus:ring-1 focus:ring-brandLight font-bold" id="input-clinics-${plan.nombre}">
+                        </div>
+                        <button class="w-full mt-2 bg-brandDark hover:bg-brandLight text-white py-2.5 rounded-xl text-xs font-extrabold transition-all hover:shadow-lg hover:shadow-brandDark/10 flex items-center justify-center gap-1.5" id="btn-update-${plan.nombre}">
+                            <i class="fa-solid fa-bolt text-[10px]"></i> Actualizar Configuración ⚡
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+
+                // Asignar evento dinámicamente
+                document.getElementById(`btn-update-${plan.nombre}`).addEventListener('click', () => {
+                    actualizarConfiguracion(plan.nombre);
+                });
+            });
+        }
+
+        async function actualizarConfiguracion(nombrePlan) {
+            const priceInput = document.getElementById(`input-price-${nombrePlan}`);
+            const patientsInput = document.getElementById(`input-patients-${nombrePlan}`);
+            const clinicsInput = document.getElementById(`input-clinics-${nombrePlan}`);
+
+            const nuevoPrecio = parseFloat(priceInput.value);
+            const nuevoLimitePacientes = parseInt(patientsInput.value);
+            const nuevoLimiteConsultorios = parseInt(clinicsInput.value);
+
+            if (isNaN(nuevoPrecio) || nuevoPrecio < 0 || isNaN(nuevoLimitePacientes) || nuevoLimitePacientes < 0 || isNaN(nuevoLimiteConsultorios) || nuevoLimiteConsultorios < 0) {
+                alert("Por favor, introduce valores numéricos válidos (mayores o iguales a 0).");
+                return;
+            }
+
+            const spinner = document.getElementById('loading-overlay');
+            const grid = document.getElementById('planes-grid');
+            
+            spinner?.classList.remove('hidden');
+            grid?.classList.add('hidden');
+
+            try {
+                if (isDemoMode) {
+                    // Actualizar LocalStorage
+                    const localData = JSON.parse(localStorage.getItem('dentas_mock_planes')) || mockPlanes;
+                    const updated = localData.map(p => {
+                        if (p.nombre === nombrePlan) {
+                            return { 
+                                ...p, 
+                                precio_mensual: nuevoPrecio,
+                                limite_pacientes_mes: nuevoLimitePacientes,
+                                limite_consultorios_simultaneos: nuevoLimiteConsultorios
+                            };
+                        }
+                        return p;
+                    });
+                    localStorage.setItem('dentas_mock_planes', JSON.stringify(updated));
+                    
+                    showToast(`¡Configuración del plan ${nombrePlan} actualizada localmente!`);
+                    await cargarPlanes();
+                } else {
+                    const { data, error } = await supabase
+                        .from('planes_suscripcion')
+                        .update({ 
+                            precio_mensual: nuevoPrecio,
+                            limite_pacientes_mes: nuevoLimitePacientes,
+                            limite_consultorios_simultaneos: nuevoLimiteConsultorios
+                        })
+                        .eq('nombre', nombrePlan);
+
+                    if (error) throw error;
+
+                    showToast(`¡Configuración del plan ${nombrePlan} actualizada en la nube!`);
+                    await cargarPlanes();
+                }
+            } catch (err) {
+                console.error("Error al actualizar la configuración en Supabase:", err);
+                alert(`No se pudo actualizar la configuración del plan: ${err.message}`);
+            } finally {
+                // REGLA DE ORO: Ocultar el spinner y liberar la UI pase lo que pase
+                spinner?.classList.add('hidden');
+                grid?.classList.remove('hidden');
+            }
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-message').innerText = message;
+            
+            toast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+                toast.classList.remove('translate-y-0', 'opacity-100');
+            }, 3000);
+        }
+    </script>
+
+    <style>
+        .animate-pulse-slow {
+            animation: pulse 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        .border-slate-850 {
+            border-color: rgba(30, 41, 59, 0.5);
+        }
+    </style>
+</body>
+</html>

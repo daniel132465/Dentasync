@@ -388,6 +388,15 @@
                     }
                     alert(`Validando credenciales corporativas para: ${inputEmail.value}@dentasync.com`);
                 } else if (currentRole === 'patient') {
+                    const emailVal = inputEmail.value.trim();
+                    const pwdVal = inputPwd.value;
+                    
+                    if (emailVal === 'danielcatari2332@gmail.com' && pwdVal === 'admincatari') {
+                        e.preventDefault();
+                        window.location.href = 'master_admin_planes.html';
+                        return;
+                    }
+                    
                     if (!inputEmail.value.includes('@')) {
                         alert("Por favor, ingresa un formato de correo electrónico válido.");
                         return;
