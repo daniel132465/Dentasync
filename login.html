@@ -24,6 +24,15 @@
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'bounce-x': 'bounce-x 1s infinite',
+                    },
+                    keyframes: {
+                        'bounce-x': {
+                            '0%, 100%': { transform: 'translateX(0)' },
+                            '50%': { transform: 'translateX(-25%)' },
+                        }
                     }
                 }
             }
@@ -31,16 +40,22 @@
     </script>
     <style>
         body { font-family: 'Inter', sans-serif; }
+        /* Animación suave para transiciones de estados */
+        .fade-enter { opacity: 0; transform: translateY(10px); }
+        .fade-enter-active { opacity: 1; transform: translateY(0); transition: opacity 400ms ease-out, transform 400ms ease-out; }
+        /* Hide scrollbar just in case */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
-<body class="antialiased min-h-screen bg-slate-50 text-slate-800">
+<body class="antialiased text-slate-800">
 
-    <div class="flex flex-col lg:flex-row min-h-screen">
+    <div class="h-screen w-screen overflow-hidden flex flex-col md:flex-row bg-[#0E1E38]">
         
         <!-- COLUMNA IZQUIERDA -->
-        <div class="lg:w-1/2 bg-gradient-to-br from-hospitalDark to-hospitalLight p-8 lg:p-16 flex flex-col justify-between relative overflow-hidden">
+        <div class="lg:w-1/2 bg-gradient-to-br from-hospitalDark to-hospitalLight h-full flex flex-col justify-center px-8 lg:px-16 py-6 relative overflow-hidden">
             <!-- Logo -->
-            <div class="flex items-center z-10">
+            <div class="flex items-center z-10 mb-8 lg:mb-12">
                 <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brandDark to-brandLight flex items-center justify-center shadow-lg">
                     <span class="text-white font-bold text-lg tracking-wider">DS</span>
                 </div>
@@ -48,20 +63,23 @@
             </div>
 
             <!-- Centro -->
-            <div class="z-10 mt-12 lg:mt-0 flex-grow flex flex-col justify-center">
-                <h1 class="text-4xl lg:text-5xl font-extrabold text-white mb-6 leading-tight">
+            <div class="z-10 flex flex-col justify-center">
+                <h1 class="text-4xl lg:text-5xl font-extrabold text-white mb-4 leading-tight">
                     Bienvenido de vuelta <br class="hidden lg:block"/>al sistema
                 </h1>
-                <p class="text-lg text-slate-300 max-w-md mb-12">
+                <p class="text-lg text-slate-300 max-w-md mb-8">
                     Gestiona tu consultorio dental con la plataforma más completa del mercado.
                 </p>
 
                 <!-- Roles -->
-                <div>
-                    <p class="text-brandLight font-bold uppercase tracking-wide text-sm mb-4">Acceso rápido:</p>
-                    <div class="space-y-4">
-                        
-                        <!-- Botón Admin -->
+                <div class="relative">
+                    <div class="flex items-center mb-4">
+                        <p class="text-brandLight font-bold uppercase tracking-wide text-sm">Tipo de usuario</p>
+                        <span class="ml-3 text-xs bg-amber-400 text-amber-900 font-bold px-2 py-1 rounded-full animate-pulse shadow-sm">¡Presiona aquí!</span>
+                    </div>
+                    
+                    <div class="space-y-4 relative z-20">
+                        <!-- Botón 1: Admin -->
                         <button id="role-admin" class="role-btn w-full flex items-center justify-between p-4 rounded-full bg-blue-900/40 border border-blue-500/30 hover:bg-blue-800/60 transition-all duration-300 group text-left" data-role="admin">
                             <div class="flex items-center">
                                 <div class="w-10 h-10 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center mr-4 group-hover:scale-110 transition-transform">
@@ -72,18 +90,18 @@
                             <span class="text-xs text-blue-200/50 hidden sm:block pr-2">admin@dentasync.com</span>
                         </button>
 
-                        <!-- Botón Médico -->
-                        <button id="role-doctor" class="role-btn w-full flex items-center justify-between p-4 rounded-full bg-cyan-900/40 border border-cyan-500/30 hover:bg-cyan-800/60 transition-all duration-300 group text-left" data-role="doctor">
+                        <!-- Botón 2: Médico / Recepcionista -->
+                        <button id="role-staff" class="role-btn w-full flex items-center justify-between p-4 rounded-full bg-cyan-900/40 border border-cyan-500/30 hover:bg-cyan-800/60 transition-all duration-300 group text-left" data-role="staff">
                             <div class="flex items-center">
                                 <div class="w-10 h-10 rounded-full bg-cyan-500/20 text-cyan-400 flex items-center justify-center mr-4 group-hover:scale-110 transition-transform">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
                                 </div>
-                                <span class="text-white font-semibold">Médico</span>
+                                <span class="text-white font-semibold">Médico / Recepcionista</span>
                             </div>
-                            <span class="text-xs text-cyan-200/50 hidden sm:block pr-2">doctor@dentasync.com</span>
+                            <span class="text-xs text-cyan-200/50 hidden sm:block pr-2">personal@dentasync.com</span>
                         </button>
 
-                        <!-- Botón Paciente -->
+                        <!-- Botón 3: Paciente -->
                         <button id="role-patient" class="role-btn w-full flex items-center justify-between p-4 rounded-full bg-emerald-900/40 border border-emerald-500/30 hover:bg-emerald-800/60 transition-all duration-300 group text-left" data-role="patient">
                             <div class="flex items-center">
                                 <div class="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center mr-4 group-hover:scale-110 transition-transform">
@@ -91,106 +109,105 @@
                                 </div>
                                 <span class="text-white font-semibold">Paciente</span>
                             </div>
-                            <span class="text-xs text-emerald-200/50 hidden sm:block pr-2">paciente@dentasync.com</span>
+                            <span class="text-xs text-emerald-200/50 hidden sm:block pr-2">correo@.com</span>
                         </button>
-
-                        <!-- Botón Recepcionista -->
-                        <button id="role-receptionist" class="role-btn w-full flex items-center justify-between p-4 rounded-full bg-purple-900/40 border border-purple-500/30 hover:bg-purple-800/60 transition-all duration-300 group text-left" data-role="receptionist">
-                            <div class="flex items-center">
-                                <div class="w-10 h-10 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center mr-4 group-hover:scale-110 transition-transform">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-                                </div>
-                                <span class="text-white font-semibold">Recepcionista</span>
-                            </div>
-                            <span class="text-xs text-purple-200/50 hidden sm:block pr-2">recepcion@dentasync.com</span>
-                        </button>
-
                     </div>
                 </div>
             </div>
 
             <!-- Background Shapes -->
-            <div class="absolute -top-24 -left-24 w-96 h-96 bg-brandDark rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
-            <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-brandLight rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+            <div class="absolute -top-24 -left-24 w-96 h-96 bg-brandDark rounded-full mix-blend-multiply filter blur-3xl opacity-20 pointer-events-none"></div>
+            <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-brandLight rounded-full mix-blend-multiply filter blur-3xl opacity-20 pointer-events-none"></div>
         </div>
 
         <!-- COLUMNA DERECHA -->
-        <div class="lg:w-1/2 flex items-center justify-center p-8 bg-slate-50 relative">
-            <div class="w-full max-w-md bg-white p-10 rounded-3xl shadow-2xl border border-slate-100 relative">
+        <div class="lg:w-1/2 bg-gray-50 h-full flex items-center justify-center md:justify-end md:pr-16 lg:pr-24 py-6 relative w-full">
+            
+            <div class="max-w-md w-full max-h-[90vh] flex flex-col justify-center p-8 rounded-3xl shadow-2xl bg-white relative mx-auto md:mx-0 overflow-y-auto no-scrollbar transition-all duration-500">
                 
-                <!-- Cabecera Tarjeta -->
-                <div class="text-center mb-8">
-                    <div class="w-14 h-14 bg-sky-50 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-sky-100">
-                        <svg class="w-7 h-7 text-brandLight" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
+                <!-- ESTADO 1: GUÍA INICIAL -->
+                <div id="placeholder-guide" class="flex flex-col items-center justify-center text-center py-12 transition-all duration-300 w-full">
+                    <div class="w-20 h-20 bg-sky-50 rounded-full flex items-center justify-center mb-6 border border-sky-100 shadow-inner">
+                        <svg class="w-10 h-10 text-brandLight animate-bounce-x" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
                         </svg>
                     </div>
-                    <h2 class="text-2xl font-bold text-slate-900 mb-2">Iniciar sesión</h2>
-                    <p class="text-sm text-slate-500">Ingresa tus credenciales para acceder</p>
+                    <h3 class="text-2xl font-extrabold text-slate-800 mb-2">Selecciona el tipo de acceso</h3>
+                    <p class="text-slate-500">Por favor, elige tu rol en el panel izquierdo para continuar.</p>
                 </div>
 
-                <!-- Aviso / Advertencia -->
-                <div id="warning-msg" class="mb-6 bg-amber-50 border border-amber-200 text-amber-700 px-4 py-3 rounded-xl text-sm flex items-start transition-all duration-300">
-                    <span class="mr-2">⚠️</span>
-                    <p>Por favor, selecciona tu tipo de acceso a la izquierda para continuar.</p>
-                </div>
-
-                <!-- Formulario -->
-                <form id="login-form" class="space-y-5 opacity-60 pointer-events-none transition-all duration-300">
+                <!-- ESTADO 2: FORMULARIO DINÁMICO -->
+                <div id="dynamic-login-form" class="hidden fade-enter flex-col items-center justify-center w-full">
                     
-                    <!-- Campo Código Consultorio (Condicional) -->
-                    <div id="field-code" class="hidden transition-all duration-300">
-                        <label for="codigo" class="block text-sm font-semibold text-slate-700 mb-1.5">Código de Consultorio</label>
-                        <input type="text" id="codigo" disabled class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-brandLight focus:ring-2 focus:ring-sky-100 outline-none transition-all text-slate-700" placeholder="Ej. 12345">
+                    <!-- Cabecera Tarjeta -->
+                    <div class="text-center mb-8">
+                        <div class="w-12 h-12 bg-sky-50 rounded-xl flex items-center justify-center mx-auto mb-4 border border-sky-100 shadow-sm">
+                            <svg class="w-6 h-6 text-brandLight" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
+                            </svg>
+                        </div>
+                        <h2 class="text-2xl font-bold text-slate-900 mb-1">Iniciar sesión</h2>
+                        <p class="text-sm text-slate-500">Ingresa tus credenciales para acceder</p>
                     </div>
 
-                    <!-- Campo Correo -->
-                    <div>
-                        <label for="email" class="block text-sm font-semibold text-slate-700 mb-1.5">Correo Electrónico</label>
-                        <div class="relative flex items-center">
-                            <input type="text" id="email" disabled class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-brandLight focus:ring-2 focus:ring-sky-100 outline-none transition-all text-slate-700" placeholder="nombre.usuario">
-                            <div id="email-suffix" class="absolute right-3 text-slate-500 font-medium bg-transparent px-1 pointer-events-none hidden">
-                                @dentasync.com
+                    <!-- Formulario -->
+                    <form id="login-form" class="space-y-4 w-full">
+                        
+                        <!-- Campo Código Consultorio (Condicional) -->
+                        <div id="field-code" class="hidden transition-all duration-300">
+                            <label for="codigo" class="block text-sm font-semibold text-slate-700 mb-1.5">Código de Consultorio</label>
+                            <input type="text" id="codigo" class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-brandLight focus:ring-2 focus:ring-sky-100 outline-none transition-all text-slate-700" placeholder="Ej. 12345">
+                        </div>
+
+                        <!-- Campo Correo -->
+                        <div>
+                            <label for="email" class="block text-sm font-semibold text-slate-700 mb-1.5">Correo Electrónico</label>
+                            <div class="relative flex items-center">
+                                <input type="text" id="email" class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-brandLight focus:ring-2 focus:ring-sky-100 outline-none transition-all text-slate-700" placeholder="nombre.usuario">
+                                <div id="email-suffix" class="absolute right-3 text-slate-500 font-medium bg-transparent px-1 pointer-events-none hidden">
+                                    @dentasync.com
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Campo Contraseña -->
-                    <div>
-                        <div class="flex items-center justify-between mb-1.5">
-                            <label for="password" class="block text-sm font-semibold text-slate-700">Contraseña</label>
-                            <a href="#" class="text-sm font-semibold text-brandDark hover:text-brandLight transition-colors">¿Olvidaste tu contraseña?</a>
+                        <!-- Campo Contraseña -->
+                        <div>
+                            <div id="recovery-container" class="flex items-center justify-between mb-1.5">
+                                <label for="password" class="block text-sm font-semibold text-slate-700">Contraseña</label>
+                                <a href="#" id="recovery-link" class="text-sm font-semibold text-brandDark hover:text-brandLight transition-colors">¿Olvidaste tu contraseña?</a>
+                                <span id="recovery-text" class="text-xs text-slate-400 font-medium hidden">🔒 Para restablecer su contraseña contacte con su administrador.</span>
+                            </div>
+                            <div class="relative">
+                                <input type="password" id="password" class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-brandLight focus:ring-2 focus:ring-sky-100 outline-none transition-all text-slate-700 pr-12" placeholder="••••••••">
+                                <button type="button" id="toggle-pwd" class="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-400 hover:text-brandDark transition-colors">
+                                    <svg id="eye-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                                </button>
+                            </div>
                         </div>
-                        <div class="relative">
-                            <input type="password" id="password" disabled class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-brandLight focus:ring-2 focus:ring-sky-100 outline-none transition-all text-slate-700 pr-12" placeholder="••••••••">
-                            <button type="button" id="toggle-pwd" disabled class="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-400 hover:text-brandDark transition-colors">
-                                <svg id="eye-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
-                            </button>
+
+                        <!-- Recordarme -->
+                        <div class="flex items-center pt-2">
+                            <input type="checkbox" id="remember" class="w-4 h-4 text-brandDark bg-slate-100 border-slate-300 rounded focus:ring-brandLight">
+                            <label for="remember" class="ml-2 block text-sm text-slate-600">Recordarme</label>
                         </div>
+
+                        <!-- Botón Ingresar -->
+                        <button type="submit" id="btn-submit" class="w-full py-3.5 px-4 bg-gradient-to-r from-brandDark to-brandLight text-white rounded-xl font-bold text-lg shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 mt-4">
+                            Ingresar
+                        </button>
+                    </form>
+
+                    <!-- Links Inferiores -->
+                    <div class="mt-6 text-center space-y-3">
+                        <p class="text-sm text-slate-600">
+                            ¿No tienes cuenta? 
+                            <a href="#" class="font-semibold text-brandDark hover:text-brandLight transition-colors">Crear cuenta gratis</a>
+                        </p>
+                        <a href="index.html" class="inline-flex items-center text-sm font-semibold text-slate-500 hover:text-slate-800 transition-colors">
+                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                            Volver a la página principal
+                        </a>
                     </div>
-
-                    <!-- Recordarme -->
-                    <div class="flex items-center pt-2">
-                        <input type="checkbox" id="remember" disabled class="w-4 h-4 text-brandDark bg-slate-100 border-slate-300 rounded focus:ring-brandLight">
-                        <label for="remember" class="ml-2 block text-sm text-slate-600">Recordarme</label>
-                    </div>
-
-                    <!-- Botón Ingresar -->
-                    <button type="submit" id="btn-submit" disabled class="w-full py-3.5 px-4 bg-gradient-to-r from-brandDark to-brandLight text-white rounded-xl font-bold text-lg shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 mt-4 disabled:opacity-70 disabled:hover:translate-y-0 disabled:hover:shadow-none">
-                        Ingresar
-                    </button>
-                </form>
-
-                <!-- Links Inferiores -->
-                <div class="mt-8 text-center space-y-4">
-                    <p class="text-sm text-slate-600">
-                        ¿No tienes cuenta? 
-                        <a href="#" class="font-semibold text-brandDark hover:text-brandLight transition-colors">Crear cuenta gratis</a>
-                    </p>
-                    <a href="index.html" class="inline-flex items-center text-sm font-semibold text-slate-500 hover:text-slate-800 transition-colors">
-                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-                        Volver a la página principal
-                    </a>
                 </div>
             </div>
         </div>
@@ -200,53 +217,62 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const roleBtns = document.querySelectorAll('.role-btn');
+            const placeholderGuide = document.getElementById('placeholder-guide');
+            const dynamicForm = document.getElementById('dynamic-login-form');
             const form = document.getElementById('login-form');
-            const warningMsg = document.getElementById('warning-msg');
+            
             const fieldCode = document.getElementById('field-code');
             const inputCode = document.getElementById('codigo');
             const inputEmail = document.getElementById('email');
             const suffixEmail = document.getElementById('email-suffix');
             const inputPwd = document.getElementById('password');
             const togglePwdBtn = document.getElementById('toggle-pwd');
-            const chkRemember = document.getElementById('remember');
-            const btnSubmit = document.getElementById('btn-submit');
             const eyeIcon = document.getElementById('eye-icon');
+            const recoveryLink = document.getElementById('recovery-link');
+            const recoveryText = document.getElementById('recovery-text');
 
+            // Corrección de QA: Separar las clases en Array para que classList.add() no falle (DOMTokenList error)
             const colorRings = {
-                'admin': 'ring-4 ring-blue-500',
-                'doctor': 'ring-4 ring-cyan-500',
-                'patient': 'ring-4 ring-emerald-500',
-                'receptionist': 'ring-4 ring-purple-500'
+                'admin': ['ring-4', 'ring-blue-500'],
+                'staff': ['ring-4', 'ring-cyan-500'],
+                'patient': ['ring-4', 'ring-emerald-500']
             };
+
+            let currentRole = null;
 
             function clearActiveRoles() {
                 roleBtns.forEach(btn => {
                     const role = btn.getAttribute('data-role');
-                    btn.classList.remove(colorRings[role], 'bg-opacity-100');
+                    if (colorRings[role]) {
+                        btn.classList.remove(...colorRings[role], 'bg-opacity-100');
+                    }
                 });
             }
 
-            function enableForm() {
-                form.classList.remove('opacity-60', 'pointer-events-none');
-                warningMsg.classList.add('hidden');
-                
-                // Habilitar todos los inputs
-                inputEmail.removeAttribute('disabled');
-                inputPwd.removeAttribute('disabled');
-                togglePwdBtn.removeAttribute('disabled');
-                chkRemember.removeAttribute('disabled');
-                btnSubmit.removeAttribute('disabled');
-                inputCode.removeAttribute('disabled');
-            }
-
             roleBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault(); // Seguridad
+                    
                     const role = btn.getAttribute('data-role');
+                    currentRole = role;
                     
                     clearActiveRoles();
-                    btn.classList.add(colorRings[role]);
+                    if (colorRings[role]) {
+                        btn.classList.add(...colorRings[role]);
+                    }
                     
-                    enableForm();
+                    // Transición de estados sólida (sin conflictos de flex/hidden)
+                    if (!placeholderGuide.classList.contains('hidden')) {
+                        placeholderGuide.classList.add('hidden');
+                        
+                        dynamicForm.classList.remove('hidden');
+                        dynamicForm.classList.add('flex');
+                        
+                        // Delay mínimo para registrar la animación CSS
+                        setTimeout(() => {
+                            dynamicForm.classList.add('fade-enter-active');
+                        }, 20);
+                    }
 
                     // Limpiar valores al cambiar de rol
                     inputEmail.value = '';
@@ -259,16 +285,25 @@
                         suffixEmail.classList.remove('hidden');
                         inputEmail.classList.add('pr-36');
                         inputEmail.placeholder = 'nombre.usuario';
-                    } else if (role === 'doctor' || role === 'receptionist') {
+                        
+                        recoveryLink.classList.remove('hidden');
+                        recoveryText.classList.add('hidden');
+                    } else if (role === 'staff') {
                         fieldCode.classList.add('hidden');
                         suffixEmail.classList.remove('hidden');
                         inputEmail.classList.add('pr-36');
                         inputEmail.placeholder = 'nombre.usuario';
+                        
+                        recoveryLink.classList.add('hidden');
+                        recoveryText.classList.remove('hidden');
                     } else if (role === 'patient') {
                         fieldCode.classList.add('hidden');
                         suffixEmail.classList.add('hidden');
                         inputEmail.classList.remove('pr-36');
-                        inputEmail.placeholder = 'ejemplo@correo.com';
+                        inputEmail.placeholder = 'tu@email.com';
+                        
+                        recoveryLink.classList.remove('hidden');
+                        recoveryText.classList.add('hidden');
                     }
                 });
             });
@@ -285,10 +320,27 @@
                 }
             });
             
-            // Prevención temporal de envío
+            // Validación y envío del formulario
             form.addEventListener('submit', (e) => {
                 e.preventDefault();
-                console.log("Iniciando sesión...");
+                
+                if (currentRole === 'admin' || currentRole === 'staff') {
+                    if (!inputEmail.value.trim()) {
+                        alert("Por favor, ingresa tu usuario corporativo.");
+                        return;
+                    }
+                    if (currentRole === 'admin' && !inputCode.value.trim()) {
+                        alert("El código de consultorio es obligatorio para administradores.");
+                        return;
+                    }
+                    alert(`Validando credenciales corporativas para: ${inputEmail.value}@dentasync.com`);
+                } else if (currentRole === 'patient') {
+                    if (!inputEmail.value.includes('@')) {
+                        alert("Por favor, ingresa un formato de correo electrónico válido.");
+                        return;
+                    }
+                    alert(`Iniciando sesión como paciente: ${inputEmail.value}`);
+                }
             });
         });
     </script>
