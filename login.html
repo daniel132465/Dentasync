@@ -158,6 +158,17 @@
                         <p class="text-sm text-slate-500">Ingresa tus credenciales para acceder</p>
                     </div>
 
+                    <!-- Error Banner -->
+                    <div id="login-error-banner" class="hidden w-full p-4 mb-4 text-sm rounded-xl bg-red-50 border border-red-100 flex flex-col items-center justify-center text-center transition-all duration-300 animate-pulse" role="alert">
+                        <span id="login-error-text" class="font-bold text-red-800"></span>
+                        <a href="registro.html" id="login-register-btn" class="mt-2 hidden inline-flex items-center px-4 py-2 bg-gradient-to-r from-brandDark to-brandLight text-white rounded-lg font-bold text-xs shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300">
+                            Cree su cuenta gratis
+                        </a>
+                        <a href="recuperar.html" id="wrong-pwd-recovery" class="mt-2 hidden text-xs font-bold text-brandDark hover:underline">
+                            ¿Olvidaste tu contraseña? Haz clic aquí para recuperarla
+                        </a>
+                    </div>
+
                     <!-- Formulario -->
                     <form id="login-form" class="space-y-4 w-full">
                         
@@ -228,7 +239,9 @@
     </div>
 
     <!-- LÓGICA DE VANILLA JAVASCRIPT -->
-    <script>
+    <script type="module">
+        import { supabase } from './supabase-config.js';
+
         document.addEventListener('DOMContentLoaded', () => {
             const roleBtns = document.querySelectorAll('.role-btn');
             const placeholderGuide = document.getElementById('placeholder-guide');
@@ -346,7 +359,7 @@
             });
             
             // Validación y envío del formulario
-            form.addEventListener('submit', (e) => {
+            form.addEventListener('submit', async (e) => {
                 e.preventDefault();
                 
                 // Limpiar errores previos
@@ -355,30 +368,182 @@
                     errorCodigo.classList.add('hidden');
                     errorCodigo.textContent = '';
                 }
+
+                // Obtener elementos del banner de error global
+                const loginErrorBanner = document.getElementById('login-error-banner');
+                const loginErrorText = document.getElementById('login-error-text');
+                const loginRegisterBtn = document.getElementById('login-register-btn');
+                const wrongPwdRecovery = document.getElementById('wrong-pwd-recovery');
+
+                // Asegurar que el banner de error esté oculto antes de validar
+                if (loginErrorBanner) loginErrorBanner.classList.add('hidden');
+                if (loginRegisterBtn) loginRegisterBtn.classList.add('hidden');
+                if (wrongPwdRecovery) wrongPwdRecovery.classList.add('hidden');
                 
                 if (currentRole === 'admin') {
-                    if (!inputEmail.value.trim()) {
+                    const codeVal = inputCode.value.trim();
+                    let emailVal = inputEmail.value.trim();
+                    const pwdVal = inputPwd.value.trim();
+
+                    if (!emailVal) {
                         alert("Por favor, ingresa tu usuario corporativo.");
                         return;
                     }
-                    const codeVal = inputCode.value.trim();
                     if (!codeVal) {
                         alert("El código de consultorio es obligatorio para administradores.");
                         return;
                     }
-                    
-                    if (codeVal === '3') {
-                        window.location.href = 'dashboard_avanzado.html';
-                    } else if (codeVal === '2') {
-                        window.location.href = 'dashboard_basico.html';
-                    } else if (codeVal === '1') {
-                        window.location.href = 'dashboard_gratuito.html';
-                    } else {
-                        if (errorCodigo) {
-                            errorCodigo.textContent = "Código de demostración inválido. Utilice 1 (Gratuito), 2 (Básico) o 3 (Avanzado).";
-                            errorCodigo.classList.remove('hidden');
+                    if (!pwdVal) {
+                        alert("Por favor, ingresa tu contraseña.");
+                        return;
+                    }
+
+                    // Concatenación e Inicio de Sesión Inteligente
+                    const correoCompletoConDominio = emailVal.includes('@') ? emailVal : `${emailVal}@dentasync.com`;
+
+                    // Estado de carga del botón de envío
+                    const btnSubmit = document.getElementById('btn-submit');
+                    let originalBtnText = "";
+                    if (btnSubmit) {
+                        originalBtnText = btnSubmit.innerHTML;
+                        btnSubmit.disabled = true;
+                        btnSubmit.innerHTML = `
+                            <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline-block animate-duration-1000" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            Ingresando...
+                        `;
+                    }
+
+                    try {
+                        console.log("Paso 1: Validando clínica y código de consultorio...");
+                        // 1. Validar clínica y código
+                        const { data: clinica, error: errClinica } = await supabase
+                            .from('clinicas')
+                            .select('id, id_plan, codigo_acceso_unico, nombre')
+                            .eq('codigo_acceso_unico', codeVal)
+                            .maybeSingle();
+
+                        if (errClinica) throw errClinica;
+
+                        if (!clinica) {
+                            console.warn("Clínica no encontrada.");
+                            if (loginErrorText && loginErrorBanner && loginRegisterBtn) {
+                                loginErrorText.textContent = "Cuenta no registrada";
+                                loginErrorBanner.classList.remove('hidden');
+                                loginRegisterBtn.classList.remove('hidden');
+                            }
+                            return;
+                        }
+
+                        console.log("Paso 2: Validando perfil y contraseña en la misma burbuja...");
+                        // 2. Validar perfil y contraseña en la misma burbuja
+                        const { data: usuario, error: errUsuario } = await supabase
+                            .from('usuarios_perfiles')
+                            .select('id, nombre_completo, contrasena, correo')
+                            .eq('correo', correoCompletoConDominio.trim())
+                            .eq('contrasena', pwdVal) // <-- COMPROBACIÓN DIRECTA DE CLAVE
+                            .maybeSingle();
+
+                        if (errUsuario) throw errUsuario;
+
+                        if (!usuario) {
+                            console.warn("Usuario o contraseña incorrectos en la consulta directa.");
+                            
+                            // Determinación de la causa exacta para la UI (Cuenta no registrada vs Contraseña incorrecta)
+                            const { data: existeCorreo } = await supabase
+                                .from('usuarios_perfiles')
+                                .select('id')
+                                .eq('correo', correoCompletoConDominio.trim())
+                                .maybeSingle();
+
+                            if (!existeCorreo) {
+                                // El usuario no existe en la base de datos
+                                console.warn("Causa: Cuenta no registrada.");
+                                if (loginErrorText && loginErrorBanner && loginRegisterBtn) {
+                                    loginErrorText.textContent = "Cuenta no registrada";
+                                    loginErrorBanner.classList.remove('hidden');
+                                    loginRegisterBtn.classList.remove('hidden');
+                                }
+                            } else {
+                                // El correo existe, por lo tanto la contraseña es incorrecta
+                                console.warn("Causa: Contraseña incorrecta.");
+                                if (loginErrorText && loginErrorBanner && wrongPwdRecovery) {
+                                    loginErrorText.textContent = "❌ Correo o contraseña incorrectos";
+                                    loginErrorBanner.classList.remove('hidden');
+                                    wrongPwdRecovery.classList.remove('hidden');
+                                }
+                            }
+                            return;
+                        }
+
+                        console.log("Usuario y clave validados con éxito. Validando relación de empleo en empleados_clinica...");
+
+                        // 3. Validar relación de empleo en empleados_clinica
+                        const { data: empleado, error: empleadoError } = await supabase
+                            .from('empleados_clinica')
+                            .select('*')
+                            .eq('id_clinica', clinica.id)
+                            .eq('id_usuario', usuario.id)
+                            .maybeSingle();
+
+                        if (empleadoError) throw empleadoError;
+
+                        if (!empleado) {
+                            console.warn("El usuario existe pero no pertenece a la clínica especificada.");
+                            if (loginErrorText && loginErrorBanner && loginRegisterBtn) {
+                                loginErrorText.textContent = "Cuenta no registrada";
+                                loginErrorBanner.classList.remove('hidden');
+                                loginRegisterBtn.classList.remove('hidden');
+                            }
+                            return;
+                        }
+
+                        console.log("Todo validado con éxito. Identificando plan contratado...");
+
+                        // RUTEO DINÁMICO POR PLAN
+                        let planNombre = 'Gratuito'; // fallback por defecto
+                        if (clinica.id_plan) {
+                            const { data: plan, error: planError } = await supabase
+                                .from('planes_suscripcion')
+                                .select('nombre')
+                                .eq('id', clinica.id_plan)
+                                .maybeSingle();
+
+                            if (!planError && plan) {
+                                planNombre = plan.nombre;
+                            }
+                        }
+
+                        console.log("Plan contratado:", planNombre, "- Almacenando en sessionStorage...");
+
+                        // CONTROL DE SESIÓN (Failsafe)
+                        sessionStorage.setItem('clinica_id', clinica.id);
+                        sessionStorage.setItem('clinica_codigo', clinica.codigo_acceso_unico);
+                        sessionStorage.setItem('usuario_nombre', usuario.nombre_completo);
+                        sessionStorage.setItem('usuario_correo', usuario.correo);
+                        sessionStorage.setItem('clinica_plan', planNombre);
+
+                        // Redirección al milisegundo
+                        console.log("Redirigiendo al dashboard correspondiente...");
+                        if (planNombre === 'Gratuito') {
+                            window.location.href = 'dashboard_gratuito.html';
+                        } else if (planNombre === 'Básico') {
+                            window.location.href = 'dashboard_basico.html';
+                        } else if (planNombre === 'Avanzado') {
+                            window.location.href = 'dashboard_avanzado.html';
                         } else {
-                            alert("Código de demostración inválido. Utilice 1 (Gratuito), 2 (Básico) o 3 (Avanzado).");
+                            window.location.href = 'dashboard_gratuito.html';
+                        }
+
+                    } catch (error) {
+                        console.error("Error crítico durante el login:", error);
+                        alert(`Ocurrió un error inesperado al iniciar sesión: ${error.message || error}`);
+                    } finally {
+                        if (btnSubmit) {
+                            btnSubmit.disabled = false;
+                            btnSubmit.innerHTML = originalBtnText;
                         }
                     }
                 } else if (currentRole === 'staff') {

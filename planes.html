@@ -439,20 +439,16 @@
                         // FASE 2: CONSTRUCCIÓN CORRECTA DEL PERFIL (usuarios_perfiles)
                         const nombreCompletoCompuesto = `${registrationData.nombre} ${registrationData.apellido1} ${registrationData.apellido2 || ''}`.trim().replace(/\s+/g, ' ');
                         
-                        let correoCorpFinal = registrationData.correoCorp || '';
-                        if (correoCorpFinal && !correoCorpFinal.endsWith('@dentasync.com')) {
-                            correoCorpFinal = `${correoCorpFinal}@dentasync.com`;
-                        }
-
                         const { data: usuarioCreado, error: profileError } = await supabase
                             .from('usuarios_perfiles')
                             .insert({
                                 nombre_completo: nombreCompletoCompuesto,
-                                correo: correoCorpFinal,
+                                correo: registrationData.correoCorp.includes('@') ? registrationData.correoCorp : `${registrationData.correoCorp}@dentasync.com`,
                                 correo_personal: registrationData.correo,
                                 telefono: registrationData.celular,
                                 carnet_identidad: registrationData.docId,
-                                tipo_usuario: 'Admin'
+                                tipo_usuario: 'Admin',
+                                contrasena: registrationData.pwd || registrationData.password // <-- GUARDAR CLAVE REAL AQUÍ
                             })
                             .select()
                             .single();
