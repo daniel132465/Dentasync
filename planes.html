@@ -94,9 +94,9 @@
                         </li>
                     </ul>
                     
-                    <a href="login.html?role=admin" class="w-full py-4 text-center font-bold rounded-xl border-2 border-slate-200 text-slate-700 hover:bg-slate-50 hover:border-slate-300 transition-colors">
+                    <button id="btn-adquirir-gratis" class="w-full py-4 text-center font-bold rounded-xl border-2 border-slate-200 text-slate-700 hover:bg-slate-50 hover:border-slate-300 transition-colors cursor-pointer">
                         Adquirir ya
-                    </a>
+                    </button>
                 </div>
 
                 <!-- Plan Básico (Más Popular) -->
@@ -176,6 +176,53 @@
         
     </div>
 
+    <!-- MODAL DE ÉXITO (PLAN GRATUITO) -->
+    <div id="admin-success-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-3xl p-8 md:p-10 max-w-md w-full mx-4 shadow-2xl flex flex-col items-center text-center transform scale-95 transition-transform duration-300">
+            <!-- Icono Check Verde -->
+            <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-6">
+                <svg class="w-10 h-10 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+                </svg>
+            </div>
+            
+            <h3 class="text-2xl font-bold text-slate-800 mb-2">¡Cuenta creada con éxito!</h3>
+            <p class="text-slate-500 mb-6 leading-relaxed">Tus datos ya están registrados en nuestra base de datos.</p>
+            
+            <!-- Recuadro destacado del código -->
+            <div class="w-full bg-slate-50 border border-slate-200 rounded-2xl p-4 mb-6 text-center font-mono relative">
+                <div class="text-slate-800 font-bold text-sm md:text-base flex items-center justify-center gap-2">
+                    <span>SU CÓDIGO DE CONSULTORIO ES:</span>
+                    <span id="generated-clinic-code" class="text-brandDark font-extrabold tracking-wider">DS-XXXXXX</span>
+                    <button type="button" id="btn-copy-code" class="inline-flex items-center justify-center p-1 rounded hover:bg-slate-200 transition-colors text-slate-500 ml-1" title="Copiar código">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path>
+                        </svg>
+                    </button>
+                </div>
+                <span id="copy-feedback" class="absolute left-1/2 transform -translate-x-1/2 bottom-1 text-[11px] text-green-600 font-semibold hidden">¡Copiado!</span>
+            </div>
+
+            <!-- Advertencia -->
+            <div class="bg-amber-50 border border-amber-200 text-amber-800 text-left rounded-xl p-4 mb-6 text-xs leading-relaxed">
+                <strong>⚠️ IMPORTANTE:</strong> Tome una captura de pantalla o copie el código en un lugar seguro. Este código es indispensable para vincular a sus pacientes y personal.
+            </div>
+
+            <!-- Checkbox de seguridad -->
+            <div class="flex items-start gap-3 w-full mb-8 text-left">
+                <input type="checkbox" id="chk-save-code" class="w-5 h-5 text-brandLight border-slate-300 rounded focus:ring-brandLight cursor-pointer mt-0.5 shrink-0">
+                <label for="chk-save-code" class="text-sm text-slate-600 font-medium cursor-pointer select-none">
+                    He copiado o guardado el código en un lugar seguro.
+                </label>
+            </div>
+
+            <!-- Botón de acción (Deshabilitado por defecto) -->
+            <button id="btn-modal-iniciar-sesion" disabled class="w-full bg-gradient-to-r from-brandLight to-brandDark text-white font-bold py-4 rounded-xl shadow-lg transition-all duration-300 text-center block opacity-50 cursor-not-allowed">
+                Ir a iniciar sesión
+            </button>
+        </div>
+    </div>
+
     <!-- Background decorative elements -->
     <div class="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
         <div class="absolute -top-[20%] -left-[10%] w-[50%] h-[50%] bg-brandDark rounded-full mix-blend-screen filter blur-[100px] opacity-20"></div>
@@ -195,6 +242,101 @@
             }
             if (data.correoCorp) {
                 document.getElementById('resumen-correo').textContent = `${data.correoCorp}@dentasync.com`;
+            }
+
+            // Lógica para mostrar el modal de éxito en el plan gratuito con código de seguridad
+            const btnAdquirir = document.getElementById('btn-adquirir-gratis');
+            const modal = document.getElementById('admin-success-modal');
+            const btnModalLogin = document.getElementById('btn-modal-iniciar-sesion');
+            const codeDisplay = document.getElementById('generated-clinic-code');
+            const btnCopy = document.getElementById('btn-copy-code');
+            const copyFeedback = document.getElementById('copy-feedback');
+            const chkSave = document.getElementById('chk-save-code');
+
+            let generatedCode = '';
+
+            // Generador de código de 8 caracteres alfanuméricos en mayúsculas
+            function generateCode() {
+                const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+                let code = '';
+                for (let i = 0; i < 8; i++) {
+                    code += chars.charAt(Math.floor(Math.random() * chars.length));
+                }
+                return `DS-${code}`;
+            }
+
+            if (btnAdquirir && modal) {
+                btnAdquirir.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    
+                    // Generar e inyectar el código único de consultorio
+                    generatedCode = generateCode();
+                    if (codeDisplay) {
+                        codeDisplay.textContent = generatedCode;
+                    }
+
+                    // Resetear el checkbox y botón de inicio
+                    if (chkSave) {
+                        chkSave.checked = false;
+                    }
+                    if (btnModalLogin) {
+                        btnModalLogin.disabled = true;
+                        btnModalLogin.classList.add('opacity-50', 'cursor-not-allowed');
+                        btnModalLogin.classList.remove('opacity-100', 'cursor-pointer');
+                    }
+
+                    // Mostrar modal quitando 'hidden'
+                    modal.classList.remove('hidden');
+                    
+                    // Forzar reflujo del navegador
+                    void modal.offsetWidth;
+                    
+                    // Transición de opacidad y escala
+                    modal.classList.remove('opacity-0');
+                    const card = modal.querySelector('div');
+                    if (card) {
+                        card.classList.remove('scale-95');
+                        card.classList.add('scale-100');
+                    }
+                });
+            }
+
+            // Habilitar/deshabilitar botón según checkbox
+            if (chkSave && btnModalLogin) {
+                chkSave.addEventListener('change', () => {
+                    if (chkSave.checked) {
+                        btnModalLogin.disabled = false;
+                        btnModalLogin.classList.remove('opacity-50', 'cursor-not-allowed');
+                        btnModalLogin.classList.add('opacity-100', 'cursor-pointer');
+                    } else {
+                        btnModalLogin.disabled = true;
+                        btnModalLogin.classList.add('opacity-50', 'cursor-not-allowed');
+                        btnModalLogin.classList.remove('opacity-100', 'cursor-pointer');
+                    }
+                });
+            }
+
+            // Copiar al portapapeles
+            if (btnCopy && codeDisplay) {
+                btnCopy.addEventListener('click', () => {
+                    navigator.clipboard.writeText(generatedCode).then(() => {
+                        if (copyFeedback) {
+                            copyFeedback.classList.remove('hidden');
+                            setTimeout(() => {
+                                copyFeedback.classList.add('hidden');
+                            }, 2000);
+                        }
+                    });
+                });
+            }
+
+            // Redirección al hacer clic en el botón habilitado
+            if (btnModalLogin) {
+                btnModalLogin.addEventListener('click', () => {
+                    if (!btnModalLogin.disabled) {
+                        window.location.href = 'login.html?role=admin';
+                    }
+                });
             }
         });
     </script>
