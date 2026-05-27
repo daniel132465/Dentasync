@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mercado Pago - Pasarela de Pago</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        mercadoBlue: '#009EE3',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center justify-center p-4 antialiased text-slate-800">
+
+    <div class="max-w-md w-full bg-white rounded-3xl shadow-xl overflow-hidden">
+        
+        <!-- Header Mercado Pago -->
+        <div class="bg-mercadoBlue p-6 flex flex-col items-center justify-center text-white">
+            <svg class="w-16 h-16 mb-2" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z"/>
+            </svg>
+            <h1 class="text-xl font-bold tracking-wide">Mercado Pago</h1>
+            <p class="text-blue-100 text-sm mt-1">Pasarela de Pago Segura</p>
+        </div>
+
+        <!-- Banner de Construcción -->
+        <div class="p-8 text-center space-y-6">
+            
+            <div class="inline-flex items-center justify-center w-20 h-20 bg-yellow-100 text-yellow-600 rounded-full mb-4">
+                <svg class="w-10 h-10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+            </div>
+            
+            <div>
+                <h2 class="text-2xl font-extrabold text-slate-800">Web en Construcción</h2>
+                <p class="text-slate-500 mt-2 leading-relaxed">
+                    Próximamente integración completa con la API real de Mercado Pago para procesar los planes premium de DentaSync.
+                </p>
+            </div>
+
+            <!-- Resumen Simulado -->
+            <div class="bg-slate-50 rounded-2xl p-4 border border-slate-100 text-left space-y-2 mt-6">
+                <div class="flex justify-between items-center">
+                    <span class="text-slate-500 text-sm">Comercio:</span>
+                    <span class="font-semibold text-slate-800 text-sm">DentaSync SaaS</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-slate-500 text-sm">Concepto:</span>
+                    <span class="font-semibold text-slate-800 text-sm">Suscripción Mensual</span>
+                </div>
+            </div>
+
+            <!-- Botón Volver -->
+            <div class="pt-4">
+                <a href="planes.html" class="inline-flex items-center justify-center w-full py-3.5 px-4 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl transition-colors duration-200">
+                    ← Volver a DentaSync
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+
+    <p class="text-slate-400 text-sm mt-8 text-center max-w-sm">
+        Entorno de pruebas local. No se procesarán pagos reales en esta fase de desarrollo.
+    </p>
+
+</body>
+</html>

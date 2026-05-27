@@ -569,6 +569,23 @@
         </div>
     </div>
 
+    <!-- MODAL DE ÉXITO (PACIENTE) -->
+    <div id="patient-success-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm hidden fade-transition opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-3xl p-8 md:p-10 max-w-sm w-full mx-4 shadow-2xl flex flex-col items-center text-center transform scale-95 transition-transform duration-300">
+            <!-- Icono Check Verde -->
+            <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-6">
+                <svg class="w-10 h-10 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path></svg>
+            </div>
+            
+            <h3 class="text-2xl font-extrabold text-slate-800 mb-3">¡Cuenta creada!</h3>
+            <p class="text-slate-500 mb-8 leading-relaxed">Tu cuenta ha sido creada exitosamente. Ya puedes iniciar sesión en DentaSync.</p>
+            
+            <a href="login.html?role=paciente" class="w-full bg-brandDark hover:bg-brandLight text-white font-bold py-4 rounded-xl shadow-lg transition-colors text-center block">
+                Ir a iniciar sesión
+            </a>
+        </div>
+    </div>
+
     <!-- Lógica Vanilla JS de una Sola Vista -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -1028,6 +1045,15 @@
                         firstInvalidElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
                         firstInvalidElement.focus();
                     } else {
+                        // Guardar datos temporalmente para la pantalla de planes
+                        const adminData = {
+                            nombre: document.getElementById('m-nombre').value,
+                            apellido1: document.getElementById('m-apellido1').value,
+                            clinica: document.getElementById('m-clinic').value,
+                            correoCorp: document.getElementById('m-correo-corp').value
+                        };
+                        localStorage.setItem('dentaSyncTempRegistration', JSON.stringify(adminData));
+                        
                         window.location.href = 'planes.html';
                     }
                 });
@@ -1052,8 +1078,17 @@
                         firstInvalidElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
                         firstInvalidElement.focus();
                     } else {
-                        alert("¡Cuenta de Paciente creada con éxito!");
-                        window.location.href = 'login.html';
+                        const modal = document.getElementById('patient-success-modal');
+                        if(modal) {
+                            modal.classList.remove('hidden');
+                            // Forzar reflujo
+                            void modal.offsetWidth;
+                            modal.classList.remove('opacity-0');
+                            modal.querySelector('div').classList.remove('scale-95');
+                            modal.querySelector('div').classList.add('scale-100');
+                        } else {
+                            window.location.href = 'login.html?role=paciente';
+                        }
                     }
                 });
             }

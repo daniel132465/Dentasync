@@ -65,10 +65,10 @@
             <!-- Centro -->
             <div class="z-10 flex flex-col justify-center">
                 <h1 class="text-4xl lg:text-5xl font-extrabold text-white mb-4 leading-tight">
-                    Bienvenido de vuelta <br class="hidden lg:block"/>al sistema
+                    Bienvenido
                 </h1>
                 <p class="text-lg text-slate-300 max-w-md mb-8">
-                    Gestiona tu consultorio dental con la plataforma más completa del mercado.
+                    Para iniciar sesión elige un tipo de usuario abajo:
                 </p>
 
                 <!-- Roles -->
@@ -133,7 +133,15 @@
                         </svg>
                     </div>
                     <h3 class="text-2xl font-extrabold text-slate-800 mb-2">Selecciona el tipo de acceso</h3>
-                    <p class="text-slate-500">Por favor, elige tu rol en el panel izquierdo para continuar.</p>
+                    <p class="text-slate-500 mb-8">Por favor, elige tu rol en el panel izquierdo para continuar.</p>
+                    
+                    <!-- Bloque de Registro y Retorno Fijo -->
+                    <div class="mt-8 pt-6 border-t border-slate-100 w-full text-center">
+                        <p class="text-sm text-slate-600">
+                            ¿No tienes cuenta? <a href='registro.html' class='text-brandLight hover:underline font-semibold'>Crear cuenta gratis</a>
+                        </p>
+                        <a href='index.html' class='text-gray-400 hover:text-gray-600 text-sm mt-2 block'>← Volver a la página principal</a>
+                    </div>
                 </div>
 
                 <!-- ESTADO 2: FORMULARIO DINÁMICO -->
@@ -358,6 +366,23 @@
                     alert(`Iniciando sesión como paciente: ${inputEmail.value}`);
                 }
             });
+            
+            // Auto-selección por parámetros en URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const roleParam = urlParams.get('role');
+            if (roleParam) {
+                let targetRole = null;
+                if (roleParam === 'paciente') targetRole = 'patient';
+                if (roleParam === 'admin') targetRole = 'admin';
+                if (roleParam === 'staff') targetRole = 'staff';
+                
+                if (targetRole) {
+                    const btn = document.querySelector(`.role-btn[data-role="${targetRole}"]`);
+                    if (btn) {
+                        btn.click();
+                    }
+                }
+            }
         });
     </script>
 </body>
