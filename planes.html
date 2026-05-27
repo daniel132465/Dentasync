@@ -47,14 +47,23 @@
 
             <!-- Resumen de Registro (Solo Lectura) -->
             <div class="bg-slate-50 border border-slate-100 rounded-2xl p-6 md:p-8 mb-12 shadow-inner">
-                <h2 class="text-lg font-bold text-slate-800 mb-4 flex items-center">
-                    <span class="w-1.5 h-5 bg-brandLight rounded-full mr-2"></span>
-                    Resumen de Registro
-                </h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-4">
+                    <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                        <span class="w-1.5 h-5 bg-brandLight rounded-full mr-2"></span>
+                        Resumen de Registro
+                    </h2>
+                    <a href="registro.html" class="inline-flex items-center text-xs font-bold text-brandDark hover:text-brandLight transition-colors">
+                        ← Volver a modificar datos
+                    </a>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
                     <div>
                         <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1">Nombre Completo</label>
                         <div class="text-slate-800 font-medium" id="resumen-nombre">Dr. Usuario Demo</div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1">Documento / CI</label>
+                        <div class="text-slate-800 font-medium" id="resumen-documento">-</div>
                     </div>
                     <div>
                         <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1">Consultorio</label>
@@ -232,15 +241,19 @@
     <script type="module">
         import { supabase } from './supabase-config.js';
 
-        // Simulador de carga de datos desde localStorage si existen, de lo contrario muestra la demo por defecto
+        // Carga de datos desde localStorage y rellenado dinámico de resumen
         document.addEventListener('DOMContentLoaded', async () => {
             const data = JSON.parse(localStorage.getItem('dentaSyncTempRegistration') || '{}');
             
-            if (data.nombre && data.apellido1) {
-                document.getElementById('resumen-nombre').textContent = `${data.nombre} ${data.apellido1}`;
+            if (data.nombre) {
+                const nombreComp = `${data.nombre} ${data.apellido1 || ''} ${data.apellido2 || ''}`.trim();
+                document.getElementById('resumen-nombre').textContent = nombreComp || 'Dr. Usuario Demo';
             }
-            if (data.clinica) {
-                document.getElementById('resumen-clinica').textContent = data.clinica;
+            if (data.docId) {
+                document.getElementById('resumen-documento').textContent = data.docId;
+            }
+            if (data.clinic || data.clinica) {
+                document.getElementById('resumen-clinica').textContent = data.clinic || data.clinica;
             }
             if (data.correoCorp) {
                 document.getElementById('resumen-correo').textContent = `${data.correoCorp}@dentasync.com`;
@@ -360,37 +373,160 @@
             }
 
             if (btnAdquirir && modal) {
-                btnAdquirir.addEventListener('click', (e) => {
+                btnAdquirir.addEventListener('click', async (e) => {
                     e.preventDefault();
                     
-                    // Generar e inyectar el código único de consultorio
-                    generatedCode = generateCode();
-                    if (codeDisplay) {
-                        codeDisplay.textContent = generatedCode;
+                    const registrationData = JSON.parse(localStorage.getItem('dentaSyncTempRegistration') || '{}');
+                    if (!registrationData.nombre) {
+                        alert("No se encontraron datos válidos de registro. Por favor, vuelve a ingresar tus datos.");
+                        window.location.href = 'registro.html';
+                        return;
                     }
 
-                    // Resetear el checkbox y botón de inicio
-                    if (chkSave) {
-                        chkSave.checked = false;
-                    }
-                    if (btnModalLogin) {
-                        btnModalLogin.disabled = true;
-                        btnModalLogin.classList.add('opacity-50', 'cursor-not-allowed');
-                        btnModalLogin.classList.remove('opacity-100', 'cursor-pointer');
-                    }
+                    // Estado de Carga
+                    const originalBtnText = btnAdquirir.innerHTML;
+                    btnAdquirir.disabled = true;
+                    btnAdquirir.innerHTML = `<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-slate-700 inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg> Procesando registro...`;
 
-                    // Mostrar modal quitando 'hidden'
-                    modal.classList.remove('hidden');
-                    
-                    // Forzar reflujo del navegador
-                    void modal.offsetWidth;
-                    
-                    // Transición de opacidad y escala
-                    modal.classList.remove('opacity-0');
-                    const card = modal.querySelector('div');
-                    if (card) {
-                        card.classList.remove('scale-95');
-                        card.classList.add('scale-100');
+                    try {
+                        // FASE 1: EXTRACCIÓN Y TRATAMIENTO DEL LOGO (Supabase Storage)
+                        let urlLogoFinal = null;
+                        if (registrationData.logoBase64) {
+                            try {
+                                const base64Parts = registrationData.logoBase64.split(',');
+                                const mimeType = base64Parts[0].match(/:(.*?);/)?.[1] || 'image/png';
+                                const byteString = atob(base64Parts[1]);
+                                const ab = new ArrayBuffer(byteString.length);
+                                const ia = new Uint8Array(ab);
+                                for (let i = 0; i < byteString.length; i++) {
+                                    ia[i] = byteString.charCodeAt(i);
+                                }
+                                const logoBlob = new Blob([ab], { type: mimeType });
+                                const fileName = `logo-${Date.now()}.png`;
+
+                                const { data: storageData, error: storageError } = await supabase.storage
+                                    .from('logos_clinicas')
+                                    .upload(`public/${fileName}`, logoBlob, { contentType: 'image/png' });
+                                
+                                if (storageError) throw storageError;
+
+                                const { data: publicUrlData } = supabase.storage
+                                    .from('logos_clinicas')
+                                    .getPublicUrl(`public/${fileName}`);
+                                
+                                urlLogoFinal = publicUrlData.publicUrl;
+                            } catch (errLogo) {
+                                console.error("Error al procesar/subir el logo:", errLogo);
+                            }
+                        }
+
+                        // FASE 2: CONSTRUCCIÓN CORRECTA DEL PERFIL (usuarios_perfiles)
+                        const nombreCompletoCompuesto = `${registrationData.nombre} ${registrationData.apellido1} ${registrationData.apellido2 || ''}`.trim().replace(/\s+/g, ' ');
+                        
+                        let correoCorpFinal = registrationData.correoCorp || '';
+                        if (correoCorpFinal && !correoCorpFinal.endsWith('@dentasync.com')) {
+                            correoCorpFinal = `${correoCorpFinal}@dentasync.com`;
+                        }
+
+                        const { data: usuarioCreado, error: profileError } = await supabase
+                            .from('usuarios_perfiles')
+                            .insert({
+                                nombre_completo: nombreCompletoCompuesto,
+                                correo: correoCorpFinal,
+                                correo_personal: registrationData.correo,
+                                telefono: registrationData.celular,
+                                carnet_identidad: registrationData.docId,
+                                tipo_usuario: 'Admin'
+                            })
+                            .select()
+                            .single();
+
+                        if (profileError) throw profileError;
+
+                        // FASE 3: INSERCIÓN DE LA CLÍNICA (clinicas)
+                        let idPlan = null;
+                        const { data: planData, error: planError } = await supabase
+                            .from('planes_suscripcion')
+                            .select('id')
+                            .eq('nombre', 'Gratuito')
+                            .single();
+                        if (!planError && planData) {
+                            idPlan = planData.id;
+                        }
+
+                        const { data: clinicaCreada, error: clinicaError } = await supabase
+                            .from('clinicas')
+                            .insert({
+                                nombre: registrationData.clinic || registrationData.clinica,
+                                pais_residencia: registrationData.pais,
+                                direccion: registrationData.direccion || '',
+                                ubicacion_mapas: registrationData.mapa || '',
+                                cantidad_profesionales: parseInt(registrationData.workers || 0),
+                                logo_url: urlLogoFinal,
+                                id_plan: idPlan
+                            })
+                            .select('id, codigo_acceso_unico')
+                            .single();
+
+                        if (clinicaError) throw clinicaError;
+                        const codigoAccesoReal = clinicaCreada.codigo_acceso_unico;
+
+                        // FASE 4: VINCULACIÓN EN LA TABLA PUENTE (empleados_clinica)
+                        const { error: errorEmpleado } = await supabase
+                            .from('empleados_clinica')
+                            .insert({
+                                id_clinica: clinicaCreada.id,
+                                id_usuario: usuarioCreado.id,
+                                especialidad: 'Odontología General',
+                                activo: true
+                            });
+
+                        if (errorEmpleado) throw errorEmpleado;
+
+                        // Inyectar el código único certificado real devuelto del Trigger
+                        generatedCode = codigoAccesoReal;
+                        if (codeDisplay) {
+                            codeDisplay.textContent = codigoAccesoReal;
+                        }
+
+                        // Resetear checkbox y botón de inicio en el modal
+                        if (chkSave) {
+                            chkSave.checked = false;
+                        }
+                        if (btnModalLogin) {
+                            btnModalLogin.disabled = true;
+                            btnModalLogin.classList.add('opacity-50', 'cursor-not-allowed');
+                            btnModalLogin.classList.remove('opacity-100', 'cursor-pointer');
+                        }
+
+                        // Limpiar caché local de registro por seguridad
+                        localStorage.removeItem('dentaSyncTempRegistration');
+
+                        // Mostrar modal con transiciones fluidas
+                        modal.classList.remove('hidden');
+                        void modal.offsetWidth;
+                        modal.classList.remove('opacity-0');
+                        const card = modal.querySelector('div');
+                        if (card) {
+                            card.classList.remove('scale-95');
+                            card.classList.add('scale-100');
+                        }
+
+                    } catch (transactionError) {
+                        console.error("Fallo crítico en la transacción con Supabase:", transactionError);
+                        const errMessage = transactionError?.message || String(transactionError);
+                        if (errMessage.includes('duplicate key') || errMessage.includes('usuarios_perfiles_correo_key')) {
+                            alert("⚠️ El correo electrónico o usuario corporativo ya se encuentra registrado en DentaSync. Por favor, regresa al formulario y utiliza credenciales diferentes.");
+                        } else {
+                            alert(`Error al registrar la cuenta: ${errMessage}`);
+                        }
+                    } finally {
+                        // Restaurar estado del botón
+                        btnAdquirir.disabled = false;
+                        btnAdquirir.innerHTML = originalBtnText;
                     }
                 });
             }

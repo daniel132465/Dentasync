@@ -51,8 +51,8 @@
 </head>
 <body class="antialiased selection:bg-brandLight selection:text-white">
 
-    <!-- NAVBAR (#inicio) -->
-    <nav id="inicio" class="fixed w-full top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-100 transition-all duration-300">
+    <!-- NAVBAR -->
+    <nav class="fixed w-full top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-100 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
                 <!-- Logo -->
@@ -116,7 +116,7 @@
     </nav>
 
     <!-- HERO SECTION -->
-    <div class="relative pt-32 pb-20 lg:pt-40 lg:pb-28 overflow-hidden bg-gradient-hero">
+    <div id="inicio" class="relative pt-32 pb-20 lg:pt-40 lg:pb-28 overflow-hidden bg-gradient-hero">
         <!-- Background Blur Circles -->
         <div class="absolute top-20 left-0 w-72 h-72 bg-sky-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
         <div class="absolute top-40 right-0 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
@@ -743,18 +743,30 @@
                     
                     const targetId = link.getAttribute('data-target');
                     if (targetId) {
-                        const targetElement = document.getElementById(targetId);
-                        
-                        if (targetElement) {
-                            // Cierra el menú móvil si está abierto
-                            const mobileMenu = document.getElementById('mobile-menu');
-                            if (!mobileMenu.classList.contains('hidden')) {
-                                mobileMenu.classList.add('hidden');
-                                document.getElementById('menu-icon-path').setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
+                        // Cierra el menú móvil si está abierto
+                        const mobileMenu = document.getElementById('mobile-menu');
+                        if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+                            mobileMenu.classList.add('hidden');
+                            const menuIconPath = document.getElementById('menu-icon-path');
+                            if (menuIconPath) {
+                                menuIconPath.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
                             }
+                        }
 
+                        // Si el objetivo es 'inicio', calcula la posición superior limpia al tope de la página
+                        if (targetId === 'inicio') {
+                            window.scrollTo({
+                                top: 0,
+                                behavior: 'smooth'
+                            });
+                            return;
+                        }
+
+                        const targetElement = document.getElementById(targetId);
+                        if (targetElement) {
                             // Offset for fixed navbar
-                            const navbarHeight = document.querySelector('nav').offsetHeight;
+                            const navbarEl = document.querySelector('nav');
+                            const navbarHeight = navbarEl ? navbarEl.offsetHeight : 0;
                             const elementPosition = targetElement.getBoundingClientRect().top;
                             const offsetPosition = elementPosition + window.scrollY - navbarHeight;
 

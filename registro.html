@@ -743,6 +743,8 @@
             // --- 5. DRAG AND DROP LOGO ---
             const dropzone = document.getElementById('m-logo-dropzone');
             const fileInput = document.getElementById('m-logo');
+            let logoBase64 = '';
+            let logoName = '';
             
             if (dropzone && fileInput) {
                 dropzone.addEventListener('click', () => fileInput.click());
@@ -773,8 +775,10 @@
                 function handleLogoUpload(file) {
                     if (!file || !file.type.startsWith('image/')) return;
                     
+                    logoName = file.name;
                     const reader = new FileReader();
                     reader.onload = (e) => {
+                        logoBase64 = e.target.result;
                         if (!dropzone.dataset.originalHtml) {
                             dropzone.dataset.originalHtml = dropzone.innerHTML;
                         }
@@ -1077,8 +1081,22 @@
                         const adminData = {
                             nombre: document.getElementById('m-nombre').value,
                             apellido1: document.getElementById('m-apellido1').value,
-                            clinica: document.getElementById('m-clinic').value,
-                            correoCorp: document.getElementById('m-correo-corp').value
+                            apellido2: document.getElementById('m-apellido2').value,
+                            pais: document.getElementById('m-pais').value,
+                            docId: document.getElementById('m-doc-id').value,
+                            telFijo: document.getElementById('m-tel-fijo').value,
+                            celular: document.getElementById('m-celular').value,
+                            direccion: document.getElementById('m-direccion').value,
+                            mapa: document.getElementById('m-mapa').value,
+                            correo: document.getElementById('m-correo').value,
+                            correoCorp: document.getElementById('m-correo-corp').value,
+                            pwd: document.getElementById('m-pwd').value,
+                            pwdConfirm: document.getElementById('m-pwd-confirm').value,
+                            clinic: document.getElementById('m-clinic').value,
+                            workers: document.getElementById('m-workers').value,
+                            terms: document.getElementById('m-terms').checked,
+                            logoBase64: logoBase64,
+                            logoName: logoName
                         };
                         localStorage.setItem('dentaSyncTempRegistration', JSON.stringify(adminData));
                         
@@ -1191,6 +1209,48 @@
                         window.location.href = 'login.html?role=paciente';
                     }
                 });
+            }
+
+            // --- AUTO-RELLENO AL VOLVER ATRÁS ---
+            const cacheData = JSON.parse(localStorage.getItem('dentaSyncTempRegistration') || '{}');
+            if (cacheData.nombre) {
+                if (document.getElementById('m-nombre')) document.getElementById('m-nombre').value = cacheData.nombre || '';
+                if (document.getElementById('m-apellido1')) document.getElementById('m-apellido1').value = cacheData.apellido1 || '';
+                if (document.getElementById('m-apellido2')) document.getElementById('m-apellido2').value = cacheData.apellido2 || '';
+                if (document.getElementById('m-pais')) {
+                    document.getElementById('m-pais').value = cacheData.pais || '';
+                    document.getElementById('m-pais').dispatchEvent(new Event('change'));
+                }
+                if (document.getElementById('m-doc-id')) document.getElementById('m-doc-id').value = cacheData.docId || '';
+                if (document.getElementById('m-tel-fijo')) document.getElementById('m-tel-fijo').value = cacheData.telFijo || '';
+                if (document.getElementById('m-celular')) document.getElementById('m-celular').value = cacheData.celular || '';
+                if (document.getElementById('m-direccion')) document.getElementById('m-direccion').value = cacheData.direccion || '';
+                if (document.getElementById('m-mapa')) document.getElementById('m-mapa').value = cacheData.mapa || '';
+                if (document.getElementById('m-correo')) document.getElementById('m-correo').value = cacheData.correo || '';
+                if (document.getElementById('m-correo-corp')) document.getElementById('m-correo-corp').value = cacheData.correoCorp || '';
+                if (document.getElementById('m-pwd')) document.getElementById('m-pwd').value = cacheData.pwd || '';
+                if (document.getElementById('m-pwd-confirm')) document.getElementById('m-pwd-confirm').value = cacheData.pwdConfirm || '';
+                if (document.getElementById('m-clinic')) document.getElementById('m-clinic').value = cacheData.clinic || '';
+                if (document.getElementById('m-workers')) document.getElementById('m-workers').value = cacheData.workers || '';
+                if (document.getElementById('m-terms')) document.getElementById('m-terms').checked = !!cacheData.terms;
+
+                if (cacheData.logoBase64 && cacheData.logoName) {
+                    logoBase64 = cacheData.logoBase64;
+                    logoName = cacheData.logoName;
+                    const dropzoneEl = document.getElementById('m-logo-dropzone');
+                    if (dropzoneEl) {
+                        if (!dropzoneEl.dataset.originalHtml) {
+                            dropzoneEl.dataset.originalHtml = dropzoneEl.innerHTML;
+                        }
+                        dropzoneEl.innerHTML = `
+                            <div class="space-y-2 w-full">
+                                <img src="${cacheData.logoBase64}" class="max-h-32 mx-auto rounded-xl shadow-md object-contain" alt="Vista previa del logo" />
+                                <p class="text-xs text-brandDark font-bold mt-2 truncate px-2">✓ ${cacheData.logoName}</p>
+                                <p class="text-[10px] text-slate-400">Haz clic o arrastra para cambiar la imagen</p>
+                            </div>
+                        `;
+                    }
+                }
             }
         });
     </script>
