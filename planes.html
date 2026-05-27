@@ -471,7 +471,8 @@
                             .insert({
                                 nombre: registrationData.clinic || registrationData.clinica,
                                 pais_residencia: registrationData.pais,
-                                direccion: registrationData.direccion || '',
+                                direccion: registrationData.direccionTextual || registrationData.direccion || '', // <-- COLUMNA DE DIRECCIÓN TEXTUAL REPARADA
+                                telefono: registrationData.telefonoFijo || registrationData.telFijo || '',     // <-- COLUMNA DE TELÉFONO FIJO REPARADA
                                 ubicacion_mapas: registrationData.mapa || '',
                                 cantidad_profesionales: parseInt(registrationData.workers || 0),
                                 logo_url: urlLogoFinal,

@@ -1077,7 +1077,6 @@
                         firstInvalidElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
                         firstInvalidElement.focus();
                     } else {
-                        // Guardar datos temporalmente para la pantalla de planes
                         const adminData = {
                             nombre: document.getElementById('m-nombre').value,
                             apellido1: document.getElementById('m-apellido1').value,
@@ -1096,7 +1095,9 @@
                             workers: document.getElementById('m-workers').value,
                             terms: document.getElementById('m-terms').checked,
                             logoBase64: logoBase64,
-                            logoName: logoName
+                            logoName: logoName,
+                            direccionTextual: document.getElementById('m-direccion').value,
+                            telefonoFijo: document.getElementById('m-tel-fijo').value
                         };
                         localStorage.setItem('dentaSyncTempRegistration', JSON.stringify(adminData));
                         
@@ -1222,9 +1223,9 @@
                     document.getElementById('m-pais').dispatchEvent(new Event('change'));
                 }
                 if (document.getElementById('m-doc-id')) document.getElementById('m-doc-id').value = cacheData.docId || '';
-                if (document.getElementById('m-tel-fijo')) document.getElementById('m-tel-fijo').value = cacheData.telFijo || '';
+                if (document.getElementById('m-tel-fijo')) document.getElementById('m-tel-fijo').value = cacheData.telefonoFijo || cacheData.telFijo || '';
                 if (document.getElementById('m-celular')) document.getElementById('m-celular').value = cacheData.celular || '';
-                if (document.getElementById('m-direccion')) document.getElementById('m-direccion').value = cacheData.direccion || '';
+                if (document.getElementById('m-direccion')) document.getElementById('m-direccion').value = cacheData.direccionTextual || cacheData.direccion || '';
                 if (document.getElementById('m-mapa')) document.getElementById('m-mapa').value = cacheData.mapa || '';
                 if (document.getElementById('m-correo')) document.getElementById('m-correo').value = cacheData.correo || '';
                 if (document.getElementById('m-correo-corp')) document.getElementById('m-correo-corp').value = cacheData.correoCorp || '';
