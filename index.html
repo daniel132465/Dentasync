@@ -3,34 +3,556 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dentasync</title>
+    <title>Dentasync - Gestión Odontológica Inteligente</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        @keyframes floatMarquee {
-            0% { transform: translateX(-20px); }
-            50% { transform: translateX(20px); }
-            100% { transform: translateX(-20px); }
+        :root {
+            --color-white: #ffffff;
+            --color-light-gray: #f8f9fa;
+            --color-navy: #2c3e50;
+            --color-green: #2ecc71;
+            --color-green-hover: #27ae60;
         }
-        .animate-float-marquee {
-            animation: floatMarquee 3s ease-in-out infinite;
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            color: var(--color-navy);
+        }
+
+        body {
+            background-color: var(--color-white);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* --- Tipografía y Botones --- */
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: var(--color-green);
+            color: var(--color-white);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--color-green-hover);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--color-navy);
+            border: 2px solid var(--color-navy);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--color-navy);
+            color: var(--color-white);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--color-navy);
+            border: none;
+        }
+        
+        .btn-secondary:hover {
+            text-decoration: underline;
+        }
+
+        /* --- Header / Navbar --- */
+        header {
+            background-color: var(--color-white);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--color-green);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--color-green);
+        }
+
+        .nav-actions .btn-outline {
+            padding: 0.5rem 1rem;
+        }
+
+        /* --- Mobile Menu Toggle --- */
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            background-color: var(--color-light-gray);
+            padding: 6rem 5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 4rem;
+        }
+
+        .hero-content {
+            flex: 1;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            color: var(--color-navy);
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: #596a7b; /* lighter navy */
+            margin-bottom: 2.5rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .hero-visual {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Dashboard Mockup CSS */
+        .dashboard-mockup {
+            width: 100%;
+            max-width: 600px;
+            background-color: var(--color-white);
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(44, 62, 80, 0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .mockup-header {
+            background-color: var(--color-light-gray);
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .mockup-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        .mockup-dot.red { background-color: #ff5f56; }
+        .mockup-dot.yellow { background-color: #ffbd2e; }
+        .mockup-dot.green { background-color: #27c93f; }
+
+        .mockup-body {
+            padding: 2rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .mockup-sidebar {
+            width: 60px;
+            height: 200px;
+            background-color: var(--color-light-gray);
+            border-radius: 8px;
+        }
+
+        .mockup-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .mockup-bar {
+            height: 20px;
+            background-color: var(--color-light-gray);
+            border-radius: 4px;
+        }
+        .mockup-bar.short { width: 50%; }
+
+        /* --- Funciones Section --- */
+        .features {
+            background-color: var(--color-white);
+            padding: 6rem 5%;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background-color: var(--color-light-gray);
+            padding: 2rem;
+            border-radius: 12px;
+            transition: transform 0.3s;
+            text-align: left;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 1.5rem;
+            color: var(--color-green);
+        }
+
+        .feature-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .feature-desc {
+            color: #596a7b;
+        }
+
+        /* --- Planes de Suscripción Section --- */
+        .pricing {
+            background-color: var(--color-light-gray);
+            padding: 6rem 5%;
+            text-align: center;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+            align-items: center;
+        }
+
+        .pricing-card {
+            background-color: var(--color-white);
+            padding: 3rem 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .pricing-card.featured {
+            border: 2px solid var(--color-green);
+            transform: scale(1.05);
+            z-index: 10;
+        }
+
+        .badge-popular {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--color-green);
+            color: var(--color-white);
+            padding: 0.25rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .plan-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .plan-price {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--color-green);
+            margin-bottom: 1.5rem;
+        }
+
+        .plan-price span {
+            font-size: 1rem;
+            color: #596a7b;
+            font-weight: 500;
+        }
+
+        .plan-features {
+            margin-bottom: 2rem;
+            flex-grow: 1;
+        }
+
+        .plan-features li {
+            margin-bottom: 0.75rem;
+            color: #596a7b;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .plan-features li::before {
+            content: "✓";
+            color: var(--color-green);
+            font-weight: bold;
+        }
+
+        /* --- Footer --- */
+        footer {
+            background-color: var(--color-navy);
+            color: var(--color-white);
+            padding: 3rem 5%;
+            text-align: center;
+        }
+        
+        footer * {
+            color: var(--color-white);
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--color-green);
+        }
+
+        .copyright {
+            font-size: 0.875rem;
+            opacity: 0.7;
+        }
+
+        /* --- Media Queries --- */
+        @media (max-width: 992px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+            .hero-buttons {
+                justify-content: center;
+            }
+            .pricing-card.featured {
+                transform: scale(1);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links, .nav-actions {
+                display: none;
+            }
+            .menu-toggle {
+                display: block;
+            }
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            .hero-buttons {
+                flex-direction: column;
+            }
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
         }
     </style>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-white min-h-screen text-gray-900 flex flex-col items-center py-16 px-4 font-sans">
-    <!-- Encabezado principal -->
-    <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight mb-12 drop-shadow-sm animate-float-marquee" style="color: red;">
-        DENTASYNC
-    </h1>
-    
-    <!-- Contenedor de datos -->
-    <div id="data-container" class="w-full max-w-4xl">
-        <p class="text-gray-500 text-center text-lg animate-pulse" id="loading-text">Cargando datos desde Supabase...</p>
-        <ul id="numbers-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 hidden">
-            <!-- Los números se inyectarán aquí dinámicamente -->
-        </ul>
-    </div>
+<body>
 
-    <script type="module" src="app.js"></script>
+    <!-- Header / Navbar -->
+    <header>
+        <div class="logo">Dentasync</div>
+        <nav class="nav-links">
+            <a href="#funciones">Funciones</a>
+            <a href="#planes">Planes</a>
+            <a href="#nosotros">Sobre Nosotros</a>
+        </nav>
+        <div class="nav-actions">
+            <button class="btn btn-outline">Iniciar Sesión</button>
+        </div>
+        <div class="menu-toggle">☰</div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Gestión Odontológica Inteligente para Bolivia</h1>
+            <p class="hero-subtitle">Optimiza tu consultorio, agenda citas con IA y gestiona historias clínicas en una burbuja SaaS segura.</p>
+            <div class="hero-buttons">
+                <button class="btn btn-primary">Prueba Gratis 10 Pacientes</button>
+                <button class="btn btn-secondary">Ver Demostración</button>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="dashboard-mockup">
+                <div class="mockup-header">
+                    <div class="mockup-dot red"></div>
+                    <div class="mockup-dot yellow"></div>
+                    <div class="mockup-dot green"></div>
+                </div>
+                <div class="mockup-body">
+                    <div class="mockup-sidebar"></div>
+                    <div class="mockup-content">
+                        <div class="mockup-bar"></div>
+                        <div class="mockup-bar short"></div>
+                        <div class="mockup-bar"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Funciones -->
+    <section id="funciones" class="features">
+        <h2 class="section-title">Funciones Principales</h2>
+        <div class="features-grid">
+            <!-- Tarjeta 1 -->
+            <div class="feature-card">
+                <svg class="feature-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                <h3 class="feature-title">Agenda Inteligente con IA</h3>
+                <p class="feature-desc">Algoritmos que optimizan tus tiempos de atención y citas diarias.</p>
+            </div>
+            <!-- Tarjeta 2 -->
+            <div class="feature-card">
+                <svg class="feature-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <h3 class="feature-title">Odontograma Interactivo</h3>
+                <p class="feature-desc">Mapeo dental FDI visual, preciso y fácil de utilizar con pacientes.</p>
+            </div>
+            <!-- Tarjeta 3 -->
+            <div class="feature-card">
+                <svg class="feature-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                <h3 class="feature-title">Evolución de Ortodoncia</h3>
+                <p class="feature-desc">Línea de tiempo detallada para tratamientos largos y seguimiento.</p>
+            </div>
+            <!-- Tarjeta 4 -->
+            <div class="feature-card">
+                <svg class="feature-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                <h3 class="feature-title">Aislamiento Multi-Tenant</h3>
+                <p class="feature-desc">Tus datos viven en su propia burbuja segura e independiente.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Planes -->
+    <section id="planes" class="pricing">
+        <h2 class="section-title">Nuestros Planes</h2>
+        <div class="pricing-grid">
+            <!-- Plan Gratis -->
+            <div class="pricing-card">
+                <h3 class="plan-name">Sillón Único</h3>
+                <div class="plan-price">0 Bs.<span>/mes</span></div>
+                <ul class="plan-features">
+                    <li>Límite: 10 pacientes/mes</li>
+                    <li>Agenda básica</li>
+                    <li>Soporte comunitario</li>
+                </ul>
+                <button class="btn btn-outline">Comenzar Ya</button>
+            </div>
+            <!-- Plan Básico (Destacado) -->
+            <div class="pricing-card featured">
+                <div class="badge-popular">Más Popular</div>
+                <h3 class="plan-name">Clínica Creciente</h3>
+                <div class="plan-price">199 Bs.<span>/mes</span></div>
+                <ul class="plan-features">
+                    <li>Límite: 250 pacientes/mes</li>
+                    <li>2 consultorios simultáneos</li>
+                    <li>Odontograma Interactivo</li>
+                    <li>Soporte prioritario</li>
+                </ul>
+                <button class="btn btn-primary">Empezar Prueba</button>
+            </div>
+            <!-- Plan Avanzado -->
+            <div class="pricing-card">
+                <h3 class="plan-name">Imperio Dental</h3>
+                <div class="plan-price">499 Bs.<span>/mes</span></div>
+                <ul class="plan-features">
+                    <li>Límite: 1500 pacientes/mes</li>
+                    <li>3 consultorios simultáneos</li>
+                    <li>IA Avanzada y Reportes</li>
+                    <li>Soporte 24/7</li>
+                </ul>
+                <button class="btn btn-outline">Contactar Ventas</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#">Términos y Condiciones</a>
+                <a href="#">Política de Privacidad</a>
+                <a href="#">Centro de Soporte</a>
+                <a href="#">Contacto</a>
+            </div>
+            <div class="copyright">
+                &copy; 2026 Dentasync-Emi. Todos los derechos reservados.
+            </div>
+        </div>
+    </footer>
+
 </body>
 </html>
